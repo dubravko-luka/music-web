@@ -1,0 +1,17 @@
+{
+  "editor.formatOnSave": true,
+  "typescript.referencesCodeLens.enabled": true,
+  "files.associations": {
+    "*.multistage": "dockerfile"
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "css.validate": false,
+  "scss.validate": false,
+  "less.validate": false,
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true
+}

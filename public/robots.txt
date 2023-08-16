@@ -1,0 +1,13 @@
+# *
+User-agent: *
+Disallow: /*.json$
+Disallow: /*_buildManifest.js$
+Disallow: /*_middlewareManifest.js$
+Disallow: /*_ssgManifest.js$
+Disallow: /*.js$
+
+# Host
+Host: https://product.reshare.com.au
+
+# Sitemaps
+Sitemap: https://product.reshare.com.au/sitemap.xml

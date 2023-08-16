@@ -1,0 +1,33 @@
+.wrapper {
+  text-align: center;
+  width: 100%;
+  height: calc(100vh - 70px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  align-items: center;
+}
+
+.title {
+  font-size: 72px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.text {
+  font-size: 24px;
+  color: #777;
+}
+
+.link {
+  text-decoration: none;
+  font-size: 24px;
+  color: #ff7f50;
+}
+
+.link:hover {
+  color: #ff6347;
+}
