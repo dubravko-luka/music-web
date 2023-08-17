@@ -1,6 +1,9 @@
-.volumn *,
-.timeSong * {
+.volumn * {
   transition: none;
+}
+
+.timeSong * {
+  transition: all .3s linear !important;
 }
 
 .volumn .input-range__track,

@@ -101,7 +101,24 @@
   height: 40px;
 }
 
+.action * {
+  transition: none !important;
+}
+
 .action svg {
   width: 16px;
   height: 16px;
+}
+
+.action.active svg * {
+  fill: #EB00FF;
+}
+
+.audio {
+  width: 0;
+  height: 0;
+  position: fixed;
+  top: -100vh;
+  opacity: 0;
+  z-index: -100;
 }

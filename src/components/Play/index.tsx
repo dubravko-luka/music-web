@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react';
+import React, { memo, useEffect, useRef, useState } from 'react';
 import InputRange from 'react-input-range';
 import styles from './styles.module.css'
 import Svg from '../Common/Svg';
@@ -11,15 +11,65 @@ type Props = {
 const Play: React.FC<Props> = () => {
 
   const [volumn, setVolumn] = useState(100)
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [totalDuration, setTotalDuration] = useState(0);
+  const [muted, setMuted] = useState(false);
+  const audioRef: any = useRef(null);
+
+  const onPlay = () => {
+    if (isPlaying) {
+      audioRef.current.pause();
+    } else {
+      audioRef.current.play();
+      audioRef.current.volume = volumn / 100;
+    }
+    setIsPlaying(!isPlaying);
+  };
+
+  const handleLoop = () => {
+    audioRef.current.loop = !audioRef.current.loop;
+  };
+
+  const handleTimeUpdate = () => {
+    if (Math.floor(audioRef.current.currentTime) >= totalDuration) {
+      setIsPlaying(false)
+    }
+    setCurrentTime(Math.floor(audioRef.current.currentTime));
+  };
+
+  const formatTime = (timeInSeconds: number) => {
+    const minutes = Math.floor(timeInSeconds / 60);
+    const seconds = timeInSeconds % 60;
+    return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  };
+
+  const handleLoadedMetadata = () => {
+    const duration = Math.floor(audioRef.current.duration);
+    setTotalDuration(duration);
+  };
+
+  const handleMuted = () => {
+    audioRef.current.muted = !muted;
+    setMuted(!muted)
+  }
+
+  useEffect(() => {
+    if (audioRef) {
+      handleLoadedMetadata()
+    }
+  }, [audioRef])
+
+  // ----------------
 
   const onChangeVolumn = (e: any) => {
     setVolumn(e)
+    audioRef.current.volume = e / 100;
   }
 
-  const [time, setTime] = useState(70)
-
   const onChangeTime = (e: any) => {
-    setTime(e)
+    audioRef.current.currentTime = e;
+    setCurrentTime(e);
   }
 
   return (
@@ -77,34 +127,44 @@ const Play: React.FC<Props> = () => {
                 <div className={`${styles.action}`}>
                   <Svg name='prev' path='icons' />
                 </div>
-                <div className={`${styles.actionPlay}`}>
-                  <Svg name='play' path='icons' />
+                <div className={`${styles.actionPlay}`} onClick={onPlay}>
+                  {
+                    isPlaying
+                      ? <Svg name='pause' path='icons' />
+                      : <Svg name='play' path='icons' />
+                  }
                 </div>
                 <div className={`${styles.action}`}>
                   <Svg name='next' path='icons' />
                 </div>
-                <div className={`${styles.action}`}>
+                <div className={`${styles.action} ${audioRef?.current?.loop ? styles.active : ''}`} onClick={handleLoop}>
                   <Svg name='loop' path='icons' />
                 </div>
               </div>
               <div className="flex gap-2">
-                <span className='text-xs text-gray-500'>00:00</span>
+                <span className='text-xs text-gray-500'>{formatTime(Number(currentTime))}</span>
                 <InputRange
                   formatLabel={() => ""}
-                  maxValue={100}
+                  maxValue={totalDuration}
                   minValue={0}
                   step={1}
-                  value={time}
+                  value={currentTime}
                   onChange={onChangeTime}
                 />
-                <span className='text-xs text-gray-500'>05:00</span>
+                <span className='text-xs text-gray-500'>{formatTime(totalDuration)}</span>
               </div>
             </div>
           </div>
           {/*  */}
           <div className="h-full flex items-center justify-end">
             <div className={`${styles.volumnWrapper} flex items-center gap-2 volumn pl-2 pr-4`}>
-              <Svg name='speaker' path='icons' />
+              <div onClick={handleMuted}>
+                {
+                  muted || volumn / 100 <= 0
+                    ? <Svg name='muted' path='icons' />
+                    : <Svg name='speaker' path='icons' />
+                }
+              </div>
               <InputRange
                 formatLabel={() => ""}
                 maxValue={100}
@@ -121,6 +181,18 @@ const Play: React.FC<Props> = () => {
           </div>
         </div>
       </div>
+      <audio
+        id="audio"
+        className={`${styles.audio}`}
+        ref={audioRef}
+        onTimeUpdate={handleTimeUpdate}
+        onLoadedMetadata={handleLoadedMetadata}
+      >
+        <source
+          src="https://res.cloudinary.com/phuockaito/video/upload/v1657263555/audio/mu1fmqp9dmf61qj5megp.mp3"
+          type="audio/mp3"
+        />
+      </audio>
     </>
   );
 };
