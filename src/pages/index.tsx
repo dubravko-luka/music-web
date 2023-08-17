@@ -1,4 +1,5 @@
 import React, { memo, useEffect } from "react";
+import HomeContainer from '@/modules/home'
 
 const HomePage: React.FC = () => {
 
@@ -7,7 +8,7 @@ const HomePage: React.FC = () => {
 
   return (
     <>
-      {/* HOME PAGE */}
+      <HomeContainer />
     </>
   )
 }

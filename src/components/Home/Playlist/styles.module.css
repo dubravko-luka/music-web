@@ -1,0 +1,7 @@
+.list {
+  /* overflow: hidden; */
+}
+
+.listContent {
+  height: calc(100vh - 245px - 100px);
+}

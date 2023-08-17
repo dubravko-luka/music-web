@@ -1,0 +1,71 @@
+.wrapper {
+  background: #21212aff;
+  border-radius: 10px;
+}
+
+.iconPlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1.2);
+  z-index: 9;
+  opacity: 0;
+  transition: all .3s linear;
+}
+
+.wrapper:hover .iconPlay {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(0.5);
+}
+
+.figure {
+  height: 100%;
+}
+
+.figure img {
+  height: 100%;
+  object-fit: cover;
+}
+
+.info {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.showOption svg * {
+  fill: #fff;
+}
+
+.options {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 10px);
+  box-sizing: border-box;
+  border-radius: 5px;
+  background: #282828ff;
+  overflow: hidden;
+  padding: 5px 0px;
+  visibility: hidden;
+  transition: all .3s linear;
+  z-index: 10;
+}
+
+.showOption:hover .options {
+  visibility: visible;
+  top: 100%;
+}
+
+.optionItem {
+  padding: 3px 15px;
+}
+
+.optionItem:hover {
+  background: #535353ff;
+}
+
+.iconOption svg {
+  width: 24px;
+}

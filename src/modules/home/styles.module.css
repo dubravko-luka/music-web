@@ -1,0 +1,21 @@
+.titleSection {
+  font-size: 20px;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 20px;
+}
+
+.section {
+  margin-bottom: 20px;
+}
+
+.wrapSection {
+  width: calc(100% - 300px - 20px);
+}
+
+.playList {
+  position: fixed;
+  max-width: 300px;
+  top: 76px;
+  right: 20px;
+}

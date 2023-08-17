@@ -5,6 +5,8 @@
 body {
   margin: 0;
   padding: 0;
+  overscroll-behavior: none;
+  /* background: #18191aff; */
 }
 
 * {
@@ -31,4 +33,25 @@ textarea:focus {
   width: 0;
   display: none;
   background-color: transparent;
+}
+
+body::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px #0500FF;
+  border-radius: 10px;
+  background-color: #1b1c4bff;
+}
+
+body::-webkit-scrollbar {
+  width: 6px;
+  background-color: #1b1c4bff;
+}
+
+body::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px #EB00FF;
+  background-color: #4a318eff;
+}
+
+.no-scroll {
+  overflow: hidden;
 }

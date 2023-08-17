@@ -1,1 +1,147 @@
-/*  */
+.headerWrapper {
+  height: 56px;
+  width: 100%;
+  background: #000;
+  color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 99;
+}
+
+.headerLogoSearch {
+  height: 100%;
+  padding: 8px 0px;
+  box-sizing: border-box;
+}
+
+.headerLogo {
+  height: 40px;
+  width: 40px;
+  padding: 5px;
+  border-radius: 50%;
+  background: linear-gradient(127deg, #00FF19 0%, #FFD600 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.headerImgLogo {
+  height: 100%;
+}
+
+.headerSearch {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.headerSearchIcon {
+  background-color: #3A3B3C;
+  height: 100%;
+  width: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  border-top-left-radius: 50px;
+  border-bottom-left-radius: 50px;
+}
+
+.headerSearchIcon svg {
+  width: 16px;
+  height: 16px;
+}
+
+.headerSearchIcon svg * {
+  fill: #B0B3B8;
+}
+
+.headerInputSearch {
+  width: 212px;
+  height: 100%;
+  border: 0;
+  border-top-right-radius: 50px;
+  border-bottom-right-radius: 50px;
+  background-color: #3A3B3C;
+  color: #fff;
+  font-size: 12px;
+  padding: 0px 5px;
+  box-sizing: border-box;
+}
+
+.headerInputSearch::placeholder {
+  color: #fff;
+  font-size: 12px;
+}
+
+.headerMainMenu {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 100%;
+}
+
+.headerMenuItem {
+  height: 100%;
+  width: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+}
+
+.headerMenuItem:hover {
+  background-color: #3a3b3cff;
+}
+
+.headerMenuItem.active svg * {
+  fill: #EB00FF;
+}
+
+.headerMenuItem svg {
+  width: 26px;
+  height: 26px;
+}
+
+.headerMenuItem svg * {
+  fill: #b9bbbfff;
+}
+
+.headerMoreSetting {
+  height: 100%;
+  padding: 8px 0px;
+  box-sizing: border-box;
+}
+
+.headerUser {
+  height: 100%;
+}
+
+.headerIconUser {
+  border-radius: 50%;
+  overflow: hidden;
+  width: 40px;
+  height: 40px;
+}
+
+.headerImgUser {
+  height: 100%;
+}
+
+.headerIconSetting {
+  border-radius: 50%;
+  overflow: hidden;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #3a3b3cff;
+}
+
+.headerIconSetting:hover {
+  background: #4e4f50ff;
+}

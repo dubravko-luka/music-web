@@ -1,0 +1,107 @@
+.playBottom {
+  position: fixed;
+  bottom: 0;
+  height: 90px;
+  width: 100%;
+  border-top: 1px solid rgba(172, 172, 172, 0.2);
+  z-index: 11;
+  background: #18191aff;
+}
+
+.figure {
+  min-width: 73px;
+  max-width: 73px;
+}
+
+.figure img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  object-fit: cover;
+}
+
+.infoSong {
+  max-width: 300px;
+}
+
+.info {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.showOption svg * {
+  fill: #fff;
+}
+
+.options {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 10px);
+  box-sizing: border-box;
+  border-radius: 5px;
+  background: #282828ff;
+  overflow: hidden;
+  padding: 5px 0px;
+  visibility: hidden;
+  transition: all .3s linear;
+  z-index: 10;
+}
+
+.showOption:hover .options {
+  visibility: visible;
+  bottom: 100%;
+}
+
+.optionItem {
+  padding: 3px 15px;
+}
+
+.optionItem:hover {
+  background: #535353ff;
+}
+
+.iconHoverOption {
+  transform: rotate(90deg);
+}
+
+.iconOption svg {
+  width: 24px;
+}
+
+.volumnWrapper {
+  width: 150px;
+}
+
+.playList svg {
+  width: 34px;
+  height: 34px;
+}
+
+.lineHeight {
+  width: 1px;
+  height: 50%;
+  background: rgba(100, 100, 100, 0.5);
+}
+
+/* -------------------------------- */
+.controlPlay {
+  max-width: 476px;
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.actionPlay svg {
+  width: 40px;
+  height: 40px;
+}
+
+.action svg {
+  width: 16px;
+  height: 16px;
+}

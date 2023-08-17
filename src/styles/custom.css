@@ -1,0 +1,26 @@
+.volumn *,
+.timeSong * {
+  transition: none;
+}
+
+.volumn .input-range__track,
+.timeSong .input-range__track {
+  background: #ababab;
+}
+
+.volumn .input-range__track--active,
+.timeSong .input-range__track--active {
+  background: #fff;
+}
+
+.volumn .input-range__slider,
+.timeSong .input-range__slider {
+  background: #fff;
+  border-color: #fff;
+  visibility: hidden;
+}
+
+.volumn .input-range:hover .input-range__slider,
+.timeSong .input-range:hover .input-range__slider {
+  visibility: visible;
+}

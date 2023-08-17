@@ -1,0 +1,26 @@
+.menu {
+  position: fixed;
+  box-sizing: border-box;
+  border-radius: 5px;
+  background: #282828ff;
+  overflow: hidden;
+  padding: 5px 0px;
+  z-index: 1000;
+  width: 200px;
+}
+
+.optionItem svg * {
+  fill: #fff;
+}
+
+.optionItem {
+  padding: 3px 15px;
+}
+
+.optionItem:hover {
+  background: #535353ff;
+}
+
+.iconOption svg {
+  width: 24px;
+}

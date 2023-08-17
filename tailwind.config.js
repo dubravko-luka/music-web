@@ -23,10 +23,11 @@ module.exports = {
     },
     extend: {
       colors: {
-        208: "rgb(30 159 208)",
-        main: 'rgba(255, 255, 255,.9)',
-        bd: {
-          255: 'rgba(255, 255, 255, .08)'
+        bg: {
+          main: "#18191aff"
+        },
+        blue: {
+          link: '#05aaedff'
         }
       },
       flex: {

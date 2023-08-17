@@ -1,0 +1,90 @@
+.wrapper {
+  width: 100%;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.wrapImgSong {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  position: relative;
+}
+
+.iconPlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1.5);
+  z-index: 9;
+  opacity: 0;
+  transition: all .3s linear;
+}
+
+.wrapper:hover .iconPlay {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.wrapper:hover .imgSong {
+  transform: scale(1.05);
+}
+
+.imgSong {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: all .3s linear;
+}
+
+.info {
+  background: #21212aff;
+}
+
+.iconFavourite {
+  padding-top: 3px;
+}
+
+.iconFavourite svg {
+  width: 16px;
+  height: 16px;
+}
+
+.iconFavourite svg * {
+  fill: #fff;
+}
+
+.showOption svg * {
+  fill: #fff;
+}
+
+.options {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 10px);
+  box-sizing: border-box;
+  border-radius: 10px;
+  background: #282828ff;
+  overflow: hidden;
+  padding: 5px 0px;
+  visibility: hidden;
+  transition: all .3s linear;
+  z-index: 10;
+}
+
+.showOption:hover .options {
+  visibility: visible;
+  bottom: 100%;
+}
+
+.optionItem {
+  padding: 3px 15px;
+}
+
+.optionItem:hover {
+  background: #535353ff;
+}
+
+.iconOption svg {
+  width: 24px;
+}

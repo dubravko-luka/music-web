@@ -9,6 +9,9 @@ import { seoConfig } from 'next-seo.config';
 import WindowResizeHandler from '@/handlers/WindowResizeHandler';
 import store from '@/store/store';
 import GoTop from '@/components/Common/GoTop';
+import Navigation from '@/components/Layout/Navigation';
+import RightClick from '@/components/Common/RightClick';
+import Play from '@/components/Play';
 
 export default function App({ Component, pageProps }: AppProps) {
 
@@ -16,11 +19,18 @@ export default function App({ Component, pageProps }: AppProps) {
     <Provider store={store}>
       <DefaultSeo {...seoConfig} />
       <WindowResizeHandler />
-      <Head />
-      <div className="max-w-screen overflow-hidden">
-        <Component {...pageProps} />
-        <GoTop />
-      </div>
+      <RightClick>
+        <Head />
+        <Navigation />
+        <div
+          className={`max-w-screen overflow-hidden bg-bg-main p-5 pb-[100px]`}
+          style={{ minHeight: `calc(100vh - 56px)` }}
+        >
+          <Component {...pageProps} />
+          <GoTop />
+        </div>
+        <Play />
+      </RightClick>
     </Provider>
   )
 }

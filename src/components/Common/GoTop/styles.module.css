@@ -1,11 +1,11 @@
 .wrapper {
   position: fixed;
-  bottom: 16px;
-  background: #0991E0;
+  bottom: 106px;
+  background: linear-gradient(135deg, #0500FF 0%, #EB00FF 100%);
   width: 55px;
   height: 55px;
-  border-radius: 4px;
   z-index: 100;
+  border-radius: 50%;
   border: 1px solid #fff;
   transition: all .3s linear;
 }

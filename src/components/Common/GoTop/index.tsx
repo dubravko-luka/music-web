@@ -1,6 +1,6 @@
 import React, { memo, useEffect, useState } from 'react';
 import styles from './styles.module.css'
-import Svg from '@/components/Svg';
+import Svg from '@/components/Common/Svg';
 import { scroller } from 'react-scroll';
 
 const GoTop: React.FC = () => {
