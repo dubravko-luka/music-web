@@ -22,7 +22,7 @@ const Playlist: React.FC<Props> = () => {
         <div className={`${styles.listContent} grid grid-cols-12 gap-y-3 overflow-auto no-sb`}>
           {
             new Array(20).fill(null)?.map((_, index) => (
-              <div className="col-span-12">
+              <div className="col-span-12" key={index}>
                 <MusicCardRectangle2 key={index} />
               </div>
             ))
