@@ -3,6 +3,7 @@ import HomeContainer from '@/modules/home'
 
 const HomePage: React.FC = () => {
 
+
   useEffect(() => {
   }, [])
 

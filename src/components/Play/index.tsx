@@ -124,6 +124,7 @@ const Play: React.FC<Props> = () => {
   const [volumn, setVolumn] = useState(100)
   const [muted, setMuted] = useState(false);
   const audioRef: any = useRef(null);
+  const [showControl, setShowControl] = useState(true)
 
   const handleMuted = () => {
     audioRef.current.muted = !muted;
@@ -137,8 +138,21 @@ const Play: React.FC<Props> = () => {
 
   return (
     <>
-      <div className={`${styles.playBottom} px-5 py-2 flex items-center`}>
-        <div className="w-full h-full flex justify-between gap-x-3 items-center">
+      <div className={`${styles.audioBlur} ${!showControl ? styles.show : ''}`} onClick={() => setShowControl(true)}>
+        <div className={`${styles.wavesBlock} relative`}>
+          <div className={`${styles.iconPlay}`}>
+            <Svg name='play-1' path='icons' />
+          </div>
+          <div className={`${styles.wave_0} ${styles.waves}`}></div>
+          <div className={`${styles.wave_1} ${styles.waves}`}></div>
+          <div className={`${styles.wave_2} ${styles.waves}`}></div>
+        </div>
+      </div>
+      <div className={`${styles.playBottom} ${showControl ? styles.show : ''} px-5 py-2 flex items-center`}>
+        <div className={`${styles.hideControl} z-1`} onClick={() => setShowControl(false)}>
+          <Svg name="chevron-down" path='icons' />
+        </div>
+        <div className="w-full h-full flex justify-between gap-x-3 items-center z-2 relative">
           {/*  */}
           <div className={`${styles.infoSong} h-full`}>
             <div className="h-full flex items-center gap-x-4 p-2">
