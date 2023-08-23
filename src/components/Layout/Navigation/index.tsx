@@ -32,7 +32,7 @@ const Navigation: React.FC = () => {
 
   return (
     <>
-      <header className={`${styles.headerWrapper}`}>
+      <header className={`${styles.headerWrapper} navigation`}>
         <div className="flex justify-between items-center h-full px-5 relative">
           <div className={`${styles.headerLogoSearch} flex items-center gap-3`}>
             <div className={`${styles.headerLogo}`}>

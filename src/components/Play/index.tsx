@@ -3,6 +3,7 @@ import InputRange from 'react-input-range';
 import styles from './styles.module.css'
 import Svg from '../Common/Svg';
 import 'react-input-range/lib/css/index.css'
+import PlayFullPage from '@/components/PlayFullPage';
 
 type AudioProps = {
   volumn: number,
@@ -124,7 +125,8 @@ const Play: React.FC<Props> = () => {
   const [volumn, setVolumn] = useState(100)
   const [muted, setMuted] = useState(false);
   const audioRef: any = useRef(null);
-  const [showControl, setShowControl] = useState(true)
+  const [showControl, setShowControl] = useState(true);
+  const [showFullPage, setShowFullPage] = useState(false);
 
   const handleMuted = () => {
     audioRef.current.muted = !muted;
@@ -148,20 +150,26 @@ const Play: React.FC<Props> = () => {
           <div className={`${styles.wave_2} ${styles.waves}`}></div>
         </div>
       </div>
-      <div className={`${styles.playBottom} ${showControl ? styles.show : ''} px-5 py-2 flex items-center`}>
-        <div className={`${styles.hideControl} z-1`} onClick={() => setShowControl(false)}>
-          <Svg name="chevron-down" path='icons' />
-        </div>
+      <div
+        className={`${styles.playBottom} ${showControl ? styles.show : ''} ${showFullPage ? styles.fullPageControl : ''} px-5 py-2 flex items-center`}
+      >
+        {
+          showFullPage
+            ? <></>
+            : <div className={`${styles.hideControl} z-1`} onClick={() => setShowControl(false)}>
+              <Svg name="chevron-down" path='icons' />
+            </div>
+        }
         <div className="w-full h-full flex justify-between gap-x-3 items-center z-2 relative">
           {/*  */}
-          <div className={`${styles.infoSong} h-full`}>
+          <div className={`${styles.infoSong} ${showFullPage ? 'hidden' : ''} h-full`}>
             <div className="h-full flex items-center gap-x-4 p-2">
               <div className={`h-full`}>
                 <div className={`${styles.figure} h-full relative`}>
                   <img className='h-full' src="https://photo-resize-zmp3.zmdcdn.me/w320_r1x1_webp/cover/7/c/7/7/7c77b46af18b56509fd2bac0f081ad49.jpg" alt="" />
                 </div>
               </div>
-              <div className="">
+              <div>
                 <p className={`${styles.info} text-sm text-white font-bold`}>Đó Là Chuyện Của Anh</p>
                 <p className={`${styles.info} text-gray-500 text-xs`}>Trịnh Đình Quang</p>
               </div>
@@ -200,7 +208,10 @@ const Play: React.FC<Props> = () => {
             audioRef={audioRef}
           />
           {/*  */}
-          <div className="h-full flex items-center justify-end">
+          <div className={`h-full flex items-center justify-end ${showFullPage ? 'hidden' : ''}`}>
+            <div className={`${styles.fullPage} mr-2`} onClick={() => setShowFullPage(!showFullPage)}>
+              <Svg name='full' path='icons' />
+            </div>
             <div className={`${styles.volumnWrapper} flex items-center gap-2 volumn pl-2 pr-4`}>
               <div onClick={handleMuted}>
                 {
@@ -224,6 +235,42 @@ const Play: React.FC<Props> = () => {
             </div>
           </div>
         </div>
+      </div >
+      {
+        <div className={`${styles.wrapperPlayFullPage} ${showFullPage ? styles.active : ''}`}>
+          {
+            showFullPage
+              ? (
+                <>
+                  <PlayFullPage />
+                </>
+              )
+              : <></>
+          }
+        </div >
+      }
+      {
+        showFullPage
+          ? (
+            <>
+              <div
+                className={`${styles.menuFullPage} px-5 flex justify-end items-center`}
+                onClick={() => setShowFullPage(false)}
+              >
+                <div className={`${styles.turnOffFullPage}`}>
+                  <Svg name='chevron-down' path='icons' />
+                </div>
+              </div>
+            </>
+          )
+          : <></>
+      }
+      <div className={`${styles.wrapBgImageFullpage} ${showFullPage ? styles.active : ''} relative`}>
+        <img
+          className={styles.bgImageFullpage}
+          src="https://photo-resize-zmp3.zmdcdn.me/w1920_r3x2_jpeg/cover/8/e/2/4/8e24305fde744814083af980a593e8c2.jpg"
+          alt=""
+        />
       </div>
     </>
   );

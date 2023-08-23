@@ -30,7 +30,7 @@ const GoTop: React.FC = () => {
 
   return (
     <>
-      <div className={`${styles.wrapper} ${show ? 'right-4' : "-right-32"} flex items-center justify-center`} onClick={handleScrollToBuyCar}>
+      <div className={`${styles.wrapper} ${show ? 'right-4' : "-right-32"} flex items-center justify-center go-top`} onClick={handleScrollToBuyCar}>
         <Svg name='chevron-up' path='icons' />
       </div>
     </>
