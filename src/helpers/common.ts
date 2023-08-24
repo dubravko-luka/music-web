@@ -1,3 +1,5 @@
+import axios from "axios";
+
 export const alt = "review phim"
 
 export const handleObjectQuery = async (router: any, key: string, value: any, path: string) => {
@@ -29,3 +31,23 @@ export const formatTimePlay = (timeInSeconds: number) => {
   const seconds = timeInSeconds % 60;
   return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 };
+
+export const downloadSong = async (mp3Link: string, name: string) => {
+  const response = await axios.get(mp3Link, {
+    responseType: 'blob',
+  });
+
+  const url = window.URL.createObjectURL(new Blob([response.data], { type: 'audio/mpeg' }));
+
+  const link = document.createElement('a');
+
+  link.href = url;
+
+  link.setAttribute('download', `${name}.mp3`);
+
+  document.body.appendChild(link);
+
+  link.click();
+
+  window.URL.revokeObjectURL(url);
+}

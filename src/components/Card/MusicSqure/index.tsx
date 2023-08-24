@@ -2,10 +2,12 @@ import React, { memo, useRef, useState } from 'react';
 import styles from './styles.module.css'
 import Svg from '@/components/Common/Svg';
 import moment from 'moment';
-import { formatTimePlay } from '@/helpers/common';
+import { downloadSong, formatTimePlay } from '@/helpers/common';
 import { useDispatch, useSelector } from 'react-redux';
-import { setIdPlay } from '@/store/actions/mediaAction';
+import { setIdPlay, setPlayList } from '@/store/actions/mediaAction';
 import { RootState } from '@/store/types';
+import Copy from '@/components/Common/Copy';
+import { useRouter } from 'next/router';
 
 type Props = {
   song: any
@@ -15,6 +17,21 @@ const MusicCard: React.FC<Props> = ({ song }) => {
 
   const dispatch = useDispatch()
   const idPlay = useSelector((state: RootState) => state?.media?.id);
+  const playList = useSelector((state: RootState) => state?.media?.playList);
+
+  const addPlayList = async () => {
+    const _playList = [...playList];
+
+    const songIndex = _playList.findIndex(item => item.encodeId === song.encodeId);
+
+    if (songIndex !== -1) {
+      _playList.splice(songIndex, 1);
+    } else {
+      _playList.push({ ...song });
+    }
+
+    dispatch(setPlayList([..._playList]))
+  }
 
   return (
     <>
@@ -61,24 +78,34 @@ const MusicCard: React.FC<Props> = ({ song }) => {
                 <div
                   className={`${styles.options}`}
                 >
-                  <div className={`${styles.optionItem} flex items-center gap-2`}>
+                  <div className={`${styles.optionItem} flex items-center gap-2`} onClick={addPlayList}>
                     <div className={`${styles.iconOption}`}>
-                      <Svg name='add-playlist' path='icons' />
+                      {
+                        playList?.findIndex((item) => item.encodeId === song?.encodeId) !== -1
+                          ? <Svg name='remove-playlist' path='icons' />
+                          : <Svg name='add-playlist' path='icons' />
+                      }
                     </div>
-                    <p className='whitespace-nowrap text-white text-xs py-2'>Thêm vào danh sách phát</p>
+                    {
+                      playList?.findIndex((item) => item.encodeId === song?.encodeId) !== -1
+                        ? <p className='whitespace-nowrap text-white text-xs py-2'>Xoá khỏi danh sách phát</p>
+                        : <p className='whitespace-nowrap text-white text-xs py-2'>Thêm vào danh sách phát</p>
+                    }
                   </div>
-                  <div className={`${styles.optionItem} flex items-center gap-2`}>
+                  <div onClick={() => downloadSong(`/audio/${song?.encodeId}/128`, song.alias)} className={`${styles.optionItem} flex items-center gap-2`}>
                     <div className={`${styles.iconOption}`}>
                       <Svg name='download' path='icons' />
                     </div>
                     <p className='whitespace-nowrap text-white text-xs py-2'>Tải xuống</p>
                   </div>
-                  <div className={`${styles.optionItem} flex items-center gap-2`}>
-                    <div className={`${styles.iconOption}`}>
-                      <Svg name='share' path='icons' />
+                  <Copy value={`https://tunescape.vercel.app/audio/${song?.encodeId}/128`}>
+                    <div className={`${styles.optionItem} flex items-center gap-2`}>
+                      <div className={`${styles.iconOption}`}>
+                        <Svg name='share' path='icons' />
+                      </div>
+                      <p className='whitespace-nowrap text-white text-xs py-2'>Chia sẻ</p>
                     </div>
-                    <p className='whitespace-nowrap text-white text-xs py-2'>Chia sẻ</p>
-                  </div>
+                  </Copy>
                 </div>
               </div>
             </div>

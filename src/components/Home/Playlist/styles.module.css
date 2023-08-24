@@ -2,8 +2,9 @@
   position: relative;
 }
 
-.listContent {
+.contentPlayList {
   height: calc(100vh - 245px - 100px);
+  overflow: auto;
 }
 
 .showHidePlayList {
@@ -22,4 +23,8 @@
 .showHidePlayList svg {
   width: 30px;
   height: 30px;
+}
+
+.nextItem {
+  height: 54px;
 }

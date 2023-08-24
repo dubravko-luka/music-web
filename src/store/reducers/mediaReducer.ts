@@ -1,11 +1,13 @@
 import _ from 'lodash';
-import { MediaAction, MediaState, SET_ID_PLAY, SET_MUTED, SET_VOLUME } from '../types/mediaTypes';
+import { MediaAction, MediaState, SET_ID_PLAY, SET_MUTED, SET_PLAY_LIST, SET_VOLUME, SET_RANDOM } from '../types/mediaTypes';
 import data from '@/data/mp3/trend/data.json'
 
 const initialState: MediaState = {
   volume: 100,
   muted: false,
   id: _.sampleSize(data, 1)[0],
+  playList: [],
+  random: false,
 };
 
 const mediaReducer = (state = initialState, action: MediaAction): MediaState => {
@@ -20,10 +22,20 @@ const mediaReducer = (state = initialState, action: MediaAction): MediaState => 
         ...state,
         muted: action?.payload,
       };
+    case SET_RANDOM:
+      return {
+        ...state,
+        random: action?.payload,
+      };
     case SET_ID_PLAY:
       return {
         ...state,
         id: action?.payload,
+      };
+    case SET_PLAY_LIST:
+      return {
+        ...state,
+        playList: action?.payload,
       };
     default:
       return state;

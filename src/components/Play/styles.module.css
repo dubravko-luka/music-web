@@ -158,8 +158,16 @@
   height: 16px;
 }
 
+.action.disabled {
+  opacity: .5;
+}
+
 .action.active svg * {
   fill: #EB00FF;
+}
+
+.action.strokeActive svg * {
+  stroke: #EB00FF;
 }
 
 .audio {

@@ -32,6 +32,8 @@
     "@types/react-svg": "^5.0.0",
     "antd": "^5.2.0",
     "aos": "^2.3.4",
+    "axios": "^1.4.0",
+    "copy-to-clipboard": "^3.3.3",
     "cross-env": "^7.0.3",
     "eslint": "8.37.0",
     "eslint-config-next": "13.2.4",

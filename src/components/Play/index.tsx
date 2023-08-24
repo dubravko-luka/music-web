@@ -7,8 +7,13 @@ import PlayFullPage from '@/components/PlayFullPage';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { setShowPlaylist } from '@/store/actions/globalAction';
-import { setMuted, setVolume } from '@/store/actions/mediaAction';
+import { setIdPlay, setMuted, setRandom, setVolume } from '@/store/actions/mediaAction';
 import { formatTimePlay } from '@/helpers/common';
+import koreanMusic from '@/data/mp3/korean-music/data.json'
+import newRelease from '@/data/mp3/new-relase/data.json'
+import trend from '@/data/mp3/trend/data.json'
+import trendFavourite from '@/data/mp3/trend-favourite/data.json'
+import _ from 'lodash';
 
 type AudioProps = {
   volumn: number,
@@ -19,6 +24,9 @@ const Audio: React.FC<AudioProps> = ({ volumn, audioRef }) => {
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
+  const playList = useSelector((state: RootState) => state?.media?.playList);
+  const randomSong = useSelector((state: RootState) => state?.media?.random);
+  const dispatch = useDispatch()
 
   const onPlay = () => {
     if (isPlaying) {
@@ -55,15 +63,59 @@ const Audio: React.FC<AudioProps> = ({ volumn, audioRef }) => {
     }
   }, [idPlay])
 
+  const randomAllSong = () => {
+    const randomMusic = _.sampleSize([...koreanMusic, ...newRelease, ...trend, ...trendFavourite], 1);
+    dispatch(setIdPlay(randomMusic[0]))
+  }
+
+  const handleEnd = () => {
+    if (randomSong) {
+      if (playList.length === 1) {
+        randomAllSong()
+      } else {
+        const filteredArray = playList.filter(item => item.encodeId !== idPlay?.encodeId);
+        const randomIndex = Math.floor(Math.random() * filteredArray.length);
+        const newRand = filteredArray[randomIndex];
+        dispatch(setIdPlay(newRand))
+      }
+    } else if (!audioRef?.current?.loop && playList?.length > 0) {
+      const songIndex = playList.findIndex(item => item.encodeId === idPlay.encodeId);
+      if (playList[songIndex + 1]) {
+        dispatch(setIdPlay(playList[songIndex + 1]))
+      } else {
+        randomAllSong()
+      }
+    } else {
+      randomAllSong()
+    }
+  }
+
+  const handlePrev = () => {
+    const songIndex = playList.findIndex(item => item.encodeId === idPlay.encodeId);
+    if (playList[songIndex - 1]) {
+      dispatch(setIdPlay(playList[songIndex - 1]))
+    }
+  }
+
+  const handleNext = () => {
+    const songIndex = playList.findIndex(item => item.encodeId === idPlay.encodeId);
+    if (playList[songIndex + 1]) {
+      dispatch(setIdPlay(playList[songIndex + 1]))
+    }
+  }
+
   return (
     <>
       <div className={`${styles.controlPlay} h-full flex items-center`}>
         <div className='w-full timeSong'>
           <div className="flex justify-center items-center gap-x-10 mb-2">
-            <div className={`${styles.action}`}>
+            <div
+              className={`${styles.action} ${randomSong ? styles.strokeActive : ''}`}
+              onClick={() => dispatch(setRandom(!randomSong))}
+            >
               <Svg name='mix' path='icons' />
             </div>
-            <div className={`${styles.action}`}>
+            <div className={`${styles.action} ${playList.findIndex(item => item.encodeId === idPlay.encodeId) - 1 < 0 ? styles.disabled : ''}`} onClick={handlePrev}>
               <Svg name='prev' path='icons' />
             </div>
             <div className={`${styles.actionPlay}`} onClick={onPlay}>
@@ -73,10 +125,13 @@ const Audio: React.FC<AudioProps> = ({ volumn, audioRef }) => {
                   : <Svg name='play' path='icons' />
               }
             </div>
-            <div className={`${styles.action}`}>
+            <div className={`${styles.action} ${playList.findIndex(item => item.encodeId === idPlay.encodeId) + 1 >= playList.length ? styles.disabled : ''}`} onClick={handleNext}>
               <Svg name='next' path='icons' />
             </div>
-            <div className={`${styles.action} ${audioRef?.current?.loop ? styles.active : ''}`} onClick={handleLoop}>
+            <div
+              className={`${styles.action} ${audioRef?.current?.loop ? styles.active : ''}`}
+              onClick={handleLoop}
+            >
               <Svg name='loop' path='icons' />
             </div>
           </div>
@@ -101,6 +156,7 @@ const Audio: React.FC<AudioProps> = ({ volumn, audioRef }) => {
         onTimeUpdate={handleTimeUpdate}
         onPause={() => setIsPlaying(false)}
         onPlay={() => setIsPlaying(true)}
+        onEnded={handleEnd}
       >
         <source
           src={`/audio/${idPlay?.encodeId}/128`}
@@ -187,12 +243,6 @@ const Play: React.FC<Props> = () => {
                     <Svg name='dot-vertical' path='icons' />
                   </div>
                   <div className={`${styles.options}`}>
-                    <div className={`${styles.optionItem} flex items-center gap-2`}>
-                      <div className={`${styles.iconOption}`}>
-                        <Svg name='add-playlist' path='icons' />
-                      </div>
-                      <p className='whitespace-nowrap text-white text-xs py-2'>Thêm vào danh sách phát</p>
-                    </div>
                     <div className={`${styles.optionItem} flex items-center gap-2`}>
                       <div className={`${styles.iconOption}`}>
                         <Svg name='download' path='icons' />
