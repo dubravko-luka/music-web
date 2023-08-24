@@ -1,5 +1,5 @@
 import TrendTikTok from '@/components/Home/TrendTikTok';
-import React, { memo, useEffect } from 'react';
+import React, { memo } from 'react';
 import styles from './styles.module.css'
 import TrendingArtist from '@/components/Home/TrendingArtist';
 import Recently from '@/components/Home/Recently';
@@ -8,7 +8,6 @@ import TrendFavourite from '@/components/Home/TrendFavourite'
 import Playlist from '@/components/Home/Playlist';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
-import { getRecommend } from '@/api/endpoints/recommend';
 
 type Props = {
   //
