@@ -4,6 +4,10 @@ import styles from './styles.module.css'
 import Svg from '../Common/Svg';
 import 'react-input-range/lib/css/index.css'
 import PlayFullPage from '@/components/PlayFullPage';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@/store/types';
+import { setShowPlaylist } from '@/store/actions/globalAction';
+import { setMuted, setVolume } from '@/store/actions/mediaAction';
 
 type AudioProps = {
   volumn: number,
@@ -108,7 +112,7 @@ const Audio: React.FC<AudioProps> = ({ volumn, audioRef }) => {
         onPlay={() => setIsPlaying(true)}
       >
         <source
-          src="https://res.cloudinary.com/phuockaito/video/upload/v1657263555/audio/mu1fmqp9dmf61qj5megp.mp3"
+          src="https://api.mp3.zing.vn/api/streaming/audio/ZZ9I7E8C/128"
           type="audio/mp3"
         />
       </audio>
@@ -121,22 +125,30 @@ type Props = {
 };
 
 const Play: React.FC<Props> = () => {
-
-  const [volumn, setVolumn] = useState(100)
-  const [muted, setMuted] = useState(false);
   const audioRef: any = useRef(null);
   const [showControl, setShowControl] = useState(true);
   const [showFullPage, setShowFullPage] = useState(false);
+  const volume = useSelector((state: RootState) => state?.media?.volume);
+  const muted = useSelector((state: RootState) => state?.media?.muted);
+  const dispatch = useDispatch();
 
   const handleMuted = () => {
-    audioRef.current.muted = !muted;
-    setMuted(!muted)
+    dispatch(setMuted(!muted));
   }
 
   const onChangeVolumn = (e: any) => {
-    setVolumn(e)
-    audioRef.current.volume = e / 100;
+    dispatch(setVolume(e));
   }
+
+  useEffect(() => {
+    audioRef.current.volume = volume / 100;
+  }, [volume])
+
+  useEffect(() => {
+    audioRef.current.muted = muted;
+  }, [muted])
+
+  const showPlayList = useSelector((state: RootState) => state?.global?.showPlayList);
 
   return (
     <>
@@ -204,7 +216,7 @@ const Play: React.FC<Props> = () => {
           </div>
           {/*  */}
           <Audio
-            volumn={volumn}
+            volumn={volume}
             audioRef={audioRef}
           />
           {/*  */}
@@ -212,26 +224,28 @@ const Play: React.FC<Props> = () => {
             <div className={`${styles.fullPage} mr-2`} onClick={() => setShowFullPage(!showFullPage)}>
               <Svg name='full' path='icons' />
             </div>
-            <div className={`${styles.volumnWrapper} flex items-center gap-2 volumn pl-2 pr-4`}>
-              <div onClick={handleMuted}>
-                {
-                  muted || volumn / 100 <= 0
-                    ? <Svg name='muted' path='icons' />
-                    : <Svg name='speaker' path='icons' />
-                }
+            <div className={`flex items-center justify-end ${styles.controlVolumn}`}>
+              <div className={`${styles.volumnWrapper} flex items-center gap-2 volumn pl-2 pr-4`}>
+                <div onClick={handleMuted}>
+                  {
+                    muted || volume / 100 <= 0
+                      ? <Svg name='muted' path='icons' />
+                      : <Svg name='speaker' path='icons' />
+                  }
+                </div>
+                <InputRange
+                  formatLabel={() => ""}
+                  maxValue={100}
+                  minValue={0}
+                  step={1}
+                  value={volume}
+                  onChange={onChangeVolumn}
+                />
               </div>
-              <InputRange
-                formatLabel={() => ""}
-                maxValue={100}
-                minValue={0}
-                step={1}
-                value={volumn}
-                onChange={onChangeVolumn}
-              />
-            </div>
-            <div className={`${styles.lineHeight}`}></div>
-            <div className={`${styles.playList} pl-3`}>
-              <Svg name='play-list' path='icons' />
+              <div className={`${styles.lineHeight}`}></div>
+              <div className={`${styles.playList} pl-3`} onClick={() => dispatch(setShowPlaylist(!showPlayList))}>
+                <Svg name='play-list' path='icons' />
+              </div>
             </div>
           </div>
         </div>

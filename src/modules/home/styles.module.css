@@ -13,9 +13,30 @@
   width: calc(100% - 300px - 20px);
 }
 
+.wrapSection.show {
+  width: 100%;
+}
+
+.wrapSection * {
+  transition: all .3s linear;
+}
+
 .playList {
   position: fixed;
-  max-width: 300px;
-  top: 76px;
+  width: 300px;
+  padding: 20px 10px;
+  top: 56px;
+  background: #18191aff;
+  transition: all .3s linear;
+  right: -300px;
+}
+
+.playList.show {
   right: 20px;
+}
+
+@media (max-width: 991px) {
+  .wrapSection {
+    width: 100%;
+  }
 }

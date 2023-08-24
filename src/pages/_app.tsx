@@ -23,7 +23,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <Head />
         <Navigation />
         <div
-          className={`max-w-screen overflow-hidden bg-bg-main p-5 pb-[100px]`}
+          className={`max-w-screen m-auto overflow-hidden bg-bg-main p-5 pb-[100px]`}
           style={{ minHeight: `calc(100vh - 56px)` }}
         >
           <Component {...pageProps} />

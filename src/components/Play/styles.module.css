@@ -39,8 +39,8 @@
 }
 
 .figure {
-  min-width: 73px;
-  max-width: 73px;
+  min-width: 56px;
+  max-width: 56px;
 }
 
 .figure img {
@@ -52,6 +52,12 @@
 
 .infoSong {
   max-width: 300px;
+}
+
+@media (max-width: 1023px) {
+  .infoSong {
+    visibility: hidden;
+  }
 }
 
 .info {
@@ -124,6 +130,18 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+@media (max-width: 1023px) {
+  .controlPlay {
+    left: 0px;
+    transform: translate(0px, -50%);
+  }
+
+  .fullPageControl .controlPlay {
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 }
 
 .actionPlay svg {
@@ -317,4 +335,27 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+@media (max-width: 767px) {
+  .controlVolumn {
+    visibility: hidden;
+  }
+
+  .controlPlay {
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .fullPage {
+    position: absolute;
+    top: 0;
+    right: -20px;
+  }
+}
+
+@media (max-width: 640px) {
+  .controlPlay {
+    transform: translate(-50%, -50%) scale(0.8);
+  }
 }

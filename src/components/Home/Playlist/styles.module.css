@@ -1,7 +1,25 @@
 .list {
-  /* overflow: hidden; */
+  position: relative;
 }
 
 .listContent {
   height: calc(100vh - 245px - 100px);
+}
+
+.showHidePlayList {
+  position: absolute;
+  top: 0px;
+  right: calc(100% + 30px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.showHidePlayList.show {
+  right: calc(100% + 10px);
+}
+
+.showHidePlayList svg {
+  width: 30px;
+  height: 30px;
 }

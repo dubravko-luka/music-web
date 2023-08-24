@@ -33,6 +33,7 @@
   height: 100%;
   display: flex;
   align-items: center;
+  z-index: 10;
 }
 
 .headerSearchIcon {
@@ -44,6 +45,24 @@
   justify-content: flex-end;
   border-top-left-radius: 50px;
   border-bottom-left-radius: 50px;
+}
+
+.headerMenuGrid {
+  /*  */
+}
+
+@media (max-width: 1279px) {
+  .headerSearchIcon {
+    width: 40px;
+    height: 40px;
+    border-radius: 40px;
+    justify-content: center;
+  }
+
+  .showSearch .headerSearchIcon {
+    width: 30px;
+    border-radius: 50px 0px 0px 50px;
+  }
 }
 
 .headerSearchIcon svg {
@@ -66,6 +85,18 @@
   font-size: 12px;
   padding: 0px 5px;
   box-sizing: border-box;
+}
+
+@media (max-width: 1279px) {
+  .headerInputSearch {
+    width: 0px;
+    padding: 0px;
+  }
+
+  .showSearch .headerInputSearch {
+    width: 212px;
+    padding: 0px 5px;
+  }
 }
 
 .headerInputSearch::placeholder {
@@ -93,6 +124,70 @@
   border-radius: 10px;
 }
 
+.headerMenuGrid {
+  display: none;
+}
+
+.textMenu {
+  display: none;
+}
+
+@media (max-width: 991px) {
+  .headerMenuItem {
+    width: 60px;
+  }
+}
+
+@media (max-width: 639px) {
+  .headerMainMenu {
+    left: unset;
+    right: 106px;
+  }
+
+  .headerMenuGrid {
+    display: block;
+  }
+
+  .menu {
+    position: absolute;
+    right: -80px;
+    top: 100%;
+    background: #242526;
+    display: none;
+    width: 220px;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+
+  .menu .headerMenuItem {
+    width: auto;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    white-space: nowrap;
+  }
+
+  .menu .headerMenuItem .textMenu {
+    color: #fff;
+    display: block;
+  }
+
+  .headerMainMenu .menu.active {
+    display: block;
+  }
+
+  .headerSearch.showSearch {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 9;
+    height: 40px;
+  }
+}
+
 .headerMenuItem:hover {
   background-color: #3a3b3cff;
 }
@@ -112,8 +207,14 @@
 
 .headerMoreSetting {
   height: 100%;
-  padding: 8px 0px;
   box-sizing: border-box;
+}
+
+.headerSetting,
+.headerUser {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .headerUser {
