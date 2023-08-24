@@ -2,7 +2,7 @@ import MusicCardRectangle from '@/components/Card/MusicCardRectangle';
 import { RootState } from '@/store/types';
 import React, { memo } from 'react';
 import { useSelector } from 'react-redux';
-import data from '@/data/mp3/new-relase/data.json'
+import data from '@/data/mp3/korean-music/data.json'
 import _ from 'lodash';
 
 type Props = {

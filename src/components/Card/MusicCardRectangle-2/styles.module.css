@@ -35,6 +35,10 @@
   text-overflow: ellipsis;
 }
 
+.showOption * {
+  transition: none !important;
+}
+
 .showOption svg * {
   fill: #fff;
 }

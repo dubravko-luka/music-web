@@ -23,3 +23,9 @@ export const convertOffsetQuery = (offset: number, limit: number) => {
 export const convertPageFromOffset = (offset: number, limit: number) => {
   return (offset / limit) + 1
 }
+
+export const formatTimePlay = (timeInSeconds: number) => {
+  const minutes = Math.floor(timeInSeconds / 60);
+  const seconds = timeInSeconds % 60;
+  return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+};

@@ -110,7 +110,7 @@ const Navigation: React.FC = () => {
                 <Svg name="menu-grid" path="icons" />
               </div>
             </div>
-            <div className={`${styles.menu} ${showMenu ? styles.active : ''} flex items-center gap-x-2.5`}>
+            <div className={`${styles.menu} ${showMenu ? styles.active : ''} sm:h-full min-h-full flex items-center gap-x-2.5`}>
               {
                 mainMenu?.map((item, index) => (
                   <Link key={index} className="h-full" href={item.path}>

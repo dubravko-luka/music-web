@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { setShowPlaylist } from '@/store/actions/globalAction';
 import { setMuted, setVolume } from '@/store/actions/mediaAction';
+import { formatTimePlay } from '@/helpers/common';
 
 type AudioProps = {
   volumn: number,
@@ -18,7 +19,6 @@ const Audio: React.FC<AudioProps> = ({ volumn, audioRef }) => {
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
-  const [totalDuration, setTotalDuration] = useState(0);
 
   const onPlay = () => {
     if (isPlaying) {
@@ -41,27 +41,19 @@ const Audio: React.FC<AudioProps> = ({ volumn, audioRef }) => {
     setCurrentTime(Math.floor(audioRef.current.currentTime));
   };
 
-  const formatTime = (timeInSeconds: number) => {
-    const minutes = Math.floor(timeInSeconds / 60);
-    const seconds = timeInSeconds % 60;
-    return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-  };
-
-  const handleLoadedMetadata = () => {
-    const duration = Math.floor(audioRef.current.duration);
-    setTotalDuration(duration);
-  };
-
   const onChangeTime = (e: any) => {
     audioRef.current.currentTime = e;
     setCurrentTime(e);
   }
 
+  const idPlay = useSelector((state: RootState) => state?.media?.id);
+
   useEffect(() => {
-    if (audioRef) {
-      handleLoadedMetadata()
+    if (audioRef.current) {
+      audioRef.current.load();
+      audioRef.current.play();
     }
-  }, [audioRef])
+  }, [idPlay])
 
   return (
     <>
@@ -89,16 +81,16 @@ const Audio: React.FC<AudioProps> = ({ volumn, audioRef }) => {
             </div>
           </div>
           <div className="flex gap-2">
-            <span className='text-xs text-gray-500'>{formatTime(Number(currentTime))}</span>
+            <span className='text-xs text-gray-500'>{formatTimePlay(Number(currentTime))}</span>
             <InputRange
               formatLabel={() => ""}
-              maxValue={totalDuration}
+              maxValue={idPlay.duration as number ?? 0}
               minValue={0}
               step={1}
               value={currentTime}
               onChange={onChangeTime}
             />
-            <span className='text-xs text-gray-500'>{formatTime(totalDuration)}</span>
+            <span className='text-xs text-gray-500'>{formatTimePlay(idPlay.duration as number ?? 0)}</span>
           </div>
         </div>
       </div>
@@ -107,12 +99,11 @@ const Audio: React.FC<AudioProps> = ({ volumn, audioRef }) => {
         className={`${styles.audio}`}
         ref={audioRef}
         onTimeUpdate={handleTimeUpdate}
-        onLoadedMetadata={handleLoadedMetadata}
         onPause={() => setIsPlaying(false)}
         onPlay={() => setIsPlaying(true)}
       >
         <source
-          src="https://api.mp3.zing.vn/api/streaming/audio/ZZ9I7E8C/128"
+          src={`/audio/${idPlay?.encodeId}/128`}
           type="audio/mp3"
         />
       </audio>
@@ -141,14 +132,19 @@ const Play: React.FC<Props> = () => {
   }
 
   useEffect(() => {
-    audioRef.current.volume = volume / 100;
+    if (audioRef && audioRef.current) {
+      audioRef.current.volume = volume / 100;
+    }
   }, [volume])
 
   useEffect(() => {
-    audioRef.current.muted = muted;
+    if (audioRef && audioRef.current) {
+      audioRef.current.muted = muted;
+    }
   }, [muted])
 
   const showPlayList = useSelector((state: RootState) => state?.global?.showPlayList);
+  const idPlay = useSelector((state: RootState) => state?.media?.id);
 
   return (
     <>
@@ -178,12 +174,12 @@ const Play: React.FC<Props> = () => {
             <div className="h-full flex items-center gap-x-4 p-2">
               <div className={`h-full`}>
                 <div className={`${styles.figure} h-full relative`}>
-                  <img className='h-full' src="https://photo-resize-zmp3.zmdcdn.me/w320_r1x1_webp/cover/7/c/7/7/7c77b46af18b56509fd2bac0f081ad49.jpg" alt="" />
+                  <img className='h-full' src={idPlay?.thumbnail} alt="" />
                 </div>
               </div>
               <div>
-                <p className={`${styles.info} text-sm text-white font-bold`}>Đó Là Chuyện Của Anh</p>
-                <p className={`${styles.info} text-gray-500 text-xs`}>Trịnh Đình Quang</p>
+                <p className={`${styles.info} text-sm text-white font-bold`}>{idPlay?.title}</p>
+                <p className={`${styles.info} text-gray-500 text-xs`}>{idPlay?.artistsNames}</p>
               </div>
               <div className="col-span-1 flex items-center justify-end">
                 <div className={`${styles.showOption} relative`}>
@@ -282,7 +278,7 @@ const Play: React.FC<Props> = () => {
       <div className={`${styles.wrapBgImageFullpage} ${showFullPage ? styles.active : ''} relative`}>
         <img
           className={styles.bgImageFullpage}
-          src="https://photo-resize-zmp3.zmdcdn.me/w1920_r3x2_jpeg/cover/8/e/2/4/8e24305fde744814083af980a593e8c2.jpg"
+          src={idPlay?.thumbnailM}
           alt=""
         />
       </div>

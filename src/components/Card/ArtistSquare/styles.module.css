@@ -54,6 +54,10 @@
   fill: #fff;
 }
 
+.showOption * {
+  transition: none !important;
+}
+
 .showOption svg * {
   fill: #fff;
 }

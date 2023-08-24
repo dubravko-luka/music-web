@@ -1,12 +1,15 @@
 import React, { memo, useEffect } from 'react';
 import styles from './styles.module.css'
 import { Helmet } from 'react-helmet';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store/types';
 
 type Props = {
   //
 };
 
 const PlayFullPage: React.FC<Props> = () => {
+  const idPlay = useSelector((state: RootState) => state?.media?.id);
 
   return (
     <>
@@ -24,7 +27,7 @@ const PlayFullPage: React.FC<Props> = () => {
         <div className={`${styles.playPoster}`}>
           <img
             className={styles.playPosterImg}
-            src="https://photo-resize-zmp3.zmdcdn.me/w480_r1x1_webp/cover/1/3/7/6/1376bcb516642f04d736b5aa2bdba687.jpg"
+            src={idPlay?.thumbnailM}
             alt=""
           />
         </div>
