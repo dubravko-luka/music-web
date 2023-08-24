@@ -141,7 +141,7 @@
 @media (max-width: 639px) {
   .headerMainMenu {
     left: unset;
-    right: 106px;
+    right: 143px;
   }
 
   .headerMenuGrid {
@@ -245,4 +245,34 @@
 
 .headerIconSetting:hover {
   background: #4e4f50ff;
+}
+
+.showHidePlayList svg {
+  width: 40px;
+  height: 40px;
+}
+
+.headerSearch.showSearch {
+  background: #18191aff;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
+.headerSearch .resultSearch {
+  display: none;
+}
+
+.headerSearch.showSearch .resultSearch {
+  display: block;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: #18191aff;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  padding: 10px;
+  box-sizing: border-box;
+  max-height: 500px;
+  overflow: auto;
 }

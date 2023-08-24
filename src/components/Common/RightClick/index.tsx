@@ -1,6 +1,9 @@
 import React, { memo, useEffect, useState } from 'react';
 import styles from './styles.module.css'
 import Svg from '../Svg';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@/store/types';
+import { setIdPlay } from '@/store/actions/mediaAction';
 
 type Props = {
   children: React.ReactNode;
@@ -8,6 +11,10 @@ type Props = {
 
 
 const RightClick: React.FC<Props> = ({ children }) => {
+
+  const playList = useSelector((state: RootState) => state?.media?.playList);
+  const idPlay = useSelector((state: RootState) => state?.media?.id);
+  const dispatch = useDispatch()
 
   const [contextMenuStyle, setContextMenuStyle] = useState({
     display: 'none',
@@ -42,6 +49,24 @@ const RightClick: React.FC<Props> = ({ children }) => {
       left: '0px',
     });
   };
+
+  const handlePrev = () => {
+    const songIndex = playList.findIndex(item => item.encodeId === idPlay.encodeId);
+    if (playList[songIndex - 1]) {
+      dispatch(setIdPlay(playList[songIndex - 1]))
+    }
+  }
+
+  const handleNext = () => {
+    const songIndex = playList.findIndex(item => item.encodeId === idPlay.encodeId);
+    if (playList[songIndex + 1]) {
+      dispatch(setIdPlay(playList[songIndex + 1]))
+    }
+  }
+
+  const reloadPage = async () => {
+    window.location.reload()
+  }
 
   useEffect(() => {
     const handleScroll = () => {
@@ -83,19 +108,33 @@ const RightClick: React.FC<Props> = ({ children }) => {
             ...contextMenuStyle,
           }}
         >
-          <div className={`${styles.optionItem} flex items-center gap-2`}>
-            <div className={`${styles.iconOption}`}>
-              <Svg name='arrow-left' path='icons' />
-            </div>
-            <p className='whitespace-nowrap text-white text-xs py-2'>Quay lại</p>
-          </div>
-          <div className={`${styles.optionItem} flex items-center gap-2`}>
-            <div className={`${styles.iconOption}`}>
-              <Svg name='arrow-right' path='icons' />
-            </div>
-            <p className='whitespace-nowrap text-white text-xs py-2'>Tiếp theo</p>
-          </div>
-          <div className={`${styles.optionItem} flex items-center gap-2`}>
+          {
+            playList.findIndex(item => item.encodeId === idPlay.encodeId) - 1 < 0
+              ? (
+                <></>
+              ) : (
+                <div className={`${styles.optionItem} flex items-center gap-2`} onClick={handlePrev}>
+                  <div className={`${styles.iconOption}`}>
+                    <Svg name='arrow-left' path='icons' />
+                  </div>
+                  <p className='whitespace-nowrap text-white text-xs py-2'>Quay lại</p>
+                </div>
+              )
+          }
+          {
+            playList.findIndex(item => item.encodeId === idPlay.encodeId) + 1 >= playList.length
+              ? (
+                <></>
+              ) : (
+                <div className={`${styles.optionItem} flex items-center gap-2`} onClick={handleNext}>
+                  <div className={`${styles.iconOption}`}>
+                    <Svg name='arrow-right' path='icons' />
+                  </div>
+                  <p className='whitespace-nowrap text-white text-xs py-2'>Tiếp theo</p>
+                </div>
+              )
+          }
+          <div className={`${styles.optionItem} flex items-center gap-2`} onClick={reloadPage}>
             <div className={`${styles.iconOption}`}>
               <Svg name='reload' path='icons' />
             </div>

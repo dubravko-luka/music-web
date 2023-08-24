@@ -22,16 +22,3 @@
   opacity: 1;
   z-index: 1;
 }
-
-.copied::before {
-  content: '';
-  position: absolute;
-  right: calc(100% - 1px);
-  border-right: 10px solid #fff;
-  border-top: 10px solid #fff0;
-  border-bottom: 10px solid #fff0;
-  width: 0;
-  height: 0;
-  top: 50%;
-  transform: translateY(-50%);
-}

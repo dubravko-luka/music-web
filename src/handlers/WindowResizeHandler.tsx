@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setWidth } from "@/store/actions/windowAction";
 import { RootState } from "@/store/types";
+import { setShowPlaylist } from "@/store/actions/globalAction";
 
 const WindowResizeHandler = () => {
   const dispatch = useDispatch();
@@ -23,6 +24,12 @@ const WindowResizeHandler = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  useEffect(() => {
+    if (width !== 0 && width < 992) {
+      dispatch(setShowPlaylist(false))
+    }
+  }, [width])
 
   return null;
 };

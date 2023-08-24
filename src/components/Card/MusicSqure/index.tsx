@@ -74,10 +74,10 @@ const MusicCard: React.FC<Props> = ({ song }) => {
               <div
                 className={`${styles.showOption} relative`}
               >
-                <Svg name='dot-vertical' path='icons' />
-                <div
-                  className={`${styles.options}`}
-                >
+                <div className="relative z-8">
+                  <Svg name='dot-vertical' path='icons' />
+                </div>
+                <div className={`${styles.options} z-9`}>
                   <div className={`${styles.optionItem} flex items-center gap-2`} onClick={addPlayList}>
                     <div className={`${styles.iconOption}`}>
                       {

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { LOCALSTORAGE_HEARD_RECENLY } from "./constants";
 
 export const alt = "review phim"
 
@@ -50,4 +51,24 @@ export const downloadSong = async (mp3Link: string, name: string) => {
   link.click();
 
   window.URL.revokeObjectURL(url);
+}
+
+export const saveHeardRecently = async (id: string) => {
+  const storedArray = await JSON.parse(localStorage.getItem(LOCALSTORAGE_HEARD_RECENLY) as string) || [];
+
+  const existingIndex = await storedArray.indexOf(id);
+
+  if (existingIndex !== -1) {
+    await storedArray.splice(existingIndex, 1);
+  }
+
+  await storedArray.unshift(id);
+
+  if (storedArray.length > 12) {
+    await storedArray.pop();
+  }
+
+  await localStorage.setItem(LOCALSTORAGE_HEARD_RECENLY, JSON.stringify(storedArray));
+
+  return storedArray;
 }

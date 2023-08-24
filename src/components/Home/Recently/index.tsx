@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
-import MusicCardSquare from '@/components/Card/MusicSqure'
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
+import MusicCardRectangle from '@/components/Card/MusicCardRectangle';
 
 type Props = {
   //
@@ -12,15 +12,16 @@ const classNoPlayList = 'xxl:col-span-2 lg:col-span-3 md:col-span-4 ssm:col-span
 
 const Recently: React.FC<Props> = () => {
 
-  const showPlayList = useSelector((state: RootState) => state?.global?.showPlayList)
+  const showPlayList = useSelector((state: RootState) => state?.global?.showPlayList);
+  const playRecent = useSelector((state: RootState) => state?.media?.recentPlay);
 
   return (
     <>
       <div className="grid grid-cols-12 gap-5">
         {
-          new Array(2).fill(null).map((_, item) => (
-            <div className={showPlayList ? classPlayList : classNoPlayList} key={item}>
-              <MusicCardSquare />
+          playRecent?.map((item, index) => (
+            <div className={showPlayList ? classPlayList : classNoPlayList} key={index}>
+              <MusicCardRectangle song={item} />
             </div>
           ))
         }

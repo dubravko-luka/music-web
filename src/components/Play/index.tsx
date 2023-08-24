@@ -7,13 +7,14 @@ import PlayFullPage from '@/components/PlayFullPage';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { setShowPlaylist } from '@/store/actions/globalAction';
-import { setIdPlay, setMuted, setRandom, setVolume } from '@/store/actions/mediaAction';
-import { formatTimePlay } from '@/helpers/common';
+import { setIdPlay, setMuted, setRandom, setRecentPlay, setVolume } from '@/store/actions/mediaAction';
+import { formatTimePlay, saveHeardRecently } from '@/helpers/common';
 import koreanMusic from '@/data/mp3/korean-music/data.json'
 import newRelease from '@/data/mp3/new-relase/data.json'
 import trend from '@/data/mp3/trend/data.json'
 import trendFavourite from '@/data/mp3/trend-favourite/data.json'
 import _ from 'lodash';
+import Copy from '../Common/Copy';
 
 type AudioProps = {
   volumn: number,
@@ -26,14 +27,32 @@ const Audio: React.FC<AudioProps> = ({ volumn, audioRef }) => {
   const [currentTime, setCurrentTime] = useState(0);
   const playList = useSelector((state: RootState) => state?.media?.playList);
   const randomSong = useSelector((state: RootState) => state?.media?.random);
+  const idPlay = useSelector((state: RootState) => state?.media?.id);
   const dispatch = useDispatch()
 
-  const onPlay = () => {
+  const recentPlay = async () => {
+    const storedArray: any = await saveHeardRecently(idPlay?.encodeId);
+    const recent = await [...koreanMusic, ...newRelease, ...trend, ...trendFavourite].filter((item) => storedArray.includes(item.encodeId));
+
+    const seenIds = new Set();
+    const array_eraser: any[] = []
+
+    await recent.forEach(item => {
+      if (!seenIds.has(item.encodeId)) {
+        array_eraser.push(item);
+        seenIds.add(item.encodeId);
+      }
+    })
+    await dispatch(setRecentPlay([...array_eraser]))
+  }
+
+  const onPlay = async () => {
     if (isPlaying) {
       audioRef.current.pause();
     } else {
       audioRef.current.play();
       audioRef.current.volume = volumn / 100;
+      recentPlay()
     }
     setIsPlaying(!isPlaying);
   };
@@ -54,12 +73,11 @@ const Audio: React.FC<AudioProps> = ({ volumn, audioRef }) => {
     setCurrentTime(e);
   }
 
-  const idPlay = useSelector((state: RootState) => state?.media?.id);
-
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.load();
       audioRef.current.play();
+      recentPlay()
     }
   }, [idPlay])
 
@@ -70,7 +88,7 @@ const Audio: React.FC<AudioProps> = ({ volumn, audioRef }) => {
 
   const handleEnd = () => {
     if (randomSong) {
-      if (playList.length === 1) {
+      if (playList.length <= 1) {
         randomAllSong()
       } else {
         const filteredArray = playList.filter(item => item.encodeId !== idPlay?.encodeId);
@@ -249,12 +267,14 @@ const Play: React.FC<Props> = () => {
                       </div>
                       <p className='whitespace-nowrap text-white text-xs py-2'>Tải xuống</p>
                     </div>
-                    <div className={`${styles.optionItem} flex items-center gap-2`}>
-                      <div className={`${styles.iconOption}`}>
-                        <Svg name='share' path='icons' />
+                    <Copy value={`https://tunescape.vercel.app/play/${idPlay?.alias}`}>
+                      <div className={`${styles.optionItem} flex items-center gap-2`}>
+                        <div className={`${styles.iconOption}`}>
+                          <Svg name='share' path='icons' />
+                        </div>
+                        <p className='whitespace-nowrap text-white text-xs py-2'>Chia sẻ</p>
                       </div>
-                      <p className='whitespace-nowrap text-white text-xs py-2'>Chia sẻ</p>
-                    </div>
+                    </Copy>
                   </div>
                 </div>
               </div>

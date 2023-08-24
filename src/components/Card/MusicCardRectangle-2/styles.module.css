@@ -2,6 +2,7 @@
   background: #21212aff;
   border-radius: 10px;
   position: relative;
+  height: 54px;
 }
 
 .wrapper.playing:before {
@@ -53,7 +54,10 @@
 }
 
 .figure {
-  height: 100%;
+  min-height: 38px;
+  max-height: 38px;
+  min-width: 38px;
+  max-width: 38px;
 }
 
 .figure img {

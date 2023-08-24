@@ -1,6 +1,6 @@
 import MusicCardRectangle from '@/components/Card/MusicCardRectangle';
 import { RootState } from '@/store/types';
-import React, { memo } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import data from '@/data/mp3/new-relase/data.json'
 import _ from 'lodash';
@@ -16,11 +16,16 @@ const NewRelease: React.FC<Props> = () => {
 
   const showPlayList = useSelector((state: RootState) => state?.global?.showPlayList);
 
+  const [dataSong, setDataSong] = useState<any[]>([])
+  useEffect(() => {
+    setDataSong(_.sampleSize(data, 18))
+  }, [])
+
   return (
     <>
       <div className="grid grid-cols-12 gap-5">
         {
-          _.sampleSize(data, 18).map((item, index) => (
+          dataSong.map((item, index) => (
             <div className={showPlayList ? classPlayList : classNoPlayList} key={index}>
               <MusicCardRectangle song={item} />
             </div>

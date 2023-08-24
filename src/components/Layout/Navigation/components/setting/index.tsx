@@ -14,7 +14,6 @@ type Props = {
 const Setting: React.FC<Props> = () => {
   const volume = useSelector((state: RootState) => state?.media?.volume);
   const muted = useSelector((state: RootState) => state?.media?.muted);
-  const showPlayList = useSelector((state: RootState) => state?.global.showPlayList);
 
   const dispatch = useDispatch();
 
@@ -29,24 +28,29 @@ const Setting: React.FC<Props> = () => {
   return (
     <>
       <div className={`${styles.wrapper}`}>
-        <div className={`${styles.volumnWrapper} flex items-center justify-between w-full gap-2 volumn`}>
-          <div onClick={handleMuted}>
-            {
-              muted || volume / 100 <= 0
-                ? <Svg name='muted' path='icons' />
-                : <Svg name='speaker' path='icons' />
-            }
+        <div className="p-2">
+          <div className={`${styles.volumnWrapper}`}>
+            <p className='text-white my-3'>Âm lượng</p>
+            <div className="flex items-center justify-between w-full gap-2 volumn">
+              <div onClick={handleMuted}>
+                {
+                  muted || volume / 100 <= 0
+                    ? <Svg name='muted' path='icons' />
+                    : <Svg name='speaker' path='icons' />
+                }
+              </div>
+              <InputRange
+                formatLabel={() => ""}
+                maxValue={100}
+                minValue={0}
+                step={1}
+                value={volume}
+                onChange={onChangeVolumn}
+              />
+            </div>
           </div>
-          <InputRange
-            formatLabel={() => ""}
-            maxValue={100}
-            minValue={0}
-            step={1}
-            value={volume}
-            onChange={onChangeVolumn}
-          />
         </div>
-        <div className="flex justify-between items-center py-3">
+        {/* <div className="flex justify-between items-center py-3">
           <p className='text-white text-sm'>Playlist</p>
           <div className='flex items-center'>
             <input
@@ -58,7 +62,7 @@ const Setting: React.FC<Props> = () => {
             />
             <label className={styles.labelPlayListActive} htmlFor="playListActive">Toggle</label>
           </div>
-        </div>
+        </div> */}
       </div>
     </>
   );

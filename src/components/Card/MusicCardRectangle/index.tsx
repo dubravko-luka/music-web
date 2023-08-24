@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { setIdPlay, setPlayList } from '@/store/actions/mediaAction';
 import { downloadSong } from '@/helpers/common';
+import Copy from '@/components/Common/Copy';
 
 type Props = {
   song: any
@@ -35,7 +36,7 @@ const MusicCardRectangle: React.FC<Props> = ({ song }) => {
     <>
       <div className={`${styles.wrapper} ${idPlay && idPlay?.encodeId === song.encodeId ? styles.playing : ''}`}>
         <div className="grid grid-cols-12 gap-2 p-2 items-center">
-          <div className={`col-span-2`} onClick={() => dispatch(setIdPlay(song))}>
+          <div className={`col-span-11 flex items-center gap-2`} onClick={() => dispatch(setIdPlay(song))}>
             <div className={`${styles.figure} relative`}>
               {
                 idPlay && idPlay?.encodeId === song.encodeId
@@ -50,20 +51,22 @@ const MusicCardRectangle: React.FC<Props> = ({ song }) => {
                     </div>
                   )
               }
-              <img src={song?.thumbnail} alt="" />
+              <img className='w-full h-full object-cover' src={song?.thumbnail} alt="" />
             </div>
-          </div>
-          <div className="col-span-9" onClick={() => dispatch(setIdPlay(song))}>
-            <p className={`${styles.info} text-sm text-white font-bold`}>{song?.title}</p>
-            <p className={`${styles.info} text-gray-500 text-xs`}>{song?.artistsNames}</p>
-            <p className={`${styles.info} text-gray-500 text-xs`}>
-              <TimeAgo timestamp={song?.releaseDate} />
-            </p>
+            <div>
+              <p className={`${styles.info} text-sm text-white font-bold`}>{song?.title}</p>
+              <p className={`${styles.info} text-gray-500 text-xs`}>{song?.artistsNames}</p>
+              <p className={`${styles.info} text-gray-500 text-xs`}>
+                <TimeAgo timestamp={song?.releaseDate} />
+              </p>
+            </div>
           </div>
           <div className="col-span-1 flex items-center justify-end">
             <div className={`${styles.showOption} relative`}>
-              <Svg name='dot-vertical' path='icons' />
-              <div className={`${styles.options}`}>
+              <div className="relative z-8">
+                <Svg name='dot-vertical' path='icons' />
+              </div>
+              <div className={`${styles.options} z-9`}>
                 <div className={`${styles.optionItem} flex items-center gap-2`} onClick={addPlayList}>
                   <div className={`${styles.iconOption}`}>
                     {
@@ -84,12 +87,14 @@ const MusicCardRectangle: React.FC<Props> = ({ song }) => {
                   </div>
                   <p className='whitespace-nowrap text-white text-xs py-2'>Tải xuống</p>
                 </div>
-                <div className={`${styles.optionItem} flex items-center gap-2`}>
-                  <div className={`${styles.iconOption}`}>
-                    <Svg name='share' path='icons' />
+                <Copy value={`https://tunescape.vercel.app/play/${song?.alias}`}>
+                  <div className={`${styles.optionItem} flex items-center gap-2`}>
+                    <div className={`${styles.iconOption}`}>
+                      <Svg name='share' path='icons' />
+                    </div>
+                    <p className='whitespace-nowrap text-white text-xs py-2'>Chia sẻ</p>
                   </div>
-                  <p className='whitespace-nowrap text-white text-xs py-2'>Chia sẻ</p>
-                </div>
+                </Copy>
               </div>
             </div>
           </div>
