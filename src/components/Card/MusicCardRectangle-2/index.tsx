@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useState } from 'react';
 import styles from './styles.module.css'
 import Svg from '@/components/Common/Svg';
 import { useDispatch, useSelector } from 'react-redux';
@@ -31,6 +31,21 @@ const MusicCardRectangle: React.FC<Props> = ({ song }) => {
     dispatch(setPlayList([..._playList]))
   }
 
+  const [contextMenuStyle, setContextMenuStyle] = useState({
+    top: 'calc(100%)'
+  });
+
+  const handleContextMenu = (e: any) => {
+    e.preventDefault();
+    const y = e.clientY;
+    const menuHeight = 124;
+    const viewportHeight = window.innerHeight;
+
+    setContextMenuStyle({
+      top: y + menuHeight > viewportHeight - 124 ? '-124px' : 'calc(100%)'
+    });
+  };
+
   return (
     <>
       <div className={`${styles.wrapper} ${idPlay && idPlay?.encodeId === song.encodeId ? styles.playing : ''}`}>
@@ -58,11 +73,16 @@ const MusicCardRectangle: React.FC<Props> = ({ song }) => {
             </div>
           </div>
           <div className="col-span-1 flex items-center justify-end">
-            <div className={`${styles.showOption} relative`}>
+            <div className={`${styles.showOption} relative`} onMouseEnter={handleContextMenu}>
               <div className="relative z-8">
                 <Svg name='dot-vertical' path='icons' />
               </div>
-              <div className={`${styles.options} z-9`}>
+              <div
+                className={`${styles.options} z-9`}
+                style={{
+                  ...contextMenuStyle,
+                }}
+              >
                 <div className={`${styles.optionItem} flex items-center gap-2`} onClick={addPlayList}>
                   <div className={`${styles.iconOption}`}>
                     {

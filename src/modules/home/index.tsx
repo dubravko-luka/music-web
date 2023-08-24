@@ -48,7 +48,7 @@ const HomeContainer: React.FC<Props> = () => {
 
   return (
     <>
-      <div className='pb-28'>
+      <div>
         <div className={`${styles.wrapSection} ${!showPlayList ? styles.show : ''}`}>
           {
             playRecent?.length > 0

@@ -84,7 +84,6 @@
 .options {
   position: absolute;
   right: 0;
-  top: calc(100% + 10px);
   box-sizing: border-box;
   border-radius: 5px;
   background: #282828ff;

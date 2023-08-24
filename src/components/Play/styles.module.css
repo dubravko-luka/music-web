@@ -163,11 +163,11 @@
 }
 
 .action.active svg * {
-  fill: #EB00FF;
+  fill: #AE32FF;
 }
 
 .action.strokeActive svg * {
-  stroke: #EB00FF;
+  stroke: #AE32FF;
 }
 
 .audio {

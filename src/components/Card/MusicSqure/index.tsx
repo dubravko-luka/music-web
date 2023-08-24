@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setIdPlay, setPlayList } from '@/store/actions/mediaAction';
 import { RootState } from '@/store/types';
 import Copy from '@/components/Common/Copy';
-import { useRouter } from 'next/router';
 
 type Props = {
   song: any
@@ -32,6 +31,21 @@ const MusicCard: React.FC<Props> = ({ song }) => {
 
     dispatch(setPlayList([..._playList]))
   }
+
+  const [contextMenuStyle, setContextMenuStyle] = useState({
+    top: 'calc(100%)'
+  });
+
+  const handleContextMenu = (e: any) => {
+    e.preventDefault();
+    const y = e.clientY;
+    const menuHeight = 124;
+    const viewportHeight = window.innerHeight;
+
+    setContextMenuStyle({
+      top: y + menuHeight > viewportHeight - 124 ? '-124px' : 'calc(100%)'
+    });
+  };
 
   return (
     <>
@@ -73,11 +87,17 @@ const MusicCard: React.FC<Props> = ({ song }) => {
             <div className="col-span-1">
               <div
                 className={`${styles.showOption} relative`}
+                onMouseEnter={handleContextMenu}
               >
                 <div className="relative z-8">
                   <Svg name='dot-vertical' path='icons' />
                 </div>
-                <div className={`${styles.options} z-9`}>
+                <div
+                  className={`${styles.options} z-9`}
+                  style={{
+                    ...contextMenuStyle,
+                  }}
+                >
                   <div className={`${styles.optionItem} flex items-center gap-2`} onClick={addPlayList}>
                     <div className={`${styles.iconOption}`}>
                       {

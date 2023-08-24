@@ -41,7 +41,7 @@
 }
 
 .playListActive:checked+.labelPlayListActive {
-  background: #EB00FF;
+  background: #AE32FF;
 }
 
 .playListActive:checked+.labelPlayListActive:after {
