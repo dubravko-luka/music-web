@@ -98,7 +98,7 @@ const MusicCard: React.FC<Props> = ({ song }) => {
                     </div>
                     <p className='whitespace-nowrap text-white text-xs py-2'>Tải xuống</p>
                   </div>
-                  <Copy value={`https://tunescape.vercel.app/audio/${song?.encodeId}/128`}>
+                  <Copy value={`https://tunescape.vercel.app/play/${song?.alias}`}>
                     <div className={`${styles.optionItem} flex items-center gap-2`}>
                       <div className={`${styles.iconOption}`}>
                         <Svg name='share' path='icons' />
