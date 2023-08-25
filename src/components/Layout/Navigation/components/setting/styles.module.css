@@ -3,7 +3,7 @@
   right: -50px;
   top: 100%;
   background: #242526;
-  width: 220px;
+  width: 270px;
   padding: 10px;
   box-sizing: border-box;
   border-radius: 5px;
@@ -51,4 +51,26 @@
 
 .labelPlayListActive:active:after {
   width: 32.5px;
+}
+
+.inputChangeImage {
+  display: inline-block;
+  height: 20px;
+  width: 40px;
+  cursor: pointer;
+  background-color: #3498db;
+}
+
+.buttonResetImg {
+  color: #000;
+  font-size: 12px;
+  background: rgb(255, 255, 0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 20px;
+  width: 40px;
+  cursor: pointer;
+  font-weight: bold;
+  text-transform: uppercase;
 }

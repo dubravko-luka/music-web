@@ -6,7 +6,7 @@ import 'react-input-range/lib/css/index.css'
 import PlayFullPage from '@/components/PlayFullPage';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
-import { setShowPlaylist } from '@/store/actions/globalAction';
+import { setShowFullPage, setShowPlaylist } from '@/store/actions/globalAction';
 import { setIdPlay, setMuted, setRandom, setRecentPlay, setVolume } from '@/store/actions/mediaAction';
 import { formatTimePlay, saveHeardRecently } from '@/helpers/common';
 import koreanMusic from '@/data/mp3/korean-music/data.json'
@@ -195,9 +195,10 @@ type Props = {
 const Play: React.FC<Props> = () => {
   const audioRef: any = useRef(null);
   const [showControl, setShowControl] = useState(true);
-  const [showFullPage, setShowFullPage] = useState(false);
   const volume = useSelector((state: RootState) => state?.media?.volume);
   const muted = useSelector((state: RootState) => state?.media?.muted);
+  const showFullPage = useSelector((state: RootState) => state?.global.fullPage);
+  const bgFullPage = useSelector((state: RootState) => state?.global.bgFullPage);
   const dispatch = useDispatch();
 
   const handleMuted = () => {
@@ -236,7 +237,7 @@ const Play: React.FC<Props> = () => {
         </div>
       </div>
       <div
-        className={`${styles.playBottom} ${showControl ? styles.show : ''} ${showFullPage ? styles.fullPageControl : ''} px-5 py-2 flex items-center`}
+        className={`${styles.playBottom} ${showControl ? styles.show : ''} ${showFullPage ? styles.fullPageControl : ''} px-5 py-2 flex items-center z-40`}
       >
         {
           showFullPage
@@ -245,7 +246,7 @@ const Play: React.FC<Props> = () => {
               <Svg name="chevron-down" path='icons' />
             </div>
         }
-        <div className="w-full h-full flex justify-between gap-x-3 items-center z-2 relative">
+        <div className="w-full h-full flex justify-between gap-x-3 items-center relative">
           {/*  */}
           <div className={`${styles.infoSong} ${showFullPage ? 'hidden' : ''} h-full`}>
             <div className="h-full flex items-center gap-x-4 p-2">
@@ -290,7 +291,7 @@ const Play: React.FC<Props> = () => {
           />
           {/*  */}
           <div className={`h-full flex items-center justify-end ${showFullPage ? 'hidden' : ''}`}>
-            <div className={`${styles.fullPage} mr-2`} onClick={() => setShowFullPage(!showFullPage)}>
+            <div className={`${styles.fullPage} mr-2`} onClick={() => dispatch(setShowFullPage(!showFullPage))}>
               <Svg name='full' path='icons' />
             </div>
             <div className={`flex items-center justify-end ${styles.controlVolumn}`}>
@@ -332,26 +333,10 @@ const Play: React.FC<Props> = () => {
           }
         </div >
       }
-      {
-        showFullPage
-          ? (
-            <>
-              <div
-                className={`${styles.menuFullPage} px-5 flex justify-end items-center`}
-                onClick={() => setShowFullPage(false)}
-              >
-                <div className={`${styles.turnOffFullPage}`}>
-                  <Svg name='chevron-down' path='icons' />
-                </div>
-              </div>
-            </>
-          )
-          : <></>
-      }
       <div className={`${styles.wrapBgImageFullpage} ${showFullPage ? styles.active : ''} relative`}>
         <img
           className={styles.bgImageFullpage}
-          src={idPlay?.thumbnailM}
+          src={bgFullPage ? bgFullPage : idPlay?.thumbnailM}
           alt=""
         />
       </div>

@@ -50,6 +50,7 @@ const Navigation: React.FC = () => {
   const [showSetting, setShowSetting] = useState(false)
   const dispatch = useDispatch();
   const showPlayList = useSelector((state: RootState) => state?.global?.showPlayList)
+  const showFullPage = useSelector((state: RootState) => state?.global.fullPage);
 
   const handleClickOutside = (event: any, ref: any, action: any) => {
     if (ref.current && !ref.current.contains(event.target)) {
@@ -185,7 +186,7 @@ const Navigation: React.FC = () => {
                   )
               }
             </div>
-            <div ref={refSetting} className={`${styles.headerSetting} h-full relative`}>
+            <div ref={refSetting} className={`${styles.headerSetting} ${showFullPage ? styles.fullPage : ''} h-full relative`}>
               <div className={`${styles.headerIconSetting}`} onClick={() => setShowSetting(!showSetting)}>
                 <Svg name="setting" path="icons" />
               </div>

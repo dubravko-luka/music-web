@@ -229,7 +229,7 @@
   overflow: hidden;
   z-index: 20;
   background: transparent;
-  transition: all .3s linear;
+  transition: height .3s linear;
 }
 
 .wrapperPlayFullPage.active {
@@ -252,12 +252,12 @@
   height: 0px;
   width: 100vw;
   transition: all .3s linear;
+  z-index: 10;
 }
 
 .wrapBgImageFullpage.active {
   height: 100vh;
   width: 100vw;
-  z-index: 9;
 }
 
 .bgImageFullpage {
@@ -278,29 +278,6 @@
   height: 100%;
   background: rgba(0, 0, 0, .5);
   z-index: 1;
-}
-
-.menuFullPage {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 56px;
-  z-index: 30;
-}
-
-.turnOffFullPage {
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0, 0, 0, 0.3);
-  border-radius: 50%;
-}
-
-.turnOffFullPage:hover {
-  background: rgba(0, 0, 0, 0.5);
 }
 
 @keyframes waves {

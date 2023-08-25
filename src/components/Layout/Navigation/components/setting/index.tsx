@@ -5,7 +5,7 @@ import InputRange from 'react-input-range';
 import { setMuted, setVolume } from '@/store/actions/mediaAction';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
-import { setShowPlaylist } from '@/store/actions/globalAction';
+import { setBackgroundFullPage, setImgMainFullPage, setShowMainImg } from '@/store/actions/globalAction';
 
 type Props = {
   //
@@ -14,6 +14,10 @@ type Props = {
 const Setting: React.FC<Props> = () => {
   const volume = useSelector((state: RootState) => state?.media?.volume);
   const muted = useSelector((state: RootState) => state?.media?.muted);
+  const showFullPage = useSelector((state: RootState) => state?.global.fullPage);
+  const showImgMain = useSelector((state: RootState) => state?.global.showImgMain);
+  const imgMainFullPage = useSelector((state: RootState) => state?.global.imgMainFullPage);
+  const bgFullPage = useSelector((state: RootState) => state?.global.bgFullPage);
 
   const dispatch = useDispatch();
 
@@ -23,6 +27,36 @@ const Setting: React.FC<Props> = () => {
 
   const onChangeVolumn = (e: any) => {
     dispatch(setVolume(e));
+  }
+
+  const handleImageChangeBg = (event: any) => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = (e: any) => {
+      dispatch(setBackgroundFullPage(e.target.result));
+    };
+
+    reader.readAsDataURL(file);
+  };
+
+  const handleImageChangeMain = (event: any) => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = (e: any) => {
+      dispatch(setImgMainFullPage(e.target.result));
+    };
+
+    reader.readAsDataURL(file);
+  };
+
+  const resetImgBg = async () => {
+    dispatch(setBackgroundFullPage(''));
+  }
+
+  const resetImgMain = async () => {
+    dispatch(setImgMainFullPage(''));
   }
 
   return (
@@ -50,6 +84,64 @@ const Setting: React.FC<Props> = () => {
             </div>
           </div>
         </div>
+        {
+          showFullPage
+            ? (
+              <>
+                <div className="flex items-center justify-between py-3">
+                  <p className='text-white text-sm'>Thay đổi ảnh nền</p>
+                  <div className='flex items-center gap-x-2'>
+                    <label htmlFor='changeImageBg' className={styles.inputChangeImage}></label>
+                    <input
+                      className='w-0 h-0 opacity-0 fixed'
+                      id='changeImageBg'
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageChangeBg}
+                    />
+                    {
+                      bgFullPage
+                        ? <button onClick={resetImgBg} className={styles.buttonResetImg}>Xoá</button>
+                        : <></>
+                    }
+                  </div>
+                </div>
+                <div className="flex items-center justify-between py-3">
+                  <p className='text-white text-sm'>Thay đổi ảnh chính</p>
+                  <div className='flex items-center gap-x-2'>
+                    <label htmlFor='changeImageMain' className={styles.inputChangeImage}></label>
+                    <input
+                      className='w-0 h-0 opacity-0 fixed'
+                      id='changeImageMain'
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageChangeMain}
+                    />
+                    {
+                      imgMainFullPage
+                        ? <button onClick={resetImgMain} className={styles.buttonResetImg}>Xoá</button>
+                        : <></>
+                    }
+                  </div>
+                </div>
+                <div className="flex justify-between items-center py-3">
+                  <p className='text-white text-sm'>Hiện ảnh chính</p>
+                  <div className='flex items-center'>
+                    <input
+                      onClick={() => dispatch(setShowMainImg(!showImgMain))}
+                      checked={showImgMain}
+                      className={styles.playListActive}
+                      type="checkbox"
+                      id="showImgMain"
+                    />
+                    <label className={styles.labelPlayListActive} htmlFor="showImgMain">Toggle</label>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <></>
+            )
+        }
         {/* <div className="flex justify-between items-center py-3">
           <p className='text-white text-sm'>Playlist</p>
           <div className='flex items-center'>
