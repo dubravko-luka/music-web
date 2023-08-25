@@ -15,6 +15,7 @@ import trend from '@/data/mp3/trend/data.json'
 import trendFavourite from '@/data/mp3/trend-favourite/data.json'
 import _ from 'lodash';
 import Copy from '../Common/Copy';
+import HeadPlay from '../Common/HeadPlay';
 
 type AudioProps = {
   volumn: number,
@@ -119,11 +120,14 @@ const Audio: React.FC<AudioProps> = ({ volumn, audioRef }) => {
     const songIndex = playList.findIndex(item => item.encodeId === idPlay.encodeId);
     if (playList[songIndex + 1]) {
       dispatch(setIdPlay(playList[songIndex + 1]))
+    } else {
+      randomAllSong()
     }
   }
 
   return (
     <>
+      <HeadPlay />
       <div className={`${styles.controlPlay} h-full flex items-center`}>
         <div className='w-full timeSong'>
           <div className="flex justify-center items-center gap-x-10 mb-2">
@@ -136,14 +140,13 @@ const Audio: React.FC<AudioProps> = ({ volumn, audioRef }) => {
             <div className={`${styles.action} ${playList.findIndex(item => item.encodeId === idPlay.encodeId) - 1 < 0 ? styles.disabled : ''}`} onClick={handlePrev}>
               <Svg name='prev' path='icons' />
             </div>
-            <div className={`${styles.actionPlay}`} onClick={onPlay}>
-              {
-                isPlaying
-                  ? <Svg name='pause' path='icons' />
-                  : <Svg name='play' path='icons' />
-              }
+            <div className={`${styles.actionPlay}`} onClick={onPlay} style={{ display: isPlaying ? 'block' : 'none' }}>
+              <Svg name='pause' path='icons' />
             </div>
-            <div className={`${styles.action} ${playList.findIndex(item => item.encodeId === idPlay.encodeId) + 1 >= playList.length ? styles.disabled : ''}`} onClick={handleNext}>
+            <div className={`${styles.actionPlay}`} onClick={onPlay} style={{ display: isPlaying ? 'none' : 'block' }}>
+              <Svg name='play' path='icons' />
+            </div>
+            <div className={`${styles.action}`} onClick={handleNext}>
               <Svg name='next' path='icons' />
             </div>
             <div
@@ -222,7 +225,7 @@ const Play: React.FC<Props> = () => {
 
   return (
     <>
-      <div className={`${styles.audioBlur} ${!showControl ? styles.show : ''}`} onClick={() => setShowControl(true)}>
+      <div className={`${styles.audioBlur} ${!showControl ? styles.show : ''} z-9`} onClick={() => setShowControl(true)}>
         <div className={`${styles.wavesBlock} relative`}>
           <div className={`${styles.iconPlay}`}>
             <Svg name='play-1' path='icons' />

@@ -253,7 +253,7 @@
 }
 
 .headerSearch.showSearch {
-  background: #18191aff;
+  background: rgb(55, 55, 56);
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
 }
@@ -268,11 +268,16 @@
   top: 100%;
   left: 0;
   width: 100%;
-  background: #18191aff;
+  background: rgb(55, 55, 56);
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
   padding: 10px;
   box-sizing: border-box;
-  max-height: 500px;
+  overflow: hidden;
+}
+
+.headerSearch.showSearch .resultSearch .mainResult {
   overflow: auto;
+  min-height: 100px;
+  max-height: 500px;
 }

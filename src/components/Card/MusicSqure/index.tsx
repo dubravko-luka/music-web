@@ -2,7 +2,7 @@ import React, { memo, useRef, useState } from 'react';
 import styles from './styles.module.css'
 import Svg from '@/components/Common/Svg';
 import moment from 'moment';
-import { downloadSong, formatTimePlay } from '@/helpers/common';
+import { formatTimePlay } from '@/helpers/common';
 import { useDispatch, useSelector } from 'react-redux';
 import { setIdPlay, setPlayList } from '@/store/actions/mediaAction';
 import { RootState } from '@/store/types';
@@ -112,12 +112,12 @@ const MusicCard: React.FC<Props> = ({ song }) => {
                         : <p className='whitespace-nowrap text-white text-xs py-2'>Thêm vào danh sách phát</p>
                     }
                   </div>
-                  <div onClick={() => downloadSong(`/audio/${song?.encodeId}/128`, song.alias)} className={`${styles.optionItem} flex items-center gap-2`}>
+                  {/* <div onClick={() => downloadSong(`/audio/${song?.encodeId}/128`, song.alias)} className={`${styles.optionItem} flex items-center gap-2`}>
                     <div className={`${styles.iconOption}`}>
                       <Svg name='download' path='icons' />
                     </div>
                     <p className='whitespace-nowrap text-white text-xs py-2'>Tải xuống</p>
-                  </div>
+                  </div> */}
                   <Copy value={`https://tunescape.vercel.app/play/${song?.alias}`}>
                     <div className={`${styles.optionItem} flex items-center gap-2`}>
                       <div className={`${styles.iconOption}`}>

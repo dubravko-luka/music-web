@@ -4,7 +4,7 @@ import Svg from '@/components/Common/Svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { setIdPlay, setPlayList } from '@/store/actions/mediaAction';
-import { downloadSong } from '@/helpers/common';
+// import { downloadSong } from '@/helpers/common';
 import Copy from '@/components/Common/Copy';
 
 type Props = {
@@ -97,12 +97,12 @@ const MusicCardRectangle: React.FC<Props> = ({ song }) => {
                       : <p className='whitespace-nowrap text-white text-xs py-2'>Thêm vào danh sách phát</p>
                   }
                 </div>
-                <div onClick={() => downloadSong(`/audio/${song?.encodeId}/128`, song.alias)} className={`${styles.optionItem} flex items-center gap-2`}>
+                {/* <div onClick={() => downloadSong(`/audio/${song?.encodeId}/128`, song.alias)} className={`${styles.optionItem} flex items-center gap-2`}>
                   <div className={`${styles.iconOption}`}>
                     <Svg name='download' path='icons' />
                   </div>
                   <p className='whitespace-nowrap text-white text-xs py-2'>Tải xuống</p>
-                </div>
+                </div> */}
                 <Copy value={`https://tunescape.vercel.app/play/${song?.alias}`}>
                   <div className={`${styles.optionItem} flex items-center gap-2`}>
                     <div className={`${styles.iconOption}`}>

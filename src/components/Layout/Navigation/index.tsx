@@ -82,7 +82,7 @@ const Navigation: React.FC = () => {
   }, [refSetting]);
 
   const [searchTerm, setSearchTerm] = useState('');
-  const [searchResults, setSearchResults] = useState<any[]>([]);
+  const [searchResults, setSearchResults] = useState<any[]>([...koreanMusic, ...newRelease, ...trend, ...trendFavourite]);
 
   const handleSearch = (event: any) => {
     const searchValue = event.target.value.toLowerCase();
@@ -131,14 +131,22 @@ const Navigation: React.FC = () => {
                 type="text"
                 placeholder="Tìm bài hát, nghệ sĩ..."
               />
-              <div className={`${styles.resultSearch} no-sb`}>
-                {
-                  searchResults?.map((item, index) => (
-                    <div className="w-full mb-2" key={index}>
-                      <MusicCardRectangle song={item} />
-                    </div>
-                  ))
-                }
+              <div className={`${styles.resultSearch}`}>
+                <div className={`${styles.mainResult} no-sb`}>
+                  {
+                    searchResults?.length > 0
+                      ? searchResults?.map((item, index) => (
+                        <div className="w-full mb-2" key={index}>
+                          <MusicCardRectangle song={item} />
+                        </div>
+                      ))
+                      : (
+                        <div className="w-full flex items-center justify-center h-20">
+                          <p className={"text-sm font-bold text-white"}>Không có kết quả</p>
+                        </div>
+                      )
+                  }
+                </div>
               </div>
             </div>
           </div>

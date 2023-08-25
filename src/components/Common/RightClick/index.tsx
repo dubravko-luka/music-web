@@ -4,6 +4,11 @@ import Svg from '../Svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { setIdPlay } from '@/store/actions/mediaAction';
+import koreanMusic from '@/data/mp3/korean-music/data.json'
+import newRelease from '@/data/mp3/new-relase/data.json'
+import trend from '@/data/mp3/trend/data.json'
+import trendFavourite from '@/data/mp3/trend-favourite/data.json'
+import _ from 'lodash';
 
 type Props = {
   children: React.ReactNode;
@@ -50,6 +55,11 @@ const RightClick: React.FC<Props> = ({ children }) => {
     });
   };
 
+  const randomAllSong = () => {
+    const randomMusic = _.sampleSize([...koreanMusic, ...newRelease, ...trend, ...trendFavourite], 1);
+    dispatch(setIdPlay(randomMusic[0]))
+  }
+
   const handlePrev = () => {
     const songIndex = playList.findIndex(item => item.encodeId === idPlay.encodeId);
     if (playList[songIndex - 1]) {
@@ -61,6 +71,8 @@ const RightClick: React.FC<Props> = ({ children }) => {
     const songIndex = playList.findIndex(item => item.encodeId === idPlay.encodeId);
     if (playList[songIndex + 1]) {
       dispatch(setIdPlay(playList[songIndex + 1]))
+    } else {
+      randomAllSong()
     }
   }
 
@@ -121,19 +133,12 @@ const RightClick: React.FC<Props> = ({ children }) => {
                 </div>
               )
           }
-          {
-            playList.findIndex(item => item.encodeId === idPlay.encodeId) + 1 >= playList.length
-              ? (
-                <></>
-              ) : (
-                <div className={`${styles.optionItem} flex items-center gap-2`} onClick={handleNext}>
-                  <div className={`${styles.iconOption}`}>
-                    <Svg name='arrow-right' path='icons' />
-                  </div>
-                  <p className='whitespace-nowrap text-white text-xs py-2'>Tiếp theo</p>
-                </div>
-              )
-          }
+          <div className={`${styles.optionItem} flex items-center gap-2`} onClick={handleNext}>
+            <div className={`${styles.iconOption}`}>
+              <Svg name='arrow-right' path='icons' />
+            </div>
+            <p className='whitespace-nowrap text-white text-xs py-2'>Tiếp theo</p>
+          </div>
           <div className={`${styles.optionItem} flex items-center gap-2`} onClick={reloadPage}>
             <div className={`${styles.iconOption}`}>
               <Svg name='reload' path='icons' />

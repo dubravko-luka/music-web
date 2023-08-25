@@ -1,5 +1,5 @@
 import axios from "axios";
-import { LOCALSTORAGE_HEARD_RECENLY } from "./constants";
+import { LOCALSTORAGE_HEARD_RECENLY, mainSite } from "./constants";
 
 export const alt = "review phim"
 
@@ -34,7 +34,7 @@ export const formatTimePlay = (timeInSeconds: number) => {
 };
 
 export const downloadSong = async (mp3Link: string, name: string) => {
-  const response = await axios.get(mp3Link, {
+  const response = await axios.get(`${mainSite}${mp3Link}`, {
     responseType: 'blob',
   });
 
