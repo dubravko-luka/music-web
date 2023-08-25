@@ -5,7 +5,7 @@ import InputRange from 'react-input-range';
 import { setMuted, setVolume } from '@/store/actions/mediaAction';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
-import { setBackgroundFullPage, setImgMainFullPage, setShowMainImg } from '@/store/actions/globalAction';
+import { setBackgroundFullPage, setImgMainFullPage, setShowBackground, setShowMainImg } from '@/store/actions/globalAction';
 
 type Props = {
   //
@@ -16,6 +16,7 @@ const Setting: React.FC<Props> = () => {
   const muted = useSelector((state: RootState) => state?.media?.muted);
   const showFullPage = useSelector((state: RootState) => state?.global.fullPage);
   const showImgMain = useSelector((state: RootState) => state?.global.showImgMain);
+  const showBackground = useSelector((state: RootState) => state?.global.showBackground);
   const imgMainFullPage = useSelector((state: RootState) => state?.global.imgMainFullPage);
   const bgFullPage = useSelector((state: RootState) => state?.global.bgFullPage);
 
@@ -135,6 +136,19 @@ const Setting: React.FC<Props> = () => {
                       id="showImgMain"
                     />
                     <label className={styles.labelPlayListActive} htmlFor="showImgMain">Toggle</label>
+                  </div>
+                </div>
+                <div className="flex justify-between items-center py-3">
+                  <p className='text-white text-sm'>Hiện ảnh nền</p>
+                  <div className='flex items-center'>
+                    <input
+                      onClick={() => dispatch(setShowBackground(!showBackground))}
+                      checked={showBackground}
+                      className={styles.playListActive}
+                      type="checkbox"
+                      id="showImgBackground"
+                    />
+                    <label className={styles.labelPlayListActive} htmlFor="showImgBackground">Toggle</label>
                   </div>
                 </div>
               </>

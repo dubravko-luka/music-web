@@ -253,6 +253,7 @@
   width: 100vw;
   transition: all .3s linear;
   z-index: 10;
+  background: #000;
 }
 
 .wrapBgImageFullpage.active {

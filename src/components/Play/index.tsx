@@ -206,6 +206,7 @@ const Play: React.FC<Props> = () => {
   const volume = useSelector((state: RootState) => state?.media?.volume);
   const muted = useSelector((state: RootState) => state?.media?.muted);
   const showFullPage = useSelector((state: RootState) => state?.global.fullPage);
+  const showBackground = useSelector((state: RootState) => state?.global.showBackground);
   const bgFullPage = useSelector((state: RootState) => state?.global.bgFullPage);
   const dispatch = useDispatch();
 
@@ -342,11 +343,18 @@ const Play: React.FC<Props> = () => {
         </div >
       }
       <div className={`${styles.wrapBgImageFullpage} ${showFullPage ? styles.active : ''} relative`}>
-        <img
-          className={styles.bgImageFullpage}
-          src={bgFullPage ? bgFullPage : idPlay?.thumbnailM}
-          alt=""
-        />
+        {
+          showBackground
+            ? (
+              <img
+                className={styles.bgImageFullpage}
+                src={bgFullPage ? bgFullPage : idPlay?.thumbnailM}
+                alt=""
+              />
+            ) : (
+              <></>
+            )
+        }
       </div>
     </>
   );

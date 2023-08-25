@@ -3,6 +3,7 @@ export const SET_SHOW_FULL_PAGE = 'SET_SHOW_FULL_PAGE';
 export const SET_BACK_GROUND_FULL_PAGE = 'SET_BACK_GROUND_FULL_PAGE';
 export const SET_IMG_MAIN_FULL_PAGE = 'SET_IMG_MAIN_FULL_PAGE';
 export const SET_SHOW_MAIN_IMG = 'SET_SHOW_MAIN_IMG';
+export const SET_SHOW_BACKGROUND = 'SET_SHOW_BACKGROUND';
 export const SET_SHOW_SEARCH = 'SET_SHOW_SEARCH';
 
 export interface GlobalState {
@@ -11,6 +12,7 @@ export interface GlobalState {
   bgFullPage: string;
   imgMainFullPage: string;
   showImgMain: boolean;
+  showBackground: boolean;
   showSearch: boolean;
 }
 
@@ -44,4 +46,9 @@ interface setShowMainImg {
   payload: boolean;
 }
 
-export type GlobalAction = setShowPlayListAction | setShowFullPageAction | setBackgroundFullPage | setImgMainFullPage | setShowMainImg | setShowSearch;
+interface setShowBgImg {
+  type: typeof SET_SHOW_BACKGROUND;
+  payload: boolean;
+}
+
+export type GlobalAction = setShowPlayListAction | setShowFullPageAction | setBackgroundFullPage | setImgMainFullPage | setShowMainImg | setShowSearch | setShowBgImg;
