@@ -16,6 +16,7 @@ import trendFavourite from '@/data/mp3/trend-favourite/data.json'
 import _ from 'lodash';
 import Copy from '../Common/Copy';
 import HeadPlay from '../Common/HeadPlay';
+import EventListener from 'react-event-listener';
 
 type AudioProps = {
   volumn: number,
@@ -125,8 +126,15 @@ const Audio: React.FC<AudioProps> = ({ volumn, audioRef }) => {
     }
   }
 
+  const handleKeyPress = (event: any) => {
+    if (event.keyCode === 32) {
+      onPlay()
+    }
+  };
+
   return (
     <>
+      <EventListener target="window" onKeyDown={handleKeyPress} />
       <HeadPlay />
       <div className={`${styles.controlPlay} h-full flex items-center`}>
         <div className='w-full timeSong'>

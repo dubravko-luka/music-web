@@ -1,11 +1,12 @@
-import { GlobalAction, GlobalState, SET_SHOW_PLAY_LIST, SET_SHOW_FULL_PAGE, SET_BACK_GROUND_FULL_PAGE, SET_IMG_MAIN_FULL_PAGE, SET_SHOW_MAIN_IMG } from '../types/globalTypes';
+import { GlobalAction, GlobalState, SET_SHOW_PLAY_LIST, SET_SHOW_FULL_PAGE, SET_BACK_GROUND_FULL_PAGE, SET_IMG_MAIN_FULL_PAGE, SET_SHOW_MAIN_IMG, SET_SHOW_SEARCH } from '../types/globalTypes';
 
 const initialState: GlobalState = {
   showPlayList: true,
   fullPage: false,
   bgFullPage: '',
   imgMainFullPage: '',
-  showImgMain: true
+  showImgMain: true,
+  showSearch: false,
 };
 
 const globalReducer = (state = initialState, action: GlobalAction): GlobalState => {
@@ -34,6 +35,11 @@ const globalReducer = (state = initialState, action: GlobalAction): GlobalState 
       return {
         ...state,
         showImgMain: action?.payload,
+      };
+    case SET_SHOW_SEARCH:
+      return {
+        ...state,
+        showSearch: action?.payload,
       };
     default:
       return state;

@@ -47,8 +47,29 @@
   border-bottom-left-radius: 50px;
 }
 
+.headerSearch:before {
+  content: '/';
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 3px;
+  color: #fff;
+  font-size: 10px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .headerMenuGrid {
   /*  */
+}
+
+.headerSearch.showSearch:before {
+  content: unset;
 }
 
 @media (max-width: 1279px) {
@@ -62,6 +83,10 @@
   .showSearch .headerSearchIcon {
     width: 30px;
     border-radius: 50px 0px 0px 50px;
+  }
+
+  .headerSearch:before {
+    content: unset;
   }
 }
 

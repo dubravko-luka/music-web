@@ -13,6 +13,7 @@ import Navigation from '@/components/Layout/Navigation';
 import RightClick from '@/components/Common/RightClick';
 import Play from '@/components/Play';
 import { useEffect } from 'react';
+import KeyPress from '@/components/Common/KeyPress';
 
 export default function App({ Component, pageProps }: AppProps) {
 
@@ -34,6 +35,7 @@ export default function App({ Component, pageProps }: AppProps) {
           <Component {...pageProps} />
           <GoTop />
         </div>
+        <KeyPress />
         <Play />
       </RightClick>
     </Provider>
