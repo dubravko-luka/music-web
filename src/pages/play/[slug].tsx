@@ -8,6 +8,7 @@ import trend from '@/data/mp3/trend/data.json'
 import trendFavourite from '@/data/mp3/trend-favourite/data.json'
 import { setIdPlay } from '@/store/actions/mediaAction';
 import { useDispatch } from 'react-redux';
+import HeadPlay from '@/components/Common/HeadPlay';
 
 type Props = {
   //
@@ -34,7 +35,7 @@ const Play: React.FC<Props> = () => {
 
   return (
     <>
-      {/*  */}
+      <HeadPlay />
     </>
   );
 };
