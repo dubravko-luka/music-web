@@ -6,6 +6,7 @@ export const SET_SHOW_MAIN_IMG = 'SET_SHOW_MAIN_IMG';
 export const SET_SHOW_BACKGROUND = 'SET_SHOW_BACKGROUND';
 export const SET_SHOW_SEARCH = 'SET_SHOW_SEARCH';
 export const SET_SHOW_CONTROL = 'SET_SHOW_CONTROL';
+export const SET_ENABLED_INPUT = 'SET_ENABLED_INPUT';
 
 export interface GlobalState {
   showPlayList: boolean;
@@ -16,6 +17,7 @@ export interface GlobalState {
   showBackground: boolean;
   showSearch: boolean;
   showControl: boolean;
+  enabledInput: boolean;
 }
 
 interface setShowPlayListAction {
@@ -58,4 +60,9 @@ interface setShowControl {
   payload: boolean;
 }
 
-export type GlobalAction = setShowPlayListAction | setShowFullPageAction | setBackgroundFullPage | setImgMainFullPage | setShowMainImg | setShowSearch | setShowBgImg | setShowControl;
+interface setEnabledInput {
+  type: typeof SET_ENABLED_INPUT;
+  payload: boolean;
+}
+
+export type GlobalAction = setShowPlayListAction | setShowFullPageAction | setBackgroundFullPage | setImgMainFullPage | setShowMainImg | setShowSearch | setShowBgImg | setShowControl | setEnabledInput;

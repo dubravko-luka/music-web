@@ -8,7 +8,7 @@ import Setting from "./components/setting"
 import User from "./components/user"
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "@/store/types"
-import { setShowPlaylist, setShowSearch } from "@/store/actions/globalAction"
+import { setEnabledInput, setShowPlaylist, setShowSearch } from "@/store/actions/globalAction"
 import MusicCardRectangle from "@/components/Card/MusicCardRectangleSearch"
 import EventListener from "react-event-listener"
 import { ALL_LIST_MUSIC } from "@/helpers/constants"
@@ -61,6 +61,7 @@ const Navigation: React.FC = () => {
   const handleShowSearch = (event: any) => {
     if (refSearch.current && !refSearch.current.contains(event.target)) {
       dispatch(setShowSearch(false));
+      dispatch(setEnabledInput(false))
     }
   }
 
@@ -106,6 +107,7 @@ const Navigation: React.FC = () => {
   const handleKeyPress = (event: any) => {
     if (event.keyCode === 191) {
       dispatch(setShowSearch(true));
+      dispatch(setEnabledInput(true))
       event.preventDefault();
       refInputSeach.current.focus();
     }
@@ -136,11 +138,21 @@ const Navigation: React.FC = () => {
               ref={refSearch}
               className={`${styles.headerSearch} ${showSearch ? styles.showSearch : ''} ${showSearch ? styles.showSearch : ''} relative`}
             >
-              <span className={`${styles.headerSearchIcon}`}>
+              <span
+                className={`${styles.headerSearchIcon}`}
+                onClick={() => {
+                  dispatch(setShowSearch(true))
+                  dispatch(setEnabledInput(true))
+                  refInputSeach.current.focus();
+                }}
+              >
                 <Svg name="search" path="icons" />
               </span>
               <input
-                onFocus={() => dispatch(setShowSearch(true))}
+                onFocus={() => {
+                  dispatch(setShowSearch(true))
+                  dispatch(setEnabledInput(true))
+                }}
                 ref={refInputSeach}
                 value={searchTerm}
                 onChange={handleSearch}

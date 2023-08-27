@@ -27,6 +27,7 @@ const Audio: React.FC<AudioProps> = ({ volumn, audioRef }) => {
   const playList = useSelector((state: RootState) => state?.media?.playList);
   const randomSong = useSelector((state: RootState) => state?.media?.random);
   const idPlay = useSelector((state: RootState) => state?.media?.id);
+  const enabledInput = useSelector((state: RootState) => state?.global?.enabledInput);
   const dispatch = useDispatch()
 
   const recentPlay = async () => {
@@ -124,7 +125,7 @@ const Audio: React.FC<AudioProps> = ({ volumn, audioRef }) => {
   }
 
   const handleKeyPress = (event: any) => {
-    if (event.keyCode === 32) {
+    if (event.keyCode === 32 && !enabledInput) {
       onPlay()
     }
   };
