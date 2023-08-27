@@ -271,12 +271,6 @@ const Play: React.FC<Props> = () => {
                     <Svg name='dot-vertical' path='icons' />
                   </div>
                   <div className={`${styles.options}`}>
-                    <div className={`${styles.optionItem} flex items-center gap-2`}>
-                      <div className={`${styles.iconOption}`}>
-                        <Svg name='download' path='icons' />
-                      </div>
-                      <p className='whitespace-nowrap text-white text-xs py-2'>Tải xuống</p>
-                    </div>
                     <Copy value={`https://tunescape.vercel.app/play/${idPlay?.alias}`}>
                       <div className={`${styles.optionItem} flex items-center gap-2`}>
                         <div className={`${styles.iconOption}`}>
