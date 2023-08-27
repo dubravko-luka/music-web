@@ -4,11 +4,8 @@ import Svg from '../Svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { setIdPlay } from '@/store/actions/mediaAction';
-import koreanMusic from '@/data/mp3/korean-music/data.json'
-import newRelease from '@/data/mp3/new-relase/data.json'
-import trend from '@/data/mp3/trend/data.json'
-import trendFavourite from '@/data/mp3/trend-favourite/data.json'
 import _ from 'lodash';
+import { ALL_LIST_MUSIC } from '@/helpers/constants';
 
 type Props = {
   children: React.ReactNode;
@@ -56,7 +53,7 @@ const RightClick: React.FC<Props> = ({ children }) => {
   };
 
   const randomAllSong = () => {
-    const randomMusic = _.sampleSize([...koreanMusic, ...newRelease, ...trend, ...trendFavourite], 1);
+    const randomMusic = _.sampleSize(ALL_LIST_MUSIC, 1);
     dispatch(setIdPlay(randomMusic[0]))
   }
 

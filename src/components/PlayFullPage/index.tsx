@@ -6,6 +6,7 @@ import { RootState } from '@/store/types';
 import Setting from '@/components/Layout/Navigation/components/setting';
 import Svg from '@/components/Common/Svg';
 import { setShowFullPage } from '@/store/actions/globalAction';
+import { extractLinkImgZingMp3 } from '@/helpers/common';
 
 type Props = {
   //
@@ -81,7 +82,7 @@ const PlayFullPage: React.FC<Props> = () => {
                 <div className={`${styles.playPosterMain}`}>
                   <img
                     className={styles.playPosterImg}
-                    src={imgMainFullPage ? imgMainFullPage : idPlay?.thumbnailM}
+                    src={imgMainFullPage ? imgMainFullPage : `/poster/${extractLinkImgZingMp3(idPlay?.thumbnailM)}`}
                     alt=""
                   />
                 </div>

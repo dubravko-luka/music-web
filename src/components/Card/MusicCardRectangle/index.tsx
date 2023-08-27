@@ -8,6 +8,7 @@ import { setIdPlay, setPlayList } from '@/store/actions/mediaAction';
 // import { downloadSong } from '@/helpers/common';
 import Copy from '@/components/Common/Copy';
 import { mainSite } from '@/helpers/constants';
+import { extractLinkImgZingMp3 } from '@/helpers/common';
 
 type Props = {
   song: any
@@ -67,7 +68,7 @@ const MusicCardRectangle: React.FC<Props> = ({ song }) => {
                     </div>
                   )
               }
-              <img className='w-full h-full object-cover' src={song?.thumbnail} alt="" />
+              <img className='w-full h-full object-cover' src={`/poster/${extractLinkImgZingMp3(song?.thumbnail)}`} alt="" />
             </div>
             <div>
               <p className={`${styles.info} text-sm text-white font-bold`}>{song?.title}</p>

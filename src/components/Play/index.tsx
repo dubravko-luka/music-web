@@ -8,15 +8,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { setShowFullPage, setShowPlaylist } from '@/store/actions/globalAction';
 import { setIdPlay, setMuted, setRandom, setRecentPlay, setVolume } from '@/store/actions/mediaAction';
-import { formatTimePlay, saveHeardRecently } from '@/helpers/common';
-import koreanMusic from '@/data/mp3/korean-music/data.json'
-import newRelease from '@/data/mp3/new-relase/data.json'
-import trend from '@/data/mp3/trend/data.json'
-import trendFavourite from '@/data/mp3/trend-favourite/data.json'
+import { extractLinkImgZingMp3, formatTimePlay, saveHeardRecently } from '@/helpers/common';
 import _ from 'lodash';
 import Copy from '../Common/Copy';
 import HeadPlay from '../Common/HeadPlay';
 import EventListener from 'react-event-listener';
+import { ALL_LIST_MUSIC } from '@/helpers/constants';
 
 type AudioProps = {
   volumn: number,
@@ -34,7 +31,7 @@ const Audio: React.FC<AudioProps> = ({ volumn, audioRef }) => {
 
   const recentPlay = async () => {
     const storedArray: any = await saveHeardRecently(idPlay?.encodeId);
-    const recent = await [...koreanMusic, ...newRelease, ...trend, ...trendFavourite].filter((item) => storedArray.includes(item.encodeId));
+    const recent = await ALL_LIST_MUSIC.filter((item) => storedArray.includes(item.encodeId));
 
     const seenIds = new Set();
     const array_eraser: any[] = []
@@ -84,7 +81,7 @@ const Audio: React.FC<AudioProps> = ({ volumn, audioRef }) => {
   }, [idPlay])
 
   const randomAllSong = () => {
-    const randomMusic = _.sampleSize([...koreanMusic, ...newRelease, ...trend, ...trendFavourite], 1);
+    const randomMusic = _.sampleSize(ALL_LIST_MUSIC, 1);
     dispatch(setIdPlay(randomMusic[0]))
   }
 
@@ -261,7 +258,7 @@ const Play: React.FC<Props> = () => {
             <div className="h-full flex items-center gap-x-4 p-2">
               <div className={`h-full`}>
                 <div className={`${styles.figure} h-full relative`}>
-                  <img className='h-full' src={idPlay?.thumbnail} alt="" />
+                  <img className='h-full' src={`/poster/${extractLinkImgZingMp3(idPlay?.thumbnail)}`} alt="" />
                 </div>
               </div>
               <div>
@@ -348,7 +345,7 @@ const Play: React.FC<Props> = () => {
             ? (
               <img
                 className={styles.bgImageFullpage}
-                src={bgFullPage ? bgFullPage : idPlay?.thumbnailM}
+                src={bgFullPage ? bgFullPage : `/poster/${extractLinkImgZingMp3(idPlay?.thumbnailM)}`}
                 alt=""
               />
             ) : (

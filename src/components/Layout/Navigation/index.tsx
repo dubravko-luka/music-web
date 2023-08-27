@@ -9,12 +9,9 @@ import User from "./components/user"
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "@/store/types"
 import { setShowPlaylist, setShowSearch } from "@/store/actions/globalAction"
-import koreanMusic from '@/data/mp3/korean-music/data.json'
-import newRelease from '@/data/mp3/new-relase/data.json'
-import trend from '@/data/mp3/trend/data.json'
-import trendFavourite from '@/data/mp3/trend-favourite/data.json'
 import MusicCardRectangle from "@/components/Card/MusicCardRectangleSearch"
 import EventListener from "react-event-listener"
+import { ALL_LIST_MUSIC } from "@/helpers/constants"
 
 const mainMenu = [
   {
@@ -91,13 +88,13 @@ const Navigation: React.FC = () => {
   }, [refSetting]);
 
   const [searchTerm, setSearchTerm] = useState('');
-  const [searchResults, setSearchResults] = useState<any[]>([...koreanMusic, ...newRelease, ...trend, ...trendFavourite]);
+  const [searchResults, setSearchResults] = useState<any[]>(ALL_LIST_MUSIC);
 
   const handleSearch = (event: any) => {
     const searchValue = event.target.value.toLowerCase();
     setSearchTerm(searchValue);
 
-    const filteredResults = [...koreanMusic, ...newRelease, ...trend, ...trendFavourite].filter(item =>
+    const filteredResults = ALL_LIST_MUSIC.filter(item =>
       item.title.toLowerCase().includes(searchValue) ||
       item.artistsNames.toLowerCase().includes(searchValue)
     );

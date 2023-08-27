@@ -2,7 +2,7 @@ import React, { memo, useRef, useState } from 'react';
 import styles from './styles.module.css'
 import Svg from '@/components/Common/Svg';
 import moment from 'moment';
-import { formatTimePlay } from '@/helpers/common';
+import { extractLinkImgZingMp3, formatTimePlay } from '@/helpers/common';
 import { useDispatch, useSelector } from 'react-redux';
 import { setIdPlay, setPlayList } from '@/store/actions/mediaAction';
 import { RootState } from '@/store/types';
@@ -64,7 +64,7 @@ const MusicCard: React.FC<Props> = ({ song }) => {
                 </div>
               )
           }
-          <img className={`${styles.imgSong}`} src={song?.thumbnailM} alt="" />
+          <img className={`${styles.imgSong}`} src={`/poster/${extractLinkImgZingMp3(song?.thumbnailM)}`} alt="" />
         </div>
         <div className={`p-2 pb-3 ${styles.info}`}>
           <div className="grid grid-cols-12">

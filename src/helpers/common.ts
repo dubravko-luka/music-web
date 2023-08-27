@@ -72,3 +72,8 @@ export const saveHeardRecently = async (id: string) => {
 
   return storedArray;
 }
+
+export const extractLinkImgZingMp3 = (url: string) => {
+  const parts = url.split("/");
+  return parts.slice(3).join("/");
+}

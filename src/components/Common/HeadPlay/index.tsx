@@ -1,3 +1,4 @@
+import { extractLinkImgZingMp3 } from '@/helpers/common';
 import { mainSite } from '@/helpers/constants';
 import { RootState } from '@/store/types';
 import React, { memo } from 'react';
@@ -16,14 +17,14 @@ const HeadPlay: React.FC<Props> = () => {
         <title>{playId.title} - TuneScape</title>
 
         {/* Z */}
-        <meta name="og:image" content={`${playId.thumbnailM}`} />
+        <meta name="og:image" content={`/poster/${extractLinkImgZingMp3(playId?.thumbnailM)}`} />
         <meta name="og:title" content={playId.title} />
         <meta name="og:description" content={`${playId.title} - ${playId.artistsNames}`} />
         <meta name="og:type" content="website" />
         <meta name="og:url" content={mainSite} />
 
         {/* F */}
-        <meta property="og:image" content={`${playId.thumbnailM}`} />
+        <meta property="og:image" content={`/poster/${extractLinkImgZingMp3(playId?.thumbnailM)}`} />
         <meta property="og:title" content={playId.title} />
         <meta property="og:description" content={`${playId.title} - ${playId.artistsNames}`} />
         <meta property="og:type" content="website" />
@@ -31,7 +32,7 @@ const HeadPlay: React.FC<Props> = () => {
 
         {/* T */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:image" content={`${playId.thumbnailM}`} />
+        <meta name="twitter:image" content={`/poster/${extractLinkImgZingMp3(playId?.thumbnailM)}`} />
         <meta name="twitter:title" content={`${playId.title}`} />
         <meta name="twitter:description" content={`${playId.title} - ${playId.artistsNames}`} />
         <meta name="twitter:site" content={mainSite} />

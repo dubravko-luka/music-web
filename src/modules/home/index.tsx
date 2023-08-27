@@ -3,16 +3,14 @@ import React, { memo, useEffect } from 'react';
 import styles from './styles.module.css'
 import Recently from '@/components/Home/Recently';
 import NewRelease from '@/components/Home/NewRelease'
+import TopRapViet from '@/components/Home/TopRapViet'
 import TrendFavourite from '@/components/Home/TrendFavourite'
 import Playlist from '@/components/Home/Playlist';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import KoreanMusic from '@/components/Home/KoreanMusic';
-import { LOCALSTORAGE_HEARD_RECENLY } from '@/helpers/constants';
-import koreanMusic from '@/data/mp3/korean-music/data.json'
-import newRelease from '@/data/mp3/new-relase/data.json'
-import trend from '@/data/mp3/trend/data.json'
-import trendFavourite from '@/data/mp3/trend-favourite/data.json'
+import ChineseMusic from '@/components/Home/ChineseMusic';
+import { ALL_LIST_MUSIC, LOCALSTORAGE_HEARD_RECENLY } from '@/helpers/constants';
 import { setRecentPlay } from '@/store/actions/mediaAction';
 
 type Props = {
@@ -28,7 +26,7 @@ const HomeContainer: React.FC<Props> = () => {
 
   const getRecently = async () => {
     const storedArray = await JSON.parse(localStorage.getItem(LOCALSTORAGE_HEARD_RECENLY) as string) || [];
-    const recent = await [...koreanMusic, ...newRelease, ...trend, ...trendFavourite].filter((item) => storedArray.includes(item.encodeId));
+    const recent = await ALL_LIST_MUSIC.filter((item) => storedArray.includes(item.encodeId));
 
     const seenIds = new Set();
     const array_eraser: any[] = []
@@ -74,8 +72,16 @@ const HomeContainer: React.FC<Props> = () => {
             <TrendFavourite />
           </div>
           <div className={`${styles.section} pt-10`}>
+            <p className={`${styles.titleSection}`}>Top Rap Việt</p>
+            <TopRapViet />
+          </div>
+          <div className={`${styles.section} pt-10`}>
             <p className={`${styles.titleSection}`}>Nhạc Hàn</p>
             <KoreanMusic />
+          </div>
+          <div className={`${styles.section} pt-10`}>
+            <p className={`${styles.titleSection}`}>Nhạc Hoa</p>
+            <ChineseMusic />
           </div>
         </div>
         <div className={`${styles.playList} ${showPlayList ? styles.show : ''} z-9`}>

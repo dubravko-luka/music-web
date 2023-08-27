@@ -2,7 +2,7 @@ import MusicCardRectangle from '@/components/Card/MusicCardRectangle';
 import { RootState } from '@/store/types';
 import React, { memo, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import data from '@/data/mp3/korean-music/data.json'
+import data from '@/data/mp3/top-rap-viet/data.json'
 import _ from 'lodash';
 
 type Props = {
@@ -12,7 +12,7 @@ type Props = {
 const classPlayList = 'xxl:col-span-4 lg:col-span-6 slg:col-span-12 sm:col-span-6 col-span-12'
 const classNoPlayList = 'xxl:col-span-3 lg:col-span-4 slg:col-span-6 sm:col-span-6 col-span-12'
 
-const KoreanMusic: React.FC<Props> = () => {
+const TopRapViet: React.FC<Props> = () => {
 
   const showPlayList = useSelector((state: RootState) => state?.global?.showPlayList);
 
@@ -36,4 +36,4 @@ const KoreanMusic: React.FC<Props> = () => {
   );
 };
 
-export default memo(KoreanMusic);
+export default memo(TopRapViet);
