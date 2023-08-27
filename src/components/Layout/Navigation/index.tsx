@@ -12,6 +12,7 @@ import { setShowPlaylist, setShowSearch } from "@/store/actions/globalAction"
 import MusicCardRectangle from "@/components/Card/MusicCardRectangleSearch"
 import EventListener from "react-event-listener"
 import { ALL_LIST_MUSIC } from "@/helpers/constants"
+import _ from "lodash"
 
 const mainMenu = [
   {
@@ -99,7 +100,7 @@ const Navigation: React.FC = () => {
       item.artistsNames.toLowerCase().includes(searchValue)
     );
 
-    setSearchResults(filteredResults);
+    setSearchResults(_.uniqBy(filteredResults, 'encodeId'));
   }
 
   const handleKeyPress = (event: any) => {
