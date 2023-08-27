@@ -43,7 +43,7 @@ const MusicCardRectangle: React.FC<Props> = ({ song }) => {
     const viewportHeight = window.innerHeight;
 
     setContextMenuStyle({
-      top: y + menuHeight > viewportHeight - 124 ? '-124px' : 'calc(100%)'
+      top: y + menuHeight > viewportHeight - 124 ? '-86px' : 'calc(100%)'
     });
   };
 

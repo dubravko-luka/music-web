@@ -6,7 +6,7 @@ import 'react-input-range/lib/css/index.css'
 import PlayFullPage from '@/components/PlayFullPage';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
-import { setShowFullPage, setShowPlaylist } from '@/store/actions/globalAction';
+import { setShowControl, setShowFullPage, setShowPlaylist } from '@/store/actions/globalAction';
 import { setIdPlay, setMuted, setRandom, setRecentPlay, setVolume } from '@/store/actions/mediaAction';
 import { extractLinkImgZingMp3, formatTimePlay, saveHeardRecently } from '@/helpers/common';
 import _ from 'lodash';
@@ -199,10 +199,10 @@ type Props = {
 
 const Play: React.FC<Props> = () => {
   const audioRef: any = useRef(null);
-  const [showControl, setShowControl] = useState(true);
   const volume = useSelector((state: RootState) => state?.media?.volume);
   const muted = useSelector((state: RootState) => state?.media?.muted);
   const showFullPage = useSelector((state: RootState) => state?.global.fullPage);
+  const showControl = useSelector((state: RootState) => state?.global.showControl);
   const showBackground = useSelector((state: RootState) => state?.global.showBackground);
   const bgFullPage = useSelector((state: RootState) => state?.global.bgFullPage);
   const dispatch = useDispatch();
@@ -232,7 +232,7 @@ const Play: React.FC<Props> = () => {
 
   return (
     <>
-      <div className={`${styles.audioBlur} ${!showControl ? styles.show : ''} z-9`} onClick={() => setShowControl(true)}>
+      <div className={`${styles.audioBlur} ${!showControl ? styles.show : ''} z-9`} onClick={() => dispatch(setShowControl(true))}>
         <div className={`${styles.wavesBlock} relative`}>
           <div className={`${styles.iconPlay}`}>
             <Svg name='play-1' path='icons' />
@@ -248,7 +248,7 @@ const Play: React.FC<Props> = () => {
         {
           showFullPage
             ? <></>
-            : <div className={`${styles.hideControl} z-1`} onClick={() => setShowControl(false)}>
+            : <div className={`${styles.hideControl} z-1`} onClick={() => dispatch(setShowControl(false))}>
               <Svg name="chevron-down" path='icons' />
             </div>
         }

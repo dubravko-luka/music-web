@@ -5,6 +5,7 @@ export const SET_IMG_MAIN_FULL_PAGE = 'SET_IMG_MAIN_FULL_PAGE';
 export const SET_SHOW_MAIN_IMG = 'SET_SHOW_MAIN_IMG';
 export const SET_SHOW_BACKGROUND = 'SET_SHOW_BACKGROUND';
 export const SET_SHOW_SEARCH = 'SET_SHOW_SEARCH';
+export const SET_SHOW_CONTROL = 'SET_SHOW_CONTROL';
 
 export interface GlobalState {
   showPlayList: boolean;
@@ -14,6 +15,7 @@ export interface GlobalState {
   showImgMain: boolean;
   showBackground: boolean;
   showSearch: boolean;
+  showControl: boolean;
 }
 
 interface setShowPlayListAction {
@@ -51,4 +53,9 @@ interface setShowBgImg {
   payload: boolean;
 }
 
-export type GlobalAction = setShowPlayListAction | setShowFullPageAction | setBackgroundFullPage | setImgMainFullPage | setShowMainImg | setShowSearch | setShowBgImg;
+interface setShowControl {
+  type: typeof SET_SHOW_CONTROL;
+  payload: boolean;
+}
+
+export type GlobalAction = setShowPlayListAction | setShowFullPageAction | setBackgroundFullPage | setImgMainFullPage | setShowMainImg | setShowSearch | setShowBgImg | setShowControl;

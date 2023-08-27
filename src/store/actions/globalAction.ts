@@ -1,4 +1,4 @@
-import { SET_SHOW_PLAY_LIST, SET_SHOW_FULL_PAGE, SET_BACK_GROUND_FULL_PAGE, SET_IMG_MAIN_FULL_PAGE, SET_SHOW_MAIN_IMG, SET_SHOW_SEARCH, SET_SHOW_BACKGROUND } from '../types/globalTypes';
+import { SET_SHOW_PLAY_LIST, SET_SHOW_FULL_PAGE, SET_BACK_GROUND_FULL_PAGE, SET_IMG_MAIN_FULL_PAGE, SET_SHOW_MAIN_IMG, SET_SHOW_SEARCH, SET_SHOW_BACKGROUND, SET_SHOW_CONTROL } from '../types/globalTypes';
 
 export const setShowPlaylist = (show: boolean) => {
   return {
@@ -45,6 +45,13 @@ export const setShowBackground = (show: boolean) => {
 export const setShowSearch = (show: boolean) => {
   return {
     type: SET_SHOW_SEARCH,
+    payload: show,
+  };
+};
+
+export const setShowControl = (show: boolean) => {
+  return {
+    type: SET_SHOW_CONTROL,
     payload: show,
   };
 };
