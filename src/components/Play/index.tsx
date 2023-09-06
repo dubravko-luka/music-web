@@ -136,7 +136,19 @@ const Audio: React.FC<AudioProps> = ({ volumn, audioRef }) => {
       <HeadPlay />
       <div className={`${styles.controlPlay} h-full flex items-center`}>
         <div className='w-full timeSong'>
-          <div className="flex justify-center items-center gap-x-10 mb-2">
+          <div className="flex gap-2">
+            <span className='text-xs text-gray-500'>{formatTimePlay(Number(currentTime))}</span>
+            <InputRange
+              formatLabel={() => ""}
+              maxValue={idPlay.duration as number ?? 0}
+              minValue={0}
+              step={1}
+              value={currentTime}
+              onChange={onChangeTime}
+            />
+            <span className='text-xs text-gray-500'>{formatTimePlay(idPlay.duration as number ?? 0)}</span>
+          </div>
+          <div className="flex justify-center items-center gap-x-10 my-2">
             <div
               className={`${styles.action} ${randomSong ? styles.strokeActive : ''}`}
               onClick={() => dispatch(setRandom(!randomSong))}
@@ -161,18 +173,6 @@ const Audio: React.FC<AudioProps> = ({ volumn, audioRef }) => {
             >
               <Svg name='loop' path='icons' />
             </div>
-          </div>
-          <div className="flex gap-2">
-            <span className='text-xs text-gray-500'>{formatTimePlay(Number(currentTime))}</span>
-            <InputRange
-              formatLabel={() => ""}
-              maxValue={idPlay.duration as number ?? 0}
-              minValue={0}
-              step={1}
-              value={currentTime}
-              onChange={onChangeTime}
-            />
-            <span className='text-xs text-gray-500'>{formatTimePlay(idPlay.duration as number ?? 0)}</span>
           </div>
         </div>
       </div>
