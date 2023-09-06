@@ -3,7 +3,11 @@
   height: 100%;
 }
 
-@keyframes rotate {
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
   100% {
     transform: rotate(360deg);
   }
@@ -20,8 +24,13 @@
   height: 100%;
   border-radius: 50%;
   overflow: hidden;
-  animation: rotate 15s linear infinite;
   position: relative;
+  animation: spin 15s linear infinite;
+  animation-play-state: paused;
+}
+
+.playPosterMain.play {
+  animation-play-state: running;
 }
 
 .playPosterMain:before {

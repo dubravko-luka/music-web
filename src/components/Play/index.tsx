@@ -7,7 +7,7 @@ import PlayFullPage from '@/components/PlayFullPage';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { setShowControl, setShowFullPage, setShowPlaylist } from '@/store/actions/globalAction';
-import { setIdPlay, setMuted, setRandom, setRecentPlay, setVolume } from '@/store/actions/mediaAction';
+import { setCanPlay, setIdPlay, setMuted, setPlaying, setRandom, setRecentPlay, setVolume } from '@/store/actions/mediaAction';
 import { extractLinkImgZingMp3, formatTimePlay, saveHeardRecently } from '@/helpers/common';
 import _ from 'lodash';
 import Copy from '../Common/Copy';
@@ -21,10 +21,10 @@ type AudioProps = {
 }
 
 const Audio: React.FC<AudioProps> = ({ volumn, audioRef }) => {
-
-  const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
+  const isPlaying = useSelector((state: RootState) => state?.media?.isPlaying);
   const playList = useSelector((state: RootState) => state?.media?.playList);
+  const canPlay = useSelector((state: RootState) => state?.media?.canPlay);
   const randomSong = useSelector((state: RootState) => state?.media?.random);
   const idPlay = useSelector((state: RootState) => state?.media?.id);
   const enabledInput = useSelector((state: RootState) => state?.global?.enabledInput);
@@ -54,7 +54,7 @@ const Audio: React.FC<AudioProps> = ({ volumn, audioRef }) => {
       audioRef.current.volume = volumn / 100;
       recentPlay()
     }
-    setIsPlaying(!isPlaying);
+    dispatch(setPlaying(!isPlaying));
   };
 
   const handleLoop = () => {
@@ -63,7 +63,7 @@ const Audio: React.FC<AudioProps> = ({ volumn, audioRef }) => {
 
   const handleTimeUpdate = () => {
     if (audioRef.ended) {
-      setIsPlaying(false)
+      dispatch(setPlaying(false))
     }
     setCurrentTime(Math.floor(audioRef.current.currentTime));
   };
@@ -78,6 +78,7 @@ const Audio: React.FC<AudioProps> = ({ volumn, audioRef }) => {
       audioRef.current.load();
       audioRef.current.play();
       recentPlay()
+      dispatch(setCanPlay(false))
     }
   }, [idPlay])
 
@@ -106,6 +107,10 @@ const Audio: React.FC<AudioProps> = ({ volumn, audioRef }) => {
     } else {
       randomAllSong()
     }
+  }
+
+  const handleCanPlayThrough = () => {
+    dispatch(setCanPlay(true))
   }
 
   const handlePrev = () => {
@@ -158,11 +163,14 @@ const Audio: React.FC<AudioProps> = ({ volumn, audioRef }) => {
             <div className={`${styles.action} ${playList.findIndex(item => item.encodeId === idPlay.encodeId) - 1 < 0 ? styles.disabled : ''}`} onClick={handlePrev}>
               <Svg name='prev' path='icons' />
             </div>
-            <div className={`${styles.actionPlay}`} onClick={onPlay} style={{ display: isPlaying ? 'block' : 'none' }}>
+            <div className={`${styles.actionPlay}`} onClick={onPlay} style={{ display: isPlaying && canPlay ? 'block' : 'none' }}>
               <Svg name='pause' path='icons' />
             </div>
-            <div className={`${styles.actionPlay}`} onClick={onPlay} style={{ display: isPlaying ? 'none' : 'block' }}>
+            <div className={`${styles.actionPlay}`} onClick={onPlay} style={{ display: !isPlaying && canPlay ? 'block' : 'none' }}>
               <Svg name='play' path='icons' />
+            </div>
+            <div className={`${styles.canPlay}`} onClick={onPlay} style={{ display: canPlay ? 'none' : 'block' }}>
+              <Svg name='loading-play' path='icons' />
             </div>
             <div className={`${styles.action}`} onClick={handleNext}>
               <Svg name='next' path='icons' />
@@ -181,8 +189,9 @@ const Audio: React.FC<AudioProps> = ({ volumn, audioRef }) => {
         className={`${styles.audio}`}
         ref={audioRef}
         onTimeUpdate={handleTimeUpdate}
-        onPause={() => setIsPlaying(false)}
-        onPlay={() => setIsPlaying(true)}
+        onCanPlayThrough={handleCanPlayThrough}
+        onPause={() => dispatch(setPlaying(false))}
+        onPlay={() => dispatch(setPlaying(true))}
         onEnded={handleEnd}
       >
         <source

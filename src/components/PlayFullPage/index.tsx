@@ -14,6 +14,7 @@ type Props = {
 
 const PlayFullPage: React.FC<Props> = () => {
 
+  const isPlaying = useSelector((state: RootState) => state?.media?.isPlaying);
   const [showSetting, setShowSetting] = useState(false)
   const idPlay = useSelector((state: RootState) => state?.media?.id);
   const imgMainFullPage = useSelector((state: RootState) => state?.global.imgMainFullPage);
@@ -79,7 +80,7 @@ const PlayFullPage: React.FC<Props> = () => {
                   '--width': `${width > 700 ? 600 : width - 30}px`
                 } as any}
               >
-                <div className={`${styles.playPosterMain}`}>
+                <div className={`${styles.playPosterMain} ${isPlaying ? styles.play : ''}`}>
                   <img
                     className={styles.playPosterImg}
                     src={imgMainFullPage ? imgMainFullPage : `/poster/${extractLinkImgZingMp3(idPlay?.thumbnailM)}`}

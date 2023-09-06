@@ -4,6 +4,8 @@ export const SET_ID_PLAY = 'SET_ID_PLAY';
 export const SET_PLAY_LIST = 'SET_PLAY_LIST';
 export const SET_RANDOM = 'SET_RANDOM';
 export const SET_RECENT_PLAY = 'SET_RECENT_PLAY';
+export const SET_CAN_PLAY = 'SET_CAN_PLAY';
+export const SET_PLAYING = 'SET_PLAYING';
 
 export interface MediaState {
   volume: number;
@@ -12,6 +14,8 @@ export interface MediaState {
   playList: any[];
   random: boolean;
   recentPlay: any[];
+  canPlay: boolean;
+  isPlaying: boolean;
 }
 
 interface setVolumeAction {
@@ -44,4 +48,14 @@ interface setRecentPlay {
   payload: any[];
 }
 
-export type MediaAction = setVolumeAction | setMutedAction | setIdPlay | setPlayList | setRandom | setRecentPlay;
+interface setCanPlay {
+  type: typeof SET_CAN_PLAY;
+  payload: boolean;
+}
+
+interface setPlaying {
+  type: typeof SET_PLAYING;
+  payload: boolean;
+}
+
+export type MediaAction = setVolumeAction | setMutedAction | setIdPlay | setPlayList | setRandom | setRecentPlay | setCanPlay | setPlaying;

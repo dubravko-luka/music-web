@@ -281,6 +281,16 @@
   z-index: 1;
 }
 
+@keyframes rotate {
+  0% {
+    transform: rotate(-360deg);
+  }
+}
+
+.canPlay {
+  animation: rotate 1s linear infinite;
+}
+
 @keyframes waves {
   0% {
     -webkit-transform: scale(0.2, 0.2);

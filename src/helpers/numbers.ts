@@ -8,3 +8,16 @@ export const convertNumberToLetter = (number: number) => {
 
   return letter;
 }
+
+
+export const formatNumberMore = (number: number) => {
+  if (number >= 10000) {
+    return `hơn ${Math.floor(number / 1000) * 1000}`;
+  } else if (number >= 1000) {
+    return `hơn ${Math.floor(number / 1000) * 1000}`;
+  } else if (number >= 100) {
+    return `hơn ${Math.floor(number / 100) * 100}`;
+  } else {
+    return `${number}`;
+  }
+}

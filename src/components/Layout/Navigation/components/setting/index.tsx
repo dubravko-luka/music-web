@@ -6,6 +6,8 @@ import { setMuted, setVolume } from '@/store/actions/mediaAction';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { setBackgroundFullPage, setImgMainFullPage, setShowBackground, setShowMainImg } from '@/store/actions/globalAction';
+import { ALL_LIST_MUSIC } from '@/helpers/constants';
+import { formatNumberMore } from '@/helpers/numbers';
 
 type Props = {
   //
@@ -64,6 +66,17 @@ const Setting: React.FC<Props> = () => {
     <>
       <div className={`${styles.wrapper}`}>
         <div className="p-2">
+          <div className={`${styles.volumnWrapper}`}>
+            <div className="flex items-center justify-between w-full gap-2 volumn">
+              <p className='text-white my-3'>Có</p>
+              <div className="flex items-center gap-2">
+                <div>
+                  <Svg name='song' path='icons' />
+                </div>
+                <p className='text-white my-3'>{formatNumberMore(ALL_LIST_MUSIC?.length)} bài hát</p>
+              </div>
+            </div>
+          </div>
           <div className={`${styles.volumnWrapper}`}>
             <p className='text-white my-3'>Âm lượng</p>
             <div className="flex items-center justify-between w-full gap-2 volumn">
