@@ -31,7 +31,7 @@ const ThemePlayFullPage2: React.FC<Props> = () => {
       const width = element.offsetWidth;
       setWidthName(width);
     }
-  }, []);
+  }, [idPlay]);
 
   console.log('---------->', widthName);
 
@@ -63,7 +63,9 @@ const ThemePlayFullPage2: React.FC<Props> = () => {
             </div>
             <div className={`${styles.info} md:col-span-6 col-span-12`}>
               <div>
-                <p ref={elementRef} className={`${styles.name} ${widthName >= 300 ? styles.animation : ''}`}>{idPlay.title}</p>
+                <div className="flex">
+                  <p ref={elementRef} className={`${styles.name} ${widthName >= 300 ? styles.animation : ''}`}>{idPlay.title}</p>
+                </div>
                 <p className={`${styles.singer} mt-5`}>{idPlay.artistsNames}</p>
                 <div className={`${styles.controlPlay} w-full relative mt-5`}>
                   <Control />
