@@ -6,13 +6,13 @@ import data from '@/data/mp3/korean-music/data.json'
 import _ from 'lodash';
 
 type Props = {
-  //
+  children: any;
 };
 
 const classPlayList = 'xxl:col-span-4 lg:col-span-6 slg:col-span-12 sm:col-span-6 col-span-12'
 const classNoPlayList = 'xxl:col-span-3 lg:col-span-4 slg:col-span-6 sm:col-span-6 col-span-12'
 
-const KoreanMusic: React.FC<Props> = () => {
+const KoreanMusic: React.FC<Props> = ({ children }) => {
 
   const showPlayList = useSelector((state: RootState) => state?.global?.showPlayList);
 
@@ -23,6 +23,9 @@ const KoreanMusic: React.FC<Props> = () => {
 
   return (
     <>
+      {
+        dataSong.length !== 0 && children
+      }
       <div className="grid grid-cols-12 gap-5">
         {
           dataSong.map((item, index) => (

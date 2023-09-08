@@ -6,13 +6,13 @@ import data from '@/data/mp3/trend-favourite/data.json'
 import _ from 'lodash'
 
 type Props = {
-  //
+  children: any;
 };
 
 const classPlayList = 'xxl:col-span-3 xl:col-span-4 lg:col-span-6 slg:col-span-6 md:col-span-4 ssm:col-span-6 col-span-12'
 const classNoPlayList = 'xxl:col-span-2 lg:col-span-3 md:col-span-4 ssm:col-span-6 col-span-12'
 
-const TrendFavourite: React.FC<Props> = () => {
+const TrendFavourite: React.FC<Props> = ({ children }) => {
 
   const showPlayList = useSelector((state: RootState) => state?.global?.showPlayList);
   const [dataSong, setDataSong] = useState<any[]>([])
@@ -22,6 +22,9 @@ const TrendFavourite: React.FC<Props> = () => {
 
   return (
     <>
+      {
+        dataSong.length !== 0 && children
+      }
       <div className="grid grid-cols-12 gap-5">
         {
           dataSong.map((item, index) => (

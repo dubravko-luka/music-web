@@ -60,28 +60,34 @@ const HomeContainer: React.FC<Props> = () => {
               )
           }
           <div className={`${styles.section} pt-10`}>
-            <p className={`${styles.titleSection}`}>Xu Hướng</p>
-            <Trend />
+            <Trend>
+              <p className={`${styles.titleSection}`}>Xu Hướng</p>
+            </Trend>
           </div>
           <div className={`${styles.section} pt-10`}>
-            <p className={`${styles.titleSection}`}>Mới Phát Hành</p>
-            <NewRelease />
+            <NewRelease>
+              <p className={`${styles.titleSection}`}>Mới Phát Hành</p>
+            </NewRelease>
           </div>
           <div className={`${styles.section} pt-10`}>
-            <p className={`${styles.titleSection}`}>Top Yêu Thích</p>
-            <TrendFavourite />
+            <TrendFavourite>
+              <p className={`${styles.titleSection}`}>Top Yêu Thích</p>
+            </TrendFavourite>
           </div>
           <div className={`${styles.section} pt-10`}>
-            <p className={`${styles.titleSection}`}>Top Rap Việt</p>
-            <TopRapViet />
+            <TopRapViet>
+              <p className={`${styles.titleSection}`}>Top Rap Việt</p>
+            </TopRapViet>
           </div>
           <div className={`${styles.section} pt-10`}>
-            <p className={`${styles.titleSection}`}>Nhạc Hàn</p>
-            <KoreanMusic />
+            <KoreanMusic>
+              <p className={`${styles.titleSection}`}>Nhạc Hàn</p>
+            </KoreanMusic>
           </div>
           <div className={`${styles.section} pt-10`}>
-            <p className={`${styles.titleSection}`}>Nhạc Hoa</p>
-            <ChineseMusic />
+            <ChineseMusic>
+              <p className={`${styles.titleSection}`}>Nhạc Hoa</p>
+            </ChineseMusic>
           </div>
         </div>
         <div className={`${styles.playList} ${showPlayList ? styles.show : ''} z-9`}>
