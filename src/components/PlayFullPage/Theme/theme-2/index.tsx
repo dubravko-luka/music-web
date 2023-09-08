@@ -1,4 +1,4 @@
-import React, { memo, useRef } from 'react';
+import React, { memo, useEffect, useRef } from 'react';
 import styles from './styles.module.css'
 import { RootState } from '@/store/types';
 import { useDispatch, useSelector } from 'react-redux';
@@ -29,12 +29,22 @@ const ThemePlayFullPage2: React.FC<Props> = () => {
           .controlAudio {
             opacity: 0;
             transition: none;
+            height: 0;
+          }
+
+          .play-bottom {
+            height: 40px;
+          }
+
+          .wrapper-play-full-page {
+            height: calc(100vh - 40px)!important;
+            bottom: 40px;
           }
         `}</style>
       </Helmet>
       <div className={`${styles.wrapperTheme}`}>
         <div className={`${styles.wrapper}`}>
-          <div className="grid grid-cols-12 md:gap-x-4 gap-y-4">
+          <div className="grid grid-cols-12 md:gap-x-4 gap-y-4 relative">
             <div className={`${styles.imgPoster} md:col-span-6 col-span-12`}>
               <img src={imgMainFullPage ? imgMainFullPage : `/poster/${extractLinkImgZingMp3(idPlay?.thumbnailM)}`} alt="" />
             </div>

@@ -62,7 +62,7 @@ const PlayFullPage: React.FC<Props> = () => {
         `}</style>
       </Helmet>
       <div className={`${styles.wrapper} flex justify-center items-center`}>
-        <div className={`${styles.action} flex items-center`}>
+        <div className={`${styles.action} ${styles.controlNavFullPage} flex items-center`}>
           <div ref={refVersion} className={`relative`}>
             <div className={`${styles.headerVersion}`} onClick={() => setShowVersion(!showVersion)}>
               V{version}

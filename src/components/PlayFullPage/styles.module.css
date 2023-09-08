@@ -83,3 +83,15 @@
 .optionVersion.active * {
   color: #fff;
 }
+
+@media (max-height: 479px) {
+  .controlNavFullPage {
+    transform: scale(.8);
+  }
+}
+
+@media (max-height: 320px) {
+  .controlNavFullPage {
+    transform: scale(.6);
+  }
+}

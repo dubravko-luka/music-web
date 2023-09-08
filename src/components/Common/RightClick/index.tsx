@@ -118,7 +118,7 @@ const RightClick: React.FC<Props> = ({ children }) => {
           }}
         >
           {
-            playList.findIndex(item => item.encodeId === idPlay.encodeId) - 1 < 0
+            playList.findIndex(item => item.encodeId === idPlay?.encodeId) - 1 < 0
               ? (
                 <></>
               ) : (

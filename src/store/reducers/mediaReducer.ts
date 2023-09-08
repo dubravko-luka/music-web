@@ -5,7 +5,7 @@ import data from '@/data/mp3/trend/data.json'
 const initialState: MediaState = {
   volume: 100,
   muted: false,
-  id: _.sampleSize(data, 1)[0],
+  id: null,
   playList: [],
   random: false,
   recentPlay: [],

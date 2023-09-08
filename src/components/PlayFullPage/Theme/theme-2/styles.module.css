@@ -61,3 +61,55 @@
     width: 100%;
   }
 }
+
+@media (max-width: 479px) {
+  .wrapperTheme {
+    width: 100%;
+  }
+
+  .wrapper {
+    width: 100%;
+  }
+}
+
+@media (max-height: 767px) {
+
+  .imgPoster {
+    opacity: .3;
+  }
+
+  .info {
+    position: absolute;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+
+  .wrapperTheme {
+    padding-top: 50px;
+  }
+}
+
+@media (max-height: 639px) {
+
+  .wrapperTheme {
+    padding-top: 50px;
+    transform: scale(.7);
+  }
+}
+
+@media (max-height: 479px) {
+  .wrapperTheme {
+    padding-top: 50px;
+    transform: scale(.5);
+  }
+}
+
+@media (min-width: 768px) {
+  .info {
+    position: relative;
+  }
+
+  .imgPoster {
+    opacity: 1;
+  }
+}

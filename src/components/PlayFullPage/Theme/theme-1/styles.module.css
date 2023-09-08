@@ -61,3 +61,27 @@
   height: 100%;
   object-fit: cover;
 }
+
+@media (max-height: 767px) {
+  .playPoster {
+    transform: scale(.8);
+  }
+}
+
+@media (max-height: 639px) {
+  .playPoster {
+    transform: scale(.6);
+  }
+}
+
+@media (max-height: 479px) {
+  .playPoster {
+    transform: scale(.4);
+  }
+}
+
+@media (max-height: 330px) {
+  .playPoster {
+    transform: scale(.3);
+  }
+}

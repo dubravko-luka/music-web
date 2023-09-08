@@ -90,6 +90,9 @@ export const savePlayList = async (id: string) => {
 }
 
 export const extractLinkImgZingMp3 = (url: string) => {
+  if (!url) {
+    return '';
+  }
   const parts = url.split("/");
   return parts.slice(3).join("/");
 }
