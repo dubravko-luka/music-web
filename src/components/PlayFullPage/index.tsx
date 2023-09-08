@@ -75,7 +75,7 @@ const PlayFullPage: React.FC<Props> = () => {
                       <Space direction="vertical">
                         {
                           new Array(2).fill(null).map((_, index) => (
-                            <Radio.Button className={`${styles.optionVersion} ${version === index + 1 ? styles.active : ''} whitespace-nowrap`} value={index + 1}>Ver. {index + 1}</Radio.Button>
+                            <Radio.Button key={index} className={`${styles.optionVersion} ${version === index + 1 ? styles.active : ''} whitespace-nowrap`} value={index + 1}>Ver. {index + 1}</Radio.Button>
                           ))
                         }
                       </Space>
