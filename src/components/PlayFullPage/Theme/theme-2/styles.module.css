@@ -26,12 +26,28 @@
   display: flex;
   justify-content: space-between;
   height: 100%;
+  overflow: hidden;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+
+  100% {
+    transform: translateX(calc(-100% + 250px));
+  }
 }
 
 .name {
   color: #fff;
   font-size: 20px;
   font-weight: bold;
+  white-space: nowrap;
+}
+
+.name.animation {
+  animation: marquee 4s linear infinite alternate;
 }
 
 .singer {

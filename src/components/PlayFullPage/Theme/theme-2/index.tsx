@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useRef } from 'react';
+import React, { memo, useEffect, useRef, useState } from 'react';
 import styles from './styles.module.css'
 import { RootState } from '@/store/types';
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,11 +16,24 @@ type Props = {
 
 const ThemePlayFullPage2: React.FC<Props> = () => {
 
+  const elementRef: any = useRef();
   const dispatch = useDispatch();
   const idPlay = useSelector((state: RootState) => state?.media?.id);
   const imgMainFullPage = useSelector((state: RootState) => state?.global.imgMainFullPage);
   const volume = useSelector((state: RootState) => state?.media?.volume);
   const muted = useSelector((state: RootState) => state?.media?.muted);
+
+  const [widthName, setWidthName] = useState(0);
+
+  useEffect(() => {
+    const element = elementRef.current;
+    if (element) {
+      const width = element.offsetWidth;
+      setWidthName(width);
+    }
+  }, []);
+
+  console.log('---------->', widthName);
 
   return (
     <>
@@ -50,7 +63,7 @@ const ThemePlayFullPage2: React.FC<Props> = () => {
             </div>
             <div className={`${styles.info} md:col-span-6 col-span-12`}>
               <div>
-                <p className={`${styles.name}`}>{idPlay.title}</p>
+                <p ref={elementRef} className={`${styles.name} ${widthName >= 300 ? styles.animation : ''}`}>{idPlay.title}</p>
                 <p className={`${styles.singer} mt-5`}>{idPlay.artistsNames}</p>
                 <div className={`${styles.controlPlay} w-full relative mt-5`}>
                   <Control />
