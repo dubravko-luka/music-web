@@ -8,11 +8,12 @@ import Setting from "./components/setting"
 import User from "./components/user"
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "@/store/types"
-import { setEnabledInput, setShowPlaylist, setShowSearch } from "@/store/actions/globalAction"
+import { setEnabledInputSearch, setShowPlaylist, setShowSearch } from "@/store/actions/globalAction"
 import MusicCardRectangle from "@/components/Card/MusicCardRectangleSearch"
 import EventListener from "react-event-listener"
 import { ALL_LIST_MUSIC } from "@/helpers/constants"
 import _ from "lodash"
+import { useKeyPress } from "@/hooks/useKeyPress"
 
 const mainMenu = [
   {
@@ -40,17 +41,21 @@ const mainMenu = [
 const Navigation: React.FC = () => {
 
   const router = useRouter();
+  const dispatch = useDispatch();
+  const { onShowSearchKeyPress } = useKeyPress()
+
   const [showMenu, setShowMenu] = useState(false);
-  const width = useSelector((state: RootState) => state?.window?.width);
+
   const refSearch: any = useRef(null);
   const refInputSeach: any = useRef(null);
   const refMenu: any = useRef(null);
   const refSetting: any = useRef(null);
+
   const [showSetting, setShowSetting] = useState(false)
-  const dispatch = useDispatch();
   const showPlayList = useSelector((state: RootState) => state?.global?.showPlayList)
   const showFullPage = useSelector((state: RootState) => state?.global.fullPage);
   const showSearch = useSelector((state: RootState) => state?.global.showSearch);
+  const width = useSelector((state: RootState) => state?.window?.width);
 
   const handleClickOutside = (event: any, ref: any, action: any) => {
     if (ref.current && !ref.current.contains(event.target)) {
@@ -61,7 +66,7 @@ const Navigation: React.FC = () => {
   const handleShowSearch = (event: any) => {
     if (refSearch.current && !refSearch.current.contains(event.target)) {
       dispatch(setShowSearch(false));
-      dispatch(setEnabledInput(false))
+      dispatch(setEnabledInputSearch(false))
     }
   }
 
@@ -104,18 +109,9 @@ const Navigation: React.FC = () => {
     setSearchResults(_.uniqBy(filteredResults, 'encodeId'));
   }
 
-  const handleKeyPress = (event: any) => {
-    if (event.keyCode === 191) {
-      dispatch(setShowSearch(true));
-      dispatch(setEnabledInput(true))
-      event.preventDefault();
-      refInputSeach.current.focus();
-    }
-  };
-
   return (
     <>
-      <EventListener target="window" onKeyDown={handleKeyPress} />
+      <EventListener target="window" onKeyDown={(e: any) => onShowSearchKeyPress(e, refInputSeach)} />
       <header className={`${styles.headerWrapper} navigation`}>
         <div className="flex justify-between items-center h-full px-5 relative">
           <div className={`${styles.headerLogoSearch} flex items-center gap-2`}>
@@ -142,7 +138,7 @@ const Navigation: React.FC = () => {
                 className={`${styles.headerSearchIcon}`}
                 onClick={() => {
                   dispatch(setShowSearch(true))
-                  dispatch(setEnabledInput(true))
+                  dispatch(setEnabledInputSearch(true))
                   refInputSeach.current.focus();
                 }}
               >
@@ -151,7 +147,7 @@ const Navigation: React.FC = () => {
               <input
                 onFocus={() => {
                   dispatch(setShowSearch(true))
-                  dispatch(setEnabledInput(true))
+                  dispatch(setEnabledInputSearch(true))
                 }}
                 ref={refInputSeach}
                 value={searchTerm}

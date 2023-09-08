@@ -9,6 +9,7 @@ import { setIdPlay, setPlayList } from '@/store/actions/mediaAction';
 import Copy from '@/components/Common/Copy';
 import { mainSite } from '@/helpers/constants';
 import { extractLinkImgZingMp3 } from '@/helpers/common';
+import { usePlayList } from '@/hooks/usePlayList';
 
 type Props = {
   song: any
@@ -17,22 +18,9 @@ type Props = {
 const MusicCardRectangle: React.FC<Props> = ({ song }) => {
 
   const dispatch = useDispatch()
+  const { onAddPlayList } = usePlayList()
   const idPlay = useSelector((state: RootState) => state?.media?.id);
   const playList = useSelector((state: RootState) => state?.media?.playList);
-
-  const addPlayList = async () => {
-    const _playList = [...playList];
-
-    const songIndex = _playList.findIndex(item => item.encodeId === song.encodeId);
-
-    if (songIndex !== -1) {
-      _playList.splice(songIndex, 1);
-    } else {
-      _playList.push({ ...song });
-    }
-
-    dispatch(setPlayList([..._playList]))
-  }
 
   const [contextMenuStyle, setContextMenuStyle] = useState({
     top: 'calc(100%)'
@@ -89,7 +77,7 @@ const MusicCardRectangle: React.FC<Props> = ({ song }) => {
                   ...contextMenuStyle,
                 }}
               >
-                <div className={`${styles.optionItem} flex items-center gap-2`} onClick={addPlayList}>
+                <div className={`${styles.optionItem} flex items-center gap-2`} onClick={() => onAddPlayList(song)}>
                   <div className={`${styles.iconOption}`}>
                     {
                       playList?.findIndex((item) => item.encodeId === song?.encodeId) !== -1
@@ -103,12 +91,6 @@ const MusicCardRectangle: React.FC<Props> = ({ song }) => {
                       : <p className='whitespace-nowrap text-white text-xs py-2'>Thêm vào danh sách phát</p>
                   }
                 </div>
-                {/* <div onClick={() => downloadSong(`/audio/${song?.encodeId}/128`, song.alias)} className={`${styles.optionItem} flex items-center gap-2`}>
-                  <div className={`${styles.iconOption}`}>
-                    <Svg name='download' path='icons' />
-                  </div>
-                  <p className='whitespace-nowrap text-white text-xs py-2'>Tải xuống</p>
-                </div> */}
                 <Copy value={`${mainSite}/play/${song?.alias}`}>
                   <div className={`${styles.optionItem} flex items-center gap-2`}>
                     <div className={`${styles.iconOption}`}>

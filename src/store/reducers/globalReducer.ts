@@ -1,4 +1,4 @@
-import { GlobalAction, GlobalState, SET_SHOW_PLAY_LIST, SET_SHOW_FULL_PAGE, SET_BACK_GROUND_FULL_PAGE, SET_IMG_MAIN_FULL_PAGE, SET_SHOW_MAIN_IMG, SET_SHOW_SEARCH, SET_SHOW_BACKGROUND, SET_SHOW_CONTROL, SET_ENABLED_INPUT } from '../types/globalTypes';
+import { GlobalAction, GlobalState, SET_SHOW_PLAY_LIST, SET_SHOW_FULL_PAGE, SET_BACK_GROUND_FULL_PAGE, SET_IMG_MAIN_FULL_PAGE, SET_SHOW_MAIN_IMG, SET_SHOW_SEARCH, SET_SHOW_BACKGROUND, SET_SHOW_CONTROL, SET_ENABLED_INPUT_SEARCH } from '../types/globalTypes';
 
 const initialState: GlobalState = {
   showPlayList: true,
@@ -9,7 +9,7 @@ const initialState: GlobalState = {
   showSearch: false,
   showBackground: true,
   showControl: true,
-  enabledInput: false
+  enabledInputSearch: false
 };
 
 const globalReducer = (state = initialState, action: GlobalAction): GlobalState => {
@@ -54,10 +54,10 @@ const globalReducer = (state = initialState, action: GlobalAction): GlobalState 
         ...state,
         showControl: action?.payload,
       };
-    case SET_ENABLED_INPUT:
+    case SET_ENABLED_INPUT_SEARCH:
       return {
         ...state,
-        enabledInput: action?.payload,
+        enabledInputSearch: action?.payload,
       };
     default:
       return state;

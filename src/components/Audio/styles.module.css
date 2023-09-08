@@ -1,0 +1,82 @@
+.controlPlay {
+  max-width: 476px;
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.timeSong {
+  text-shadow: 0px 0px 5px #18191aff;
+}
+
+.actionPlay svg {
+  width: 40px;
+  height: 40px;
+}
+
+.action * {
+  transition: none !important;
+}
+
+.action svg {
+  width: 16px;
+  height: 16px;
+}
+
+.action.disabled {
+  opacity: .5;
+}
+
+.action.active svg * {
+  fill: #AE32FF;
+}
+
+.action.strokeActive svg * {
+  stroke: #AE32FF;
+}
+
+.audio {
+  width: 0;
+  height: 0;
+  position: fixed;
+  top: -100vh;
+  opacity: 0;
+  z-index: -100;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(-360deg);
+  }
+}
+
+.canPlay {
+  animation: rotate 1s linear infinite;
+}
+
+@media (max-width: 1023px) {
+  .controlPlay {
+    left: 0px;
+    transform: translate(0px, -50%);
+  }
+
+  /* .fullPageControl .controlPlay {
+    left: 50%;
+    transform: translate(-50%, -50%);
+  } */
+}
+
+@media (max-width: 767px) {
+  .controlPlay {
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+@media (max-width: 640px) {
+  .controlPlay {
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+}

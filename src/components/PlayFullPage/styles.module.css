@@ -13,60 +13,6 @@
   }
 }
 
-.playPoster {
-  width: var(--width);
-  height: var(--width);
-  padding: 20px;
-}
-
-.playPosterMain {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  overflow: hidden;
-  position: relative;
-  animation: spin 15s linear infinite;
-  animation-play-state: paused;
-}
-
-.playPosterMain.play {
-  animation-play-state: running;
-}
-
-.playPosterMain:before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 100px;
-  height: 100px;
-  transform: translate(-50%, -50%);
-  background: rgba(24, 25, 26, 0.7);
-  border-radius: 50%;
-  z-index: 1;
-}
-
-.playPosterMain:after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 50px;
-  height: 50px;
-  transform: translate(-50%, -50%);
-  background: #18191aff;
-  border-radius: 50%;
-}
-
-.playPosterImg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
 .action {
   position: fixed;
   top: 0;

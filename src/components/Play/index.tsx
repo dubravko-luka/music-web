@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useRef, useState } from 'react';
+import React, { memo, useEffect, useRef } from 'react';
 import InputRange from 'react-input-range';
 import styles from './styles.module.css'
 import Svg from '../Common/Svg';
@@ -7,201 +7,12 @@ import PlayFullPage from '@/components/PlayFullPage';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { setShowControl, setShowFullPage, setShowPlaylist } from '@/store/actions/globalAction';
-import { setCanPlay, setIdPlay, setMuted, setPlaying, setRandom, setRecentPlay, setVolume } from '@/store/actions/mediaAction';
-import { extractLinkImgZingMp3, formatTimePlay, saveHeardRecently } from '@/helpers/common';
+import { setMuted, setVolume } from '@/store/actions/mediaAction';
+import { extractLinkImgZingMp3 } from '@/helpers/common';
 import _ from 'lodash';
 import Copy from '../Common/Copy';
-import HeadPlay from '../Common/HeadPlay';
-import EventListener from 'react-event-listener';
-import { ALL_LIST_MUSIC } from '@/helpers/constants';
-
-type AudioProps = {
-  volumn: number,
-  audioRef: any
-}
-
-const Audio: React.FC<AudioProps> = ({ volumn, audioRef }) => {
-  const [currentTime, setCurrentTime] = useState(0);
-  const isPlaying = useSelector((state: RootState) => state?.media?.isPlaying);
-  const playList = useSelector((state: RootState) => state?.media?.playList);
-  const canPlay = useSelector((state: RootState) => state?.media?.canPlay);
-  const randomSong = useSelector((state: RootState) => state?.media?.random);
-  const idPlay = useSelector((state: RootState) => state?.media?.id);
-  const enabledInput = useSelector((state: RootState) => state?.global?.enabledInput);
-  const dispatch = useDispatch()
-
-  const recentPlay = async () => {
-    const storedArray: any = await saveHeardRecently(idPlay?.encodeId);
-    const recent = await ALL_LIST_MUSIC.filter((item) => storedArray.includes(item.encodeId));
-
-    const seenIds = new Set();
-    const array_eraser: any[] = []
-
-    await recent.forEach(item => {
-      if (!seenIds.has(item.encodeId)) {
-        array_eraser.push(item);
-        seenIds.add(item.encodeId);
-      }
-    })
-    await dispatch(setRecentPlay([...array_eraser]))
-  }
-
-  const onPlay = async () => {
-    if (isPlaying) {
-      audioRef.current.pause();
-    } else {
-      audioRef.current.play();
-      audioRef.current.volume = volumn / 100;
-      recentPlay()
-    }
-    dispatch(setPlaying(!isPlaying));
-  };
-
-  const handleLoop = () => {
-    audioRef.current.loop = !audioRef.current.loop;
-  };
-
-  const handleTimeUpdate = () => {
-    if (audioRef.ended) {
-      dispatch(setPlaying(false))
-    }
-    setCurrentTime(Math.floor(audioRef.current.currentTime));
-  };
-
-  const onChangeTime = (e: any) => {
-    audioRef.current.currentTime = e;
-    setCurrentTime(e);
-  }
-
-  useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.load();
-      audioRef.current.play();
-      recentPlay()
-      dispatch(setCanPlay(false))
-    }
-  }, [idPlay])
-
-  const randomAllSong = () => {
-    const randomMusic = _.sampleSize(ALL_LIST_MUSIC, 1);
-    dispatch(setIdPlay(randomMusic[0]))
-  }
-
-  const handleEnd = () => {
-    if (randomSong) {
-      if (playList.length <= 1) {
-        randomAllSong()
-      } else {
-        const filteredArray = playList.filter(item => item.encodeId !== idPlay?.encodeId);
-        const randomIndex = Math.floor(Math.random() * filteredArray.length);
-        const newRand = filteredArray[randomIndex];
-        dispatch(setIdPlay(newRand))
-      }
-    } else if (!audioRef?.current?.loop && playList?.length > 0) {
-      const songIndex = playList.findIndex(item => item.encodeId === idPlay.encodeId);
-      if (playList[songIndex + 1]) {
-        dispatch(setIdPlay(playList[songIndex + 1]))
-      } else {
-        randomAllSong()
-      }
-    } else {
-      randomAllSong()
-    }
-  }
-
-  const handleCanPlayThrough = () => {
-    dispatch(setCanPlay(true))
-  }
-
-  const handlePrev = () => {
-    const songIndex = playList.findIndex(item => item.encodeId === idPlay.encodeId);
-    if (playList[songIndex - 1]) {
-      dispatch(setIdPlay(playList[songIndex - 1]))
-    }
-  }
-
-  const handleNext = () => {
-    const songIndex = playList.findIndex(item => item.encodeId === idPlay.encodeId);
-    if (playList[songIndex + 1]) {
-      dispatch(setIdPlay(playList[songIndex + 1]))
-    } else {
-      randomAllSong()
-    }
-  }
-
-  const handleKeyPress = (event: any) => {
-    if (event.keyCode === 32 && !enabledInput) {
-      onPlay()
-    }
-  };
-
-  return (
-    <>
-      <EventListener target="window" onKeyDown={handleKeyPress} />
-      <HeadPlay />
-      <div className={`${styles.controlPlay} h-full flex items-center`}>
-        <div className='w-full timeSong'>
-          <div className="flex gap-2">
-            <span className='text-xs text-gray-500'>{formatTimePlay(Number(currentTime))}</span>
-            <InputRange
-              formatLabel={() => ""}
-              maxValue={idPlay.duration as number ?? 0}
-              minValue={0}
-              step={1}
-              value={currentTime}
-              onChange={onChangeTime}
-            />
-            <span className='text-xs text-gray-500'>{formatTimePlay(idPlay.duration as number ?? 0)}</span>
-          </div>
-          <div className="flex justify-center items-center gap-x-10 my-2">
-            <div
-              className={`${styles.action} ${randomSong ? styles.strokeActive : ''}`}
-              onClick={() => dispatch(setRandom(!randomSong))}
-            >
-              <Svg name='mix' path='icons' />
-            </div>
-            <div className={`${styles.action} ${playList.findIndex(item => item.encodeId === idPlay.encodeId) - 1 < 0 ? styles.disabled : ''}`} onClick={handlePrev}>
-              <Svg name='prev' path='icons' />
-            </div>
-            <div className={`${styles.actionPlay}`} onClick={onPlay} style={{ display: isPlaying && canPlay ? 'block' : 'none' }}>
-              <Svg name='pause' path='icons' />
-            </div>
-            <div className={`${styles.actionPlay}`} onClick={onPlay} style={{ display: !isPlaying && canPlay ? 'block' : 'none' }}>
-              <Svg name='play' path='icons' />
-            </div>
-            <div className={`${styles.canPlay}`} onClick={onPlay} style={{ display: canPlay ? 'none' : 'block' }}>
-              <Svg name='loading-play' path='icons' />
-            </div>
-            <div className={`${styles.action}`} onClick={handleNext}>
-              <Svg name='next' path='icons' />
-            </div>
-            <div
-              className={`${styles.action} ${audioRef?.current?.loop ? styles.active : ''}`}
-              onClick={handleLoop}
-            >
-              <Svg name='loop' path='icons' />
-            </div>
-          </div>
-        </div>
-      </div>
-      <audio
-        id="audio"
-        className={`${styles.audio}`}
-        ref={audioRef}
-        onTimeUpdate={handleTimeUpdate}
-        onCanPlayThrough={handleCanPlayThrough}
-        onPause={() => dispatch(setPlaying(false))}
-        onPlay={() => dispatch(setPlaying(true))}
-        onEnded={handleEnd}
-      >
-        <source
-          src={`/audio/${idPlay?.encodeId}/128`}
-          type="audio/mp3"
-        />
-      </audio>
-    </>
-  )
-}
+import Audio from '@/components/Audio';
+import Waves from './components/waves';
 
 type Props = {
   //
@@ -215,6 +26,9 @@ const Play: React.FC<Props> = () => {
   const showControl = useSelector((state: RootState) => state?.global.showControl);
   const showBackground = useSelector((state: RootState) => state?.global.showBackground);
   const bgFullPage = useSelector((state: RootState) => state?.global.bgFullPage);
+  const showPlayList = useSelector((state: RootState) => state?.global?.showPlayList);
+  const idPlay = useSelector((state: RootState) => state?.media?.id);
+
   const dispatch = useDispatch();
 
   const handleMuted = () => {
@@ -237,24 +51,14 @@ const Play: React.FC<Props> = () => {
     }
   }, [muted])
 
-  const showPlayList = useSelector((state: RootState) => state?.global?.showPlayList);
-  const idPlay = useSelector((state: RootState) => state?.media?.id);
-
   return (
     <>
-      <div className={`${styles.audioBlur} ${!showControl ? styles.show : ''} z-9`} onClick={() => dispatch(setShowControl(true))}>
-        <div className={`${styles.wavesBlock} relative`}>
-          <div className={`${styles.iconPlay}`}>
-            <Svg name='play-1' path='icons' />
-          </div>
-          <div className={`${styles.wave_0} ${styles.waves}`}></div>
-          <div className={`${styles.wave_1} ${styles.waves}`}></div>
-          <div className={`${styles.wave_2} ${styles.waves}`}></div>
-        </div>
+      {/* Waves show when hide control audio */}
+      <div onClick={() => dispatch(setShowControl(true))}>
+        <Waves />
       </div>
-      <div
-        className={`${styles.playBottom} ${showControl ? styles.show : ''} ${showFullPage ? styles.fullPageControl : ''} px-5 py-2 flex items-center z-40`}
-      >
+      <div className={`${styles.playBottom} ${showControl ? styles.show : ''} ${showFullPage ? styles.fullPageControl : ''} px-5 py-2 flex items-center z-40`}>
+        {/* Control show hide control audio */}
         {
           showFullPage
             ? <></>
@@ -263,7 +67,7 @@ const Play: React.FC<Props> = () => {
             </div>
         }
         <div className="w-full h-full flex justify-between gap-x-3 items-center relative">
-          {/*  */}
+          {/* Left control: share and another action */}
           <div className={`${styles.infoSong} ${showFullPage ? 'hidden' : ''} h-full`}>
             <div className="h-full flex items-center gap-x-4 p-2">
               <div className={`h-full`}>
@@ -294,12 +98,11 @@ const Play: React.FC<Props> = () => {
               </div>
             </div>
           </div>
-          {/*  */}
+          {/* Audio */}
           <Audio
-            volumn={volume}
             audioRef={audioRef}
           />
-          {/*  */}
+          {/* Right control */}
           <div className={`h-full flex items-center justify-end ${showFullPage ? 'hidden' : ''}`}>
             <div className={`${styles.fullPage} mr-2`} onClick={() => dispatch(setShowFullPage(!showFullPage))}>
               <Svg name='full' path='icons' />
@@ -330,6 +133,8 @@ const Play: React.FC<Props> = () => {
           </div>
         </div>
       </div >
+
+      {/* Full page view */}
       {
         <div className={`${styles.wrapperPlayFullPage} ${showFullPage ? styles.active : ''}`}>
           {
@@ -343,6 +148,8 @@ const Play: React.FC<Props> = () => {
           }
         </div >
       }
+
+      {/* Background fullpage */}
       <div className={`${styles.wrapBgImageFullpage} ${showFullPage ? styles.active : ''} relative`}>
         {
           showBackground

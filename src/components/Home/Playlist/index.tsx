@@ -4,6 +4,7 @@ import MusicCardRectangle2 from '@/components/Card/MusicCardRectangle-2';
 import Line from '@/components/Common/Line';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
+import { usePlayList } from '@/hooks/usePlayList';
 
 type Props = {
   //
@@ -11,8 +12,14 @@ type Props = {
 
 const Playlist: React.FC<Props> = () => {
 
+  const { getPlayList } = usePlayList()
+
   const idPlay = useSelector((state: RootState) => state?.media?.id)
-  const playList = useSelector((state: RootState) => state?.media?.playList)
+  const playList = useSelector((state: RootState) => state?.media?.playList);
+
+  useEffect(() => {
+    getPlayList()
+  }, [])
 
   return (
     <>

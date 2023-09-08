@@ -1,5 +1,5 @@
 import axios from "axios";
-import { LOCALSTORAGE_HEARD_RECENLY, mainSite } from "./constants";
+import { LOCALSTORAGE_HEARD_RECENLY, LOCALSTORAGE_PLAY_LIST, mainSite } from "./constants";
 
 export const alt = "review phim"
 
@@ -69,6 +69,22 @@ export const saveHeardRecently = async (id: string) => {
   }
 
   await localStorage.setItem(LOCALSTORAGE_HEARD_RECENLY, JSON.stringify(storedArray));
+
+  return storedArray;
+}
+
+export const savePlayList = async (id: string) => {
+  const storedArray = await JSON.parse(localStorage.getItem(LOCALSTORAGE_PLAY_LIST) as string) || [];
+
+  const existingIndex = await storedArray.indexOf(id);
+
+  if (existingIndex !== -1) {
+    await storedArray.splice(existingIndex, 1);
+  }
+
+  await storedArray.unshift(id);
+
+  await localStorage.setItem(LOCALSTORAGE_PLAY_LIST, JSON.stringify(storedArray));
 
   return storedArray;
 }

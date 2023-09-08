@@ -1,25 +1,18 @@
 import React, { memo, useEffect, useRef, useState } from 'react';
 import styles from './styles.module.css'
 import { Helmet } from 'react-helmet';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '@/store/types';
+import { useDispatch } from 'react-redux';
 import Setting from '@/components/Layout/Navigation/components/setting';
 import Svg from '@/components/Common/Svg';
 import { setShowFullPage } from '@/store/actions/globalAction';
-import { extractLinkImgZingMp3 } from '@/helpers/common';
+import Theme_1 from './Theme/theme_1';
 
 type Props = {
   //
 };
 
 const PlayFullPage: React.FC<Props> = () => {
-
-  const isPlaying = useSelector((state: RootState) => state?.media?.isPlaying);
   const [showSetting, setShowSetting] = useState(false)
-  const idPlay = useSelector((state: RootState) => state?.media?.id);
-  const imgMainFullPage = useSelector((state: RootState) => state?.global.imgMainFullPage);
-  const showImgMain = useSelector((state: RootState) => state?.global.showImgMain);
-  const width = useSelector((state: RootState) => state?.window.width);
   const refSetting: any = useRef(null);
   const dispatch = useDispatch()
 
@@ -71,27 +64,7 @@ const PlayFullPage: React.FC<Props> = () => {
             </div>
           </div>
         </div>
-        {
-          showImgMain
-            ? (
-              <div
-                className={`${styles.playPoster}`}
-                style={{
-                  '--width': `${width > 700 ? 600 : width - 30}px`
-                } as any}
-              >
-                <div className={`${styles.playPosterMain} ${isPlaying ? styles.play : ''}`}>
-                  <img
-                    className={styles.playPosterImg}
-                    src={imgMainFullPage ? imgMainFullPage : `/poster/${extractLinkImgZingMp3(idPlay?.thumbnailM)}`}
-                    alt=""
-                  />
-                </div>
-              </div>
-            ) : (
-              <></>
-            )
-        }
+        <Theme_1 />
       </div>
     </>
   );

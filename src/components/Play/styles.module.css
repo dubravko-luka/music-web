@@ -122,86 +122,6 @@
   background: rgba(100, 100, 100, 0.5);
 }
 
-/* -------------------------------- */
-.controlPlay {
-  max-width: 476px;
-  width: 100%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-@media (max-width: 1023px) {
-  .controlPlay {
-    left: 0px;
-    transform: translate(0px, -50%);
-  }
-
-  .fullPageControl .controlPlay {
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-}
-
-.actionPlay svg {
-  width: 40px;
-  height: 40px;
-}
-
-.action * {
-  transition: none !important;
-}
-
-.action svg {
-  width: 16px;
-  height: 16px;
-}
-
-.action.disabled {
-  opacity: .5;
-}
-
-.action.active svg * {
-  fill: #AE32FF;
-}
-
-.action.strokeActive svg * {
-  stroke: #AE32FF;
-}
-
-.audio {
-  width: 0;
-  height: 0;
-  position: fixed;
-  top: -100vh;
-  opacity: 0;
-  z-index: -100;
-}
-
-/* ----------------- */
-
-.audioBlur {
-  position: fixed;
-  left: 20px;
-  bottom: 20px;
-  width: 100px;
-  height: 100px;
-  visibility: hidden;
-}
-
-.audioBlur.show {
-  visibility: visible;
-}
-
-.wavesBlock {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .fullPage {
   width: 28px;
   height: 28px;
@@ -281,93 +201,14 @@
   z-index: 1;
 }
 
-@keyframes rotate {
-  0% {
-    transform: rotate(-360deg);
-  }
-}
-
-.canPlay {
-  animation: rotate 1s linear infinite;
-}
-
-@keyframes waves {
-  0% {
-    -webkit-transform: scale(0.2, 0.2);
-    transform: scale(0.2, 0.2);
-    opacity: 0;
-  }
-
-  50% {
-    opacity: 0.9;
-  }
-
-  100% {
-    -webkit-transform: scale(0.9, 0.9);
-    transform: scale(0.9, 0.9);
-    opacity: 0;
-  }
-}
-
-.waves {
-  position: absolute;
-  top: 0;
-  left: 0;
-  background: rgb(235, 0, 255, 1);
-  opacity: 0;
-  border-radius: 100%;
-  -webkit-animation: waves 3s ease-in-out infinite;
-  animation: waves 3s ease-in-out infinite;
-  width: 100%;
-  height: 100%;
-}
-
-.wave_0 {
-  -webkit-animation-delay: 0s;
-  animation-delay: 0s;
-}
-
-.wave_1 {
-  -webkit-animation-delay: 1s;
-  animation-delay: 1s;
-}
-
-.wave_2 {
-  -webkit-animation-delay: 2s;
-  animation-delay: 2s;
-}
-
-.iconPlay {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: #0500FF;
-  position: relative;
-  z-index: 2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 @media (max-width: 767px) {
   .controlVolumn {
     visibility: hidden;
-  }
-
-  .controlPlay {
-    left: 50%;
-    transform: translate(-50%, -50%);
   }
 
   .fullPage {
     position: absolute;
     top: 0;
     right: -20px;
-  }
-}
-
-@media (max-width: 640px) {
-  .controlPlay {
-    transform: translate(-50%, -50%) scale(0.8);
   }
 }

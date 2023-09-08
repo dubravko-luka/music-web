@@ -1,7 +1,6 @@
-import { RootState } from '@/store/types';
+import { useKeyPress } from '@/hooks/useKeyPress';
 import React, { memo } from 'react';
 import EventListener from 'react-event-listener';
-import { useSelector } from 'react-redux';
 
 type Props = {
   //
@@ -9,17 +8,11 @@ type Props = {
 
 const KeyPress: React.FC<Props> = () => {
 
-  const enabledInput = useSelector((state: RootState) => state?.global?.enabledInput);
-
-  const handleKeyPress = (event: any) => {
-    if (event.keyCode === 32 && !enabledInput) {
-      event.preventDefault();
-    }
-  };
+  const { pauseKeyPress } = useKeyPress()
 
   return (
     <>
-      <EventListener target="window" onKeyDown={handleKeyPress} />
+      <EventListener target="window" onKeyDown={(e: any) => pauseKeyPress(e)} />
     </>
   );
 };

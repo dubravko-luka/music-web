@@ -1,0 +1,91 @@
+.audioBlur {
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+  width: 100px;
+  height: 100px;
+  visibility: hidden;
+}
+
+.audioBlur.show {
+  visibility: visible;
+}
+
+.wavesBlock {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@keyframes scale {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+.iconPlay {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #0500FF;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: scale 2s linear infinite;
+}
+
+@keyframes waves {
+  0% {
+    -webkit-transform: scale(0.2, 0.2);
+    transform: scale(0.2, 0.2);
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 0.9;
+  }
+
+  100% {
+    -webkit-transform: scale(0.9, 0.9);
+    transform: scale(0.9, 0.9);
+    opacity: 0;
+  }
+}
+
+.waves {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgb(235, 0, 255, 1);
+  opacity: 0;
+  border-radius: 100%;
+  -webkit-animation: waves 3s ease-in-out infinite;
+  animation: waves 3s ease-in-out infinite;
+  width: 100%;
+  height: 100%;
+}
+
+.wave_0 {
+  -webkit-animation-delay: 0s;
+  animation-delay: 0s;
+}
+
+.wave_1 {
+  -webkit-animation-delay: 1s;
+  animation-delay: 1s;
+}
+
+.wave_2 {
+  -webkit-animation-delay: 2s;
+  animation-delay: 2s;
+}
