@@ -29,16 +29,16 @@ const ThemePlayFullPage2: React.FC<Props> = () => {
           .controlAudio {
             opacity: 0;
             transition: none;
-            height: 0;
+            height: 20px;
           }
 
           .play-bottom {
-            height: 40px;
+            height: 60px;
           }
 
           .wrapper-play-full-page {
-            height: calc(100vh - 40px)!important;
-            bottom: 40px;
+            height: calc(100vh - 60px)!important;
+            bottom: 60px;
           }
         `}</style>
       </Helmet>

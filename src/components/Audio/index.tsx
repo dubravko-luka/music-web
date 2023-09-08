@@ -92,7 +92,7 @@ const Audio: React.FC<AudioProps> = () => {
 
   useEffect(() => {
     dispatch(setAudioRef(refAudio))
-  }, [])
+  }, [refAudio])
 
   return (
     <>
