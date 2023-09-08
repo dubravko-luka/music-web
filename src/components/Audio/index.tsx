@@ -1,30 +1,30 @@
-import React, { memo, useEffect, useState } from 'react';
+import React, { memo, useEffect, useRef, useState } from 'react';
 import HeadPlay from '../Common/HeadPlay';
 import EventListener from 'react-event-listener';
 import { usePlay } from '@/hooks/usePlay';
 import { useKeyPress } from '@/hooks/useKeyPress';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
-import { setCanPlay, setIdPlay, setPlaying, setRandom } from '@/store/actions/mediaAction';
+import { setAudioRef, setCanPlay, setIdPlay, setPlaying } from '@/store/actions/mediaAction';
 import InputRange from 'react-input-range';
 import { formatTimePlay } from '@/helpers/common';
 import styles from './styles.module.css'
-import Svg from '../Common/Svg';
+import Control from './control';
 type AudioProps = {
-  audioRef: any
+  // 
 }
 
-const Audio: React.FC<AudioProps> = ({ audioRef }) => {
+const Audio: React.FC<AudioProps> = () => {
 
-  const { onPlay, saveRecentPlay, onLoop, onNext, onPrev, randomInAllSong } = usePlay();
+  const { saveRecentPlay, randomInAllSong } = usePlay();
   const { onPlayKeyPress } = useKeyPress()
 
   const [currentTime, setCurrentTime] = useState(0);
-  const isPlaying = useSelector((state: RootState) => state?.media?.isPlaying);
   const playList = useSelector((state: RootState) => state?.media?.playList);
-  const canPlay = useSelector((state: RootState) => state?.media?.canPlay);
+  const showFullPage = useSelector((state: RootState) => state?.global.fullPage);
   const randomSong = useSelector((state: RootState) => state?.media?.random);
   const idPlay = useSelector((state: RootState) => state?.media?.id);
+  const audioRef = useSelector((state: RootState) => state?.media?.audioRef);
   const dispatch = useDispatch();
 
   const handleTimeUpdate = () => {
@@ -80,7 +80,7 @@ const Audio: React.FC<AudioProps> = ({ audioRef }) => {
   }
 
   useEffect(() => {
-    if (audioRef.current) {
+    if (audioRef && audioRef.current) {
       audioRef.current.load();
       audioRef.current.play();
       saveRecentPlay();
@@ -88,11 +88,19 @@ const Audio: React.FC<AudioProps> = ({ audioRef }) => {
     }
   }, [idPlay])
 
+  const refAudio = useRef();
+
+  useEffect(() => {
+    dispatch(setAudioRef(refAudio))
+  }, [])
+
   return (
     <>
       <EventListener target="window" onKeyDown={(event: any) => onPlayKeyPress(event, audioRef)} />
       <HeadPlay />
-      <div className={`${styles.controlPlay} h-full flex items-center`}>
+      <div
+        className={`${styles.controlPlay} ${showFullPage ? styles.fullPage : ''} h-full flex items-center`}
+      >
         <div className='w-full timeSong'>
           <div className="flex gap-2">
             <span className={`${styles.timeSong} text-xs text-gray-300`}>{formatTimePlay(Number(currentTime))}</span>
@@ -106,37 +114,8 @@ const Audio: React.FC<AudioProps> = ({ audioRef }) => {
             />
             <span className={`${styles.timeSong} text-xs text-gray-300`}>{formatTimePlay(idPlay.duration as number ?? 0)}</span>
           </div>
-          <div className="flex justify-center items-center gap-x-10 my-2">
-            <div
-              className={`${styles.action} ${randomSong ? styles.strokeActive : ''}`}
-              onClick={() => dispatch(setRandom(!randomSong))}
-            >
-              <Svg name='mix' path='icons' />
-            </div>
-            <div
-              className={`${styles.action} ${playList.findIndex(item => item.encodeId === idPlay.encodeId) - 1 < 0 ? styles.disabled : ''}`}
-              onClick={onPrev}
-            >
-              <Svg name='prev' path='icons' />
-            </div>
-            <div className={`${styles.actionPlay}`} onClick={() => onPlay(audioRef)} style={{ display: isPlaying && canPlay ? 'block' : 'none' }}>
-              <Svg name='pause' path='icons' />
-            </div>
-            <div className={`${styles.actionPlay}`} onClick={() => onPlay(audioRef)} style={{ display: !isPlaying && canPlay ? 'block' : 'none' }}>
-              <Svg name='play' path='icons' />
-            </div>
-            <div className={`${styles.canPlay}`} style={{ display: canPlay ? 'none' : 'block' }}>
-              <Svg name='loading-play' path='icons' />
-            </div>
-            <div className={`${styles.action}`} onClick={onNext}>
-              <Svg name='next' path='icons' />
-            </div>
-            <div
-              className={`${styles.action} ${audioRef?.current?.loop ? styles.active : ''}`}
-              onClick={() => onLoop(audioRef)}
-            >
-              <Svg name='loop' path='icons' />
-            </div>
+          <div className="controlAudio">
+            <Control />
           </div>
         </div>
       </div>

@@ -19,7 +19,6 @@ type Props = {
 };
 
 const Play: React.FC<Props> = () => {
-  const audioRef: any = useRef(null);
   const volume = useSelector((state: RootState) => state?.media?.volume);
   const muted = useSelector((state: RootState) => state?.media?.muted);
   const showFullPage = useSelector((state: RootState) => state?.global.fullPage);
@@ -28,6 +27,7 @@ const Play: React.FC<Props> = () => {
   const bgFullPage = useSelector((state: RootState) => state?.global.bgFullPage);
   const showPlayList = useSelector((state: RootState) => state?.global?.showPlayList);
   const idPlay = useSelector((state: RootState) => state?.media?.id);
+  const audioRef = useSelector((state: RootState) => state?.media?.audioRef)
 
   const dispatch = useDispatch();
 
@@ -99,9 +99,7 @@ const Play: React.FC<Props> = () => {
             </div>
           </div>
           {/* Audio */}
-          <Audio
-            audioRef={audioRef}
-          />
+          <Audio />
           {/* Right control */}
           <div className={`h-full flex items-center justify-end ${showFullPage ? 'hidden' : ''}`}>
             <div className={`${styles.fullPage} mr-2`} onClick={() => dispatch(setShowFullPage(!showFullPage))}>

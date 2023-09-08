@@ -1,4 +1,4 @@
-import { SET_ID_PLAY, SET_MUTED, SET_PLAY_LIST, SET_VOLUME, SET_RANDOM, SET_RECENT_PLAY, SET_CAN_PLAY, SET_PLAYING } from '../types/mediaTypes';
+import { SET_ID_PLAY, SET_MUTED, SET_PLAY_LIST, SET_VOLUME, SET_RANDOM, SET_RECENT_PLAY, SET_CAN_PLAY, SET_PLAYING, SET_AUDIO_REF } from '../types/mediaTypes';
 
 export const setVolume = (volume: number) => {
   return {
@@ -53,5 +53,12 @@ export const setPlaying = (playing: boolean) => {
   return {
     type: SET_PLAYING,
     payload: playing,
+  };
+};
+
+export const setAudioRef = (ref: any) => {
+  return {
+    type: SET_AUDIO_REF,
+    payload: ref,
   };
 };

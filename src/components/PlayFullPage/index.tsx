@@ -1,11 +1,13 @@
 import React, { memo, useEffect, useRef, useState } from 'react';
+import { Radio, Space } from 'antd';
 import styles from './styles.module.css'
 import { Helmet } from 'react-helmet';
 import { useDispatch } from 'react-redux';
 import Setting from '@/components/Layout/Navigation/components/setting';
 import Svg from '@/components/Common/Svg';
 import { setShowFullPage } from '@/store/actions/globalAction';
-import Theme_1 from './Theme/theme_1';
+import Theme_1 from './Theme/theme-1';
+import Theme_2 from './Theme/theme-2';
 
 type Props = {
   //
@@ -14,6 +16,8 @@ type Props = {
 const PlayFullPage: React.FC<Props> = () => {
   const [showSetting, setShowSetting] = useState(false)
   const refSetting: any = useRef(null);
+  const [showVersion, setShowVersion] = useState(false)
+  const refVersion: any = useRef(null);
   const dispatch = useDispatch()
 
   const handleClickOutside = (event: any, ref: any, action: any) => {
@@ -30,6 +34,21 @@ const PlayFullPage: React.FC<Props> = () => {
     // eslint-disable-next-line
   }, [refSetting]);
 
+  useEffect(() => {
+    document.addEventListener("click", (e) => handleClickOutside(e, refVersion, setShowVersion));
+    return () => {
+      document.removeEventListener("click", (e) => handleClickOutside(e, refVersion, setShowVersion));
+    };
+    // eslint-disable-next-line
+  }, [refVersion]);
+
+  const [version, setVersion] = useState(2)
+
+  const onChange = (e: any) => {
+    console.log('radio checked', e.target.value);
+    setVersion(e.target.value);
+  };
+
   return (
     <>
       <Helmet>
@@ -44,7 +63,31 @@ const PlayFullPage: React.FC<Props> = () => {
       </Helmet>
       <div className={`${styles.wrapper} flex justify-center items-center`}>
         <div className={`${styles.action} flex items-center`}>
-          <div ref={refSetting} className={`relative`}>
+          <div ref={refVersion} className={`relative`}>
+            <div className={`${styles.headerVersion}`} onClick={() => setShowVersion(!showVersion)}>
+              V{version}
+            </div>
+            {
+              showVersion
+                ? (
+                  <div className={`${styles.wrapperVersion}`}>
+                    <Radio.Group defaultValue={version} onChange={onChange} value={version} buttonStyle="solid">
+                      <Space direction="vertical">
+                        {
+                          new Array(2).fill(null).map((_, index) => (
+                            <Radio.Button className={`${styles.optionVersion} ${version === index + 1 ? styles.active : ''} whitespace-nowrap`} value={index + 1}>Ver. {index + 1}</Radio.Button>
+                          ))
+                        }
+                      </Space>
+                    </Radio.Group>
+                  </div>
+                ) : (
+                  <></>
+                )
+            }
+          </div>
+
+          <div ref={refSetting} className={`relative pl-5`}>
             <div className={`${styles.headerIconSetting}`} onClick={() => setShowSetting(!showSetting)}>
               <Svg name="setting" path="icons" />
             </div>
@@ -64,7 +107,11 @@ const PlayFullPage: React.FC<Props> = () => {
             </div>
           </div>
         </div>
-        <Theme_1 />
+        {
+          version === 1
+            ? <Theme_1 />
+            : <Theme_2 />
+        }
       </div>
     </>
   );

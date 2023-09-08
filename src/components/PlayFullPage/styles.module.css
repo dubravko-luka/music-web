@@ -39,3 +39,47 @@
 .headerIconSetting:hover {
   background: #4e4f50ff;
 }
+
+.headerVersion {
+  border-radius: 50%;
+  overflow: hidden;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #3a3b3cff;
+  color: #fff;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.headerVersion:hover {
+  background: #4e4f50ff;
+}
+
+.wrapperVersion {
+  position: absolute;
+  right: -25px;
+  top: 100%;
+  background: #242526;
+  max-width: 270px;
+  padding: 10px;
+  box-sizing: border-box;
+  border-radius: 5px;
+}
+
+.optionVersion * {
+  color: #000;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.optionVersion.active {
+  background: #AE32FF !important;
+  border: #AE32FF !important;
+}
+
+.optionVersion.active * {
+  color: #fff;
+}
