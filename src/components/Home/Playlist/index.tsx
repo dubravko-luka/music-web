@@ -46,7 +46,11 @@ const Playlist: React.FC<Props> = () => {
       <div className={`${styles.list}`}>
         <div className="flex items-center justify-between mb-3">
           <p className='text-white text-sm font-bold'>Tiếp theo</p>
-          <button onClick={onClearPlayList} className={`${styles.clearPlaylist}`}>Xoá toàn bộ</button>
+          {
+            playList.length === 0
+              ? <></>
+              : <button onClick={onClearPlayList} className={`${styles.clearPlaylist}`}>Xoá toàn bộ</button>
+          }
         </div>
         <div className={`${styles.contentPlayList} flex items-start justify-start no-sb`}>
           <div className={`grid grid-cols-12 items-start gap-y-3 no-sb`}>
