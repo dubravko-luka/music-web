@@ -45,7 +45,6 @@ const PlayFullPage: React.FC<Props> = () => {
   const [version, setVersion] = useState(2)
 
   const onChange = (e: any) => {
-    console.log('radio checked', e.target.value);
     setVersion(e.target.value);
   };
 

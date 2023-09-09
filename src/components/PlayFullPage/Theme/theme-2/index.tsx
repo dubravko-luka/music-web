@@ -33,8 +33,6 @@ const ThemePlayFullPage2: React.FC<Props> = () => {
     }
   }, [idPlay]);
 
-  console.log('---------->', widthName);
-
   return (
     <>
       <Helmet>

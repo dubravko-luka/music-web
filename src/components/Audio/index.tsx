@@ -88,11 +88,16 @@ const Audio: React.FC<AudioProps> = () => {
     }
   }, [idPlay])
 
-  const refAudio = useRef();
+  const refAudio = useRef(null);
 
   useEffect(() => {
-    dispatch(setAudioRef(refAudio))
+    if (!audioRef) {
+      dispatch(setAudioRef(refAudio))
+    }
   }, [refAudio])
+
+  console.log('---------->', currentTime);
+  console.log('---------->', idPlay.name);
 
   return (
     <>

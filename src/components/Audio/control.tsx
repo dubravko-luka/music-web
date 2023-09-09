@@ -26,14 +26,22 @@ const Control: React.FC<Props> = () => {
     <>
       <div className="flex justify-center items-center gap-x-10 my-2">
         <div
-          className={`${styles.action} ${randomSong ? styles.strokeActive : ''}`}
-          onClick={() => dispatch(setRandom(!randomSong))}
+          className={`${styles.action} ${randomSong ? styles.strokeActive : ''} ${canPlay ? 'opacity-100' : 'opacity-50'}`}
+          onClick={() => {
+            if (canPlay) {
+              dispatch(setRandom(!randomSong))
+            }
+          }}
         >
           <Svg name='mix' path='icons' />
         </div>
         <div
-          className={`${styles.action} ${playList.findIndex(item => item.encodeId === idPlay.encodeId) - 1 < 0 ? styles.disabled : ''}`}
-          onClick={onPrev}
+          className={`${styles.action} ${canPlay ? 'opacity-100' : 'opacity-50'} ${playList.findIndex(item => item.encodeId === idPlay.encodeId) - 1 < 0 ? styles.disabled : ''}`}
+          onClick={() => {
+            if (canPlay) {
+              onPrev()
+            }
+          }}
         >
           <Svg name='prev' path='icons' />
         </div>
@@ -46,12 +54,20 @@ const Control: React.FC<Props> = () => {
         <div className={`${styles.canPlay}`} style={{ display: canPlay ? 'none' : 'block' }}>
           <Svg name='loading-play' path='icons' />
         </div>
-        <div className={`${styles.action}`} onClick={onNext}>
+        <div className={`${styles.action} ${canPlay ? 'opacity-100' : 'opacity-50'}`} onClick={() => {
+          if (canPlay) {
+            onNext();
+          }
+        }}>
           <Svg name='next' path='icons' />
         </div>
         <div
-          className={`${styles.action} ${audioRef?.current?.loop ? styles.active : ''}`}
-          onClick={() => onLoop(audioRef)}
+          className={`${styles.action} ${canPlay ? 'opacity-100' : 'opacity-50'} ${audioRef?.current?.loop ? styles.active : ''}`}
+          onClick={() => {
+            if (canPlay) {
+              onLoop(audioRef);
+            }
+          }}
         >
           <Svg name='loop' path='icons' />
         </div>
