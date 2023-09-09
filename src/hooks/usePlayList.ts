@@ -51,8 +51,14 @@ export const usePlayList = () => {
     await dispatch(setPlayList([...array_eraser]))
   }
 
+  const clearPlaylist = () => {
+    localStorage.removeItem(LOCALSTORAGE_PLAY_LIST)
+    dispatch(setPlayList([]));
+  }
+
   return {
     onAddPlayList,
-    getPlayList
+    getPlayList,
+    clearPlaylist
   };
 };

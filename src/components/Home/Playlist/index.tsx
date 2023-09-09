@@ -12,7 +12,7 @@ type Props = {
 
 const Playlist: React.FC<Props> = () => {
 
-  const { getPlayList } = usePlayList()
+  const { getPlayList, clearPlaylist } = usePlayList()
 
   const idPlay = useSelector((state: RootState) => state?.media?.id)
   const playList = useSelector((state: RootState) => state?.media?.playList);
@@ -20,6 +20,10 @@ const Playlist: React.FC<Props> = () => {
   useEffect(() => {
     getPlayList()
   }, [])
+
+  const onClearPlayList = () => {
+    clearPlaylist()
+  }
 
   return (
     <>
@@ -31,7 +35,10 @@ const Playlist: React.FC<Props> = () => {
         <Line />
       </div>
       <div className={`${styles.list}`}>
-        <p className='text-white text-sm font-bold mb-3'>Tiếp theo</p>
+        <div className="flex items-center justify-between mb-3">
+          <p className='text-white text-sm font-bold'>Tiếp theo</p>
+          <button onClick={onClearPlayList} className={`${styles.clearPlaylist}`}>Xoá toàn bộ</button>
+        </div>
         <div className={`${styles.contentPlayList} flex items-start justify-start no-sb`}>
           <div className={`grid grid-cols-12 items-start gap-y-3 no-sb`}>
             {

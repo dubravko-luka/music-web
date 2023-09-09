@@ -28,3 +28,15 @@
 .nextItem {
   height: 54px;
 }
+
+.clearPlaylist {
+  border: none;
+  background: none;
+  color: #fff;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.clearPlaylist:hover {
+  color: #ff3e3e;
+}
