@@ -27,13 +27,22 @@ const Playlist: React.FC<Props> = () => {
 
   return (
     <>
-      <div className={`${styles.list}`}>
-        <p className='text-white text-sm font-bold mb-3 px-2.5'>Đang phát</p>
-        <MusicCardRectangle2 song={idPlay} />
-      </div>
-      <div className="py-5">
-        <Line />
-      </div>
+      {
+        idPlay
+          ? (
+            <>
+              <div className={`${styles.list}`}>
+                <p className='text-white text-sm font-bold mb-3 px-2.5'>Đang phát</p>
+                <MusicCardRectangle2 song={idPlay} />
+              </div>
+              <div className="py-5">
+                <Line />
+              </div>
+            </>
+          ) : (
+            <></>
+          )
+      }
       <div className={`${styles.list}`}>
         <div className="flex items-center justify-between mb-3">
           <p className='text-white text-sm font-bold'>Tiếp theo</p>
@@ -42,7 +51,7 @@ const Playlist: React.FC<Props> = () => {
         <div className={`${styles.contentPlayList} flex items-start justify-start no-sb`}>
           <div className={`grid grid-cols-12 items-start gap-y-3 no-sb`}>
             {
-              playList.length === 0
+              playList.length === 0 && idPlay
                 ? (
                   <div className={`col-span-12 ${styles.nextItem}`}>
                     <MusicCardRectangle2 song={idPlay} />
