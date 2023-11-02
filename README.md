@@ -1,4 +1,4 @@
-# Music - Next.js Based Film Review Application
+# Music - Based Film Review Application
 
 This is the Readme.md file for the Music project, a web application for listen music. This project is built using the Next.js framework.
 
